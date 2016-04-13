@@ -403,6 +403,25 @@ restricted form of this format which allows encoding of the date and
 time, but disallows the timezone format:
 
 % GENERATED: !schemadoc VOResource-v1.0.xsd UTCTimestamp
+\begingroup
+      	\renewcommand*\descriptionlabel[1]{%
+      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{vr:UTCTimestamp} Type Schema Documentation}
+
+\noindent{\small
+           A timestamp that is compliant with ISO8601 but disallows
+           the use of a timezone indicator.
+         \par}
+
+\vspace{1ex}\noindent\textbf{\xmlel{vr:UTCTimestamp} Type Schema Definition}
+
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<xs:simpleType name="UTCTimestamp" >
+  <xs:restriction base="xs:dateTime" >
+    <xs:pattern
+              value="\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(\.\d+)?" />
+  </xs:restriction>
+</xs:simpleType>
+\end{lstlisting}\endgroup
 % /GENERATED
 
 
@@ -874,6 +893,195 @@ minimally compliant resource description; this requirement is enforced
 by the VOResource schema definition.  
 
 % GENERATED: !schemadoc VOResource-v1.0.xsd Resource
+\begingroup
+      	\renewcommand*\descriptionlabel[1]{%
+      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{vr:Resource} Type Schema Documentation}
+
+\noindent{\small
+           Any entity or component of a VO application that is
+           describable and identifiable by a IVOA Identifier. 
+         \par}
+
+\vspace{1ex}\noindent\textbf{\xmlel{vr:Resource} Type Schema Definition}
+
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<xs:complexType name="Resource" >
+  <xs:sequence >
+    <xs:element name="validationLevel" type="vr:Validation" minOccurs="0"
+              maxOccurs="unbounded" />
+    <xs:element name="title" type="xs:token" />
+    <xs:element name="shortName" type="vr:ShortName" minOccurs="0" />
+    <xs:element name="identifier" type="vr:IdentifierURI" />
+    <xs:element name="curation" type="vr:Curation" />
+    <xs:element name="content" type="vr:Content" />
+  </xs:sequence>
+  <xs:attribute name="created" type="xs:dateTime" use="required" />
+  <xs:attribute name="updated" type="xs:dateTime" use="required" />
+  <xs:attribute name="status" use="required" >
+    <xs:simpleType >
+      <xs:restriction base="xs:string" >
+        <xs:enumeration value="active" />
+        <xs:enumeration value="inactive" />
+        <xs:enumeration value="deleted" />
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+</xs:complexType>
+\end{lstlisting}
+
+\vspace{0.5ex}\noindent\textbf{\xmlel{vr:Resource} Attributes}
+
+\begingroup\small\begin{bigdescription}
+\item[created]
+\begin{description}
+\item[Type] \xmlel{xs:dateTime}
+\item[Meaning] 
+              The UTC date and time this resource metadata description
+              was created. 
+            
+\item[Occurrence] required
+\item[Comment] 
+              This timestamp must not be in the future.  This time is
+              not required to be accurate; it should be at least
+              accurate to the day.  Any insignificant time fields
+              should be set to zero. 
+            
+\end{description}
+\item[updated]
+\begin{description}
+\item[Type] \xmlel{xs:dateTime}
+\item[Meaning] 
+              The UTC date this resource metadata description was last updated.
+            
+\item[Occurrence] required
+\item[Comment] 
+              This timestamp must not be in the future.  This time is
+              not required to be accurate; it should be at least
+              accurate to the day.  Any insignificant time fields
+              should be set to zero. 
+            
+\end{description}
+\item[status]
+\begin{description}
+\item[Type] string with controlled vocabulary
+\item[Meaning] 
+              a tag indicating whether this resource is believed to be still
+              actively maintained.
+            
+\item[Occurrence] required
+\item[Allowed Values]\hfil\begin{longtermsdescription}
+\item[active]
+                      resource is believed to be currently maintained, and its
+                      description is up to date (default). 
+                   
+\item[inactive]
+                     resource is apparently not being maintained at the present.
+                   
+\item[deleted]
+                      resource publisher has explicitly deleted the resource.
+                   
+\end{longtermsdescription}
+\end{description}
+
+
+\end{bigdescription}\endgroup
+
+
+
+\vspace{0.5ex}\noindent\textbf{\xmlel{vr:Resource} Metadata Elements}
+
+\begingroup\small\begin{bigdescription}\item[Element \xmlel{validationLevel}]
+\begin{description}
+\item[Type] \xmlel{vr:ValidationLevel} with optional attributes
+\item[Meaning] 
+                  A numeric grade describing the quality of the
+                  resource description, when applicable, 
+                  to be used to indicate the confidence an end-user
+                  can put in the resource as part of a VO application
+                  or research study. 
+               
+\item[Occurrence] optional; multiple occurrences allowed.
+\item[Comment] 
+                  See vr:ValidationLevel for an explanation of the
+                  allowed levels.  
+               
+\item[Comment] 
+                  Note that when this resource is a Service, this
+                  grade applies to the core set of metadata.
+                  Capability and interface metadata, as well as the
+                  compliance of the service with the interface
+                  standard, is rated by validationLevel tag in the 
+                  capability element (see the vr:Service complex
+                  type).  
+               
+
+\end{description}
+\item[Element \xmlel{title}]
+\begin{description}
+Title
+\item[Type] string: \xmlel{xs:token}
+\item[Meaning] 
+                  the full name given to the resource
+               
+\item[Occurrence] required
+
+\end{description}
+\item[Element \xmlel{shortName}]
+\begin{description}
+\item[Type] string
+\item[Meaning] 
+                 a short name or abbreviation given to the resource.
+               
+\item[Occurrence] optional
+\item[Allowed Values]\hfil\begin{longtermsdescription}
+\end{longtermsdescription}
+\item[Comment] 
+                 This name will be used where brief annotations for
+                 the resource name are required.  Applications may 
+                 use to refer to this resource in a compact display.   
+               
+\item[Comment] 
+                 One word or a few letters is recommended.  No more
+                 than sixteen characters are allowed.
+               
+
+\end{description}
+\item[Element \xmlel{identifier}]
+\begin{description}
+Identifier
+\item[Type] an IVOA Identifier URI: vr:IdentifierURI
+\item[Meaning] 
+                 Unambiguous reference to the resource conforming to the IVOA
+                 standard for identifiers
+               
+\item[Occurrence] required
+\item[Allowed Values]\hfil\begin{longtermsdescription}
+\end{longtermsdescription}
+
+\end{description}
+\item[Element \xmlel{curation}]
+\begin{description}
+\item[Type] composite: \xmlel{vr:Curation}
+\item[Meaning] 
+               Information regarding the general curation of the resource
+             
+\item[Occurrence] required
+
+\end{description}
+\item[Element \xmlel{content}]
+\begin{description}
+\item[Type] composite: \xmlel{vr:Content}
+\item[Meaning] 
+               Information regarding the general content of the resource
+             
+\item[Occurrence] required
+
+\end{description}
+
+
+\end{bigdescription}\endgroup
+
+\endgroup
 % /GENERATED
 
 
@@ -901,6 +1109,34 @@ metadata.  The \xmlel{vr:ShortName} definition enforces the
 16-character limit on shortNames.  
 
 % GENERATED: !schemadoc VOResource-v1.0.xsd ShortName
+\begingroup
+      	\renewcommand*\descriptionlabel[1]{%
+      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{vr:ShortName} Type Schema Documentation}
+
+\noindent{\small
+         a short name or abbreviation given to something.
+       \par}
+
+\noindent{\small
+         This name will be used where brief annotations for
+         the resource name are required.  Applications may 
+         use to refer to this resource in a compact display.   
+       \par}
+
+\noindent{\small
+         One word or a few letters is recommended.  No more
+         than sixteen characters are allowed.
+       \par}
+
+\vspace{1ex}\noindent\textbf{\xmlel{vr:ShortName} Type Schema Definition}
+
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<xs:simpleType name="ShortName" >
+  <xs:restriction base="xs:token" >
+    <xs:maxLength value="16" />
+  </xs:restriction>
+</xs:simpleType>
+\end{lstlisting}\endgroup
 % /GENERATED
 
 
@@ -910,6 +1146,18 @@ Identifiers as defined by the IVOA Identifier standard
 \citep{std:Identifiers}.
 
 % GENERATED: !schemadoc VOResource-v1.0.xsd IdentifierURI
+\begingroup
+      	\renewcommand*\descriptionlabel[1]{%
+      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{1ex}\noindent\textbf{\xmlel{vr:IdentifierURI} Type Schema Definition}
+
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<xs:simpleType name="IdentifierURI" >
+  <xs:restriction base="xs:anyURI" >
+    <xs:pattern
+              value="ivo://[\w\d][\w\d\-_\.!~\*'\(\)\+=]{2,}(/[\w\d\-_\.!~\*'\(\)\+=]+(/[\w\d\-_\.!~\*'\(\)\+=]+)*)?" />
+  </xs:restriction>
+</xs:simpleType>
+\end{lstlisting}\endgroup
 % /GENERATED
 
 
@@ -921,9 +1169,33 @@ components of an IVOA Identifier,
 
 
 % GENERATED: !schemadoc VOResource-v1.0.xsd AuthorityID
+\begingroup
+      	\renewcommand*\descriptionlabel[1]{%
+      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{1ex}\noindent\textbf{\xmlel{vr:AuthorityID} Type Schema Definition}
+
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<xs:simpleType name="AuthorityID" >
+  <xs:restriction base="xs:token" >
+    <xs:pattern
+              value="[\w\d][\w\d\-_\.!~\*'\(\)\+=]{2,}" />
+  </xs:restriction>
+</xs:simpleType>
+\end{lstlisting}\endgroup
 % /GENERATED
 
 % GENERATED: !schemadoc VOResource-v1.0.xsd ResourceKey
+\begingroup
+      	\renewcommand*\descriptionlabel[1]{%
+      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{1ex}\noindent\textbf{\xmlel{vr:ResourceKey} Type Schema Definition}
+
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<xs:simpleType name="ResourceKey" >
+  <xs:restriction base="xs:token" >
+    <xs:pattern
+              value="[\w\d\-_\.!~\*'\(\)\+=]+(/[\w\d\-_\.!~\*'\(\)\+=]+)*" />
+  </xs:restriction>
+</xs:simpleType>
+\end{lstlisting}\endgroup
 % /GENERATED
 
 
@@ -939,6 +1211,114 @@ The curation metadata described in the RM (section
 
 
 % GENERATED: !schemadoc VOResource-v1.0.xsd Curation
+\begingroup
+      	\renewcommand*\descriptionlabel[1]{%
+      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{vr:Curation} Type Schema Documentation}
+
+\noindent{\small
+         Information regarding the general curation of a resource
+       \par}
+
+\vspace{1ex}\noindent\textbf{\xmlel{vr:Curation} Type Schema Definition}
+
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<xs:complexType name="Curation" >
+  <xs:sequence >
+    <xs:element name="publisher" type="vr:ResourceName" />
+    <xs:element name="creator" type="vr:Creator" minOccurs="0"
+              maxOccurs="unbounded" />
+    <xs:element name="contributor" type="vr:ResourceName" minOccurs="0"
+              maxOccurs="unbounded" />
+    <xs:element name="date" type="vr:Date" minOccurs="0"
+              maxOccurs="unbounded" />
+    <xs:element name="version" type="xs:token" minOccurs="0" />
+    <xs:element name="contact" type="vr:Contact" maxOccurs="unbounded" />
+  </xs:sequence>
+</xs:complexType>
+\end{lstlisting}
+
+\vspace{0.5ex}\noindent\textbf{\xmlel{vr:Curation} Metadata Elements}
+
+\begingroup\small\begin{bigdescription}\item[Element \xmlel{publisher}]
+\begin{description}
+Publisher
+\item[Type] string with ID attribute: vr:ResourceName
+\item[Meaning] 
+               Entity (e.g. person or organisation) responsible for making the 
+               resource available
+             
+\item[Occurrence] required
+
+\end{description}
+\item[Element \xmlel{creator}]
+\begin{description}
+Creator
+\item[Type] composite: \xmlel{vr:Creator}
+\item[Meaning] 
+                The entity (e.g. person or organisation) primarily responsible 
+                for creating the content or constitution of the resource.
+             
+\item[Occurrence] optional; multiple occurrences allowed.
+\item[Comment] 
+                A logo need only be provided for the first occurance.
+                When multiple logos are supplied via multiple creator 
+                elements, the application is free to choose which to
+                use. 
+             
+
+\end{description}
+\item[Element \xmlel{contributor}]
+\begin{description}
+Contributor
+\item[Type] string with ID attribute: vr:ResourceName
+\item[Meaning] 
+               Entity responsible for contributions to the content of
+               the resource
+             
+\item[Occurrence] optional; multiple occurrences allowed.
+
+\end{description}
+\item[Element \xmlel{date}]
+\begin{description}
+Date
+\item[Type] \xmlel{vr:UTCDateTime} with optional attributes
+\item[Meaning] 
+               Date associated with an event in the life cycle of the
+               resource.  
+             
+\item[Occurrence] optional; multiple occurrences allowed.
+\item[Comment] 
+               This will typically be associated with the creation or 
+               availability (i.e., most recent release or version) of
+               the resource.  Use the role attribute to clarify.
+             
+
+\end{description}
+\item[Element \xmlel{version}]
+\begin{description}
+\item[Type] string: \xmlel{xs:token}
+\item[Meaning] 
+               Label associated with creation or availablilty of a version of 
+               a resource.
+             
+\item[Occurrence] optional
+
+\end{description}
+\item[Element \xmlel{contact}]
+\begin{description}
+\item[Type] composite: \xmlel{vr:Contact}
+\item[Meaning] 
+               Information that can be used for contacting someone with
+               regard to this resource.
+             
+\item[Occurrence] required; multiple occurrences allowed.
+
+\end{description}
+
+
+\end{bigdescription}\endgroup
+
+\endgroup
 % /GENERATED
 
 Several of the curation elements (most importantly,
@@ -951,6 +1331,45 @@ thus, the identifier (which is encoded as an attribute) is optional.
 
 
 % GENERATED: !schemadoc VOResource-v1.0.xsd ResourceName
+\begingroup
+      	\renewcommand*\descriptionlabel[1]{%
+      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{vr:ResourceName} Type Schema Documentation}
+
+\noindent{\small
+         the name of a potentially registered resource.  That is, the entity
+         referred to may have an associated identifier.
+       \par}
+
+\vspace{1ex}\noindent\textbf{\xmlel{vr:ResourceName} Type Schema Definition}
+
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<xs:complexType name="ResourceName" >
+  <xs:simpleContent >
+    <xs:extension base="xs:token" >
+      <xs:attribute name="ivo-id" type="vr:IdentifierURI" />
+    </xs:extension>
+  </xs:simpleContent>
+</xs:complexType>
+\end{lstlisting}
+
+\vspace{0.5ex}\noindent\textbf{\xmlel{vr:ResourceName} Attributes}
+
+\begingroup\small\begin{bigdescription}
+\item[ivo-id]
+\begin{description}
+\item[Type] an IVOA Identifier URI: vr:IdentifierURI
+\item[Meaning] 
+                The URI form of the IVOA identifier for the resource refered to
+              
+\item[Occurrence] optional
+\item[Allowed Values]\hfil\begin{longtermsdescription}
+\end{longtermsdescription}
+\end{description}
+
+
+\end{bigdescription}\endgroup
+
+\endgroup
 % /GENERATED
 
 
@@ -961,6 +1380,56 @@ type which bundles together the RM metadata \emph{Creator} and
 
 
 % GENERATED: !schemadoc VOResource-v1.0.xsd Creator
+\begingroup
+      	\renewcommand*\descriptionlabel[1]{%
+      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{vr:Creator} Type Schema Documentation}
+
+\noindent{\small
+            The entity (e.g. person or organisation) primarily responsible 
+            for creating something
+         \par}
+
+\vspace{1ex}\noindent\textbf{\xmlel{vr:Creator} Type Schema Definition}
+
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<xs:complexType name="Creator" >
+  <xs:sequence >
+    <xs:element name="name" type="vr:ResourceName" />
+    <xs:element name="logo" type="xs:anyURI" minOccurs="0" />
+  </xs:sequence>
+</xs:complexType>
+\end{lstlisting}
+
+\vspace{0.5ex}\noindent\textbf{\xmlel{vr:Creator} Metadata Elements}
+
+\begingroup\small\begin{bigdescription}\item[Element \xmlel{name}]
+\begin{description}
+\item[Type] string with ID attribute: vr:ResourceName
+\item[Meaning] 
+                  the name or title of the creating person or organization
+              
+\item[Occurrence] required
+\item[Comment] 
+                  Users of the creation should use this name in
+                  subsequent credits and acknowledgements.
+              
+
+\end{description}
+\item[Element \xmlel{logo}]
+\begin{description}
+\item[Type] a URI: \xmlel{xs:anyURI}
+\item[Meaning] 
+                URL pointing to a graphical logo, which may be used to help 
+                identify the information source
+              
+\item[Occurrence] optional
+
+\end{description}
+
+
+\end{bigdescription}\endgroup
+
+\endgroup
 % /GENERATED
 
 
@@ -970,6 +1439,51 @@ optional attribute called \xmlel{role}.
 
 
 % GENERATED: !schemadoc VOResource-v1.0.xsd Date
+\begingroup
+      	\renewcommand*\descriptionlabel[1]{%
+      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{1ex}\noindent\textbf{\xmlel{vr:Date} Type Schema Definition}
+
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<xs:complexType name="Date" >
+  <xs:simpleContent >
+    <xs:extension base="vr:UTCDateTime" >
+      <xs:attribute name="role" type="xs:string" default="representative" />
+    </xs:extension>
+  </xs:simpleContent>
+</xs:complexType>
+\end{lstlisting}
+
+\vspace{0.5ex}\noindent\textbf{\xmlel{vr:Date} Attributes}
+
+\begingroup\small\begin{bigdescription}
+\item[role]
+\begin{description}
+\item[Type] string: \xmlel{xs:string}
+\item[Meaning] 
+                 A string indicating what the date refers to.  
+               
+\item[Occurrence] optional
+representative
+\item[Comment] 
+                 While this vocabulary is uncontrolled, recognized strings 
+                 include {"}creation{"}, indicating the date that the resource 
+                 itself was created, and {"}update{"}, indicating when the
+                 resource was updated last.  The default value, 
+                 {"}representative{"}, means that the date is a rough 
+                 representation of the time coverage of the resource.
+               
+\item[Comment] 
+                 Note that this date refers to the resource; dates describing
+                 the metadata description of the resource are handled by
+                 the {"}created{"} and {"}updated{"} attributes of the Resource 
+                 element. 
+               
+\end{description}
+
+
+\end{bigdescription}\endgroup
+
+\endgroup
 % /GENERATED
 
 
@@ -988,6 +1502,76 @@ and \emph{Contact.Email}.
 
 
 % GENERATED: !schemadoc VOResource-v1.0.xsd Contact
+\begingroup
+      	\renewcommand*\descriptionlabel[1]{%
+      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{vr:Contact} Type Schema Documentation}
+
+\noindent{\small
+          Information that can be used for contacting someone
+        \par}
+
+\vspace{1ex}\noindent\textbf{\xmlel{vr:Contact} Type Schema Definition}
+
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<xs:complexType name="Contact" >
+  <xs:sequence >
+    <xs:element name="name" type="vr:ResourceName" />
+    <xs:element name="address" type="xs:token" minOccurs="0" />
+    <xs:element name="email" type="xs:token" minOccurs="0" />
+    <xs:element name="telephone" type="xs:token" minOccurs="0" />
+  </xs:sequence>
+</xs:complexType>
+\end{lstlisting}
+
+\vspace{0.5ex}\noindent\textbf{\xmlel{vr:Contact} Metadata Elements}
+
+\begingroup\small\begin{bigdescription}\item[Element \xmlel{name}]
+\begin{description}
+\item[Type] string with ID attribute: vr:ResourceName
+\item[Meaning] 
+                  the name or title of the contact person.
+              
+\item[Occurrence] required
+\item[Comment] 
+                  This can be a person's name, e.g. {"}John P. Jones{"} or
+                  a group, {"}Archive Support Team{"}.
+              
+
+\end{description}
+\item[Element \xmlel{address}]
+\begin{description}
+\item[Type] string: \xmlel{xs:token}
+\item[Meaning] the contact mailing address
+\item[Occurrence] optional
+\item[Comment] 
+                All components of the mailing address are given in one
+                string, e.g. {"}3700 San Martin Drive, Baltimore, MD 21218 USA{"}.
+              
+
+\end{description}
+\item[Element \xmlel{email}]
+\begin{description}
+\item[Type] string: \xmlel{xs:token}
+\item[Meaning] the contact email address
+\item[Occurrence] optional
+
+\end{description}
+\item[Element \xmlel{telephone}]
+\begin{description}
+\item[Type] string: \xmlel{xs:token}
+\item[Meaning] the contact telephone number
+\item[Occurrence] optional
+\item[Comment] 
+                Complete international dialing codes should be given, e.g.
+                {"}+1-410-338-1234{"}.
+              
+
+\end{description}
+
+
+\end{bigdescription}\endgroup
+
+\endgroup
 % /GENERATED
 
 
@@ -1002,6 +1586,247 @@ defined by the \xmlel{vr:Content} complex type.
 
 
 % GENERATED: !schemadoc VOResource-v1.0.xsd Content
+\begingroup
+      	\renewcommand*\descriptionlabel[1]{%
+      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{vr:Content} Type Schema Documentation}
+
+\noindent{\small
+         Information regarding the general content of a resource
+       \par}
+
+\vspace{1ex}\noindent\textbf{\xmlel{vr:Content} Type Schema Definition}
+
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<xs:complexType name="Content" >
+  <xs:sequence >
+    <xs:element name="subject" type="xs:token" maxOccurs="unbounded" />
+    <xs:element name="description" type="xs:token" />
+    <xs:element name="source" type="vr:Source" minOccurs="0" />
+    <xs:element name="referenceURL" type="xs:anyURI" />
+    <xs:element name="type" type="vr:Type" minOccurs="0"
+              maxOccurs="unbounded" />
+    <xs:element name="contentLevel" type="vr:ContentLevel" minOccurs="0"
+              maxOccurs="unbounded" />
+    <xs:element name="relationship" type="vr:Relationship" minOccurs="0"
+              maxOccurs="unbounded" />
+  </xs:sequence>
+</xs:complexType>
+\end{lstlisting}
+
+\vspace{0.5ex}\noindent\textbf{\xmlel{vr:Content} Metadata Elements}
+
+\begingroup\small\begin{bigdescription}\item[Element \xmlel{subject}]
+\begin{description}
+Subject
+\item[Type] string: \xmlel{xs:token}
+\item[Meaning] 
+               a topic, object type, or other descriptive keywords 
+               about the resource.  
+             
+\item[Occurrence] required; multiple occurrences allowed.
+\item[Comment] 
+               Terms for Subject should be drawn from the IAU Astronomy 
+               Thesaurus (http://msowww.anu.edu.au/library/thesaurus/).
+             
+
+\end{description}
+\item[Element \xmlel{description}]
+\begin{description}
+Description
+\item[Type] string: \xmlel{xs:token}
+\item[Meaning] 
+               An account of the nature of the resource
+             
+\item[Occurrence] required
+\item[Comment] 
+               The description may include but is not limited to an abstract, 
+               table of contents, reference to a graphical representation of
+               content or a free-text account of the content.
+             
+
+\end{description}
+\item[Element \xmlel{source}]
+\begin{description}
+Source
+\item[Type] a string with optional attributes
+\item[Meaning] 
+                a bibliographic reference from which the present resource is 
+                derived or extracted.  
+             
+\item[Occurrence] optional
+\item[Comment] 
+                This is intended to point to an article in the published 
+                literature.  An ADS Bibcode is recommended as a value when 
+                available.    
+             
+
+\end{description}
+\item[Element \xmlel{referenceURL}]
+\begin{description}
+\item[Type] a URI: \xmlel{xs:anyURI}
+\item[Meaning] 
+                URL pointing to a human-readable document describing this 
+                resource.   
+             
+\item[Occurrence] required
+
+\end{description}
+\item[Element \xmlel{type}]
+\begin{description}
+Type
+\item[Type] string with controlled vocabulary
+\item[Meaning] 
+               Nature or genre of the content of the resource
+             
+\item[Occurrence] optional; multiple occurrences allowed.
+\item[Allowed Values]\hfil\begin{longtermsdescription}
+\item[Other]
+               resource that does not fall into any of the category names
+               currently defined.
+             
+\item[Archive]
+               Collection of pointed observations
+             
+\item[Bibliography]
+               Collection of bibliographic reference, abstracts, and 
+               publications
+             
+\item[Catalog]
+               Collection of derived data, primarily in tabular form
+             
+\item[Journal]
+               Collection of scholarly publications under common editorial 
+               policy
+             
+\item[Library]
+               Collection of published materials (journals, books, etc.)
+             
+\item[Simulation]
+               Theoretical simulation or model
+             
+\item[Survey]
+               Collection of observations covering substantial and
+               contiguous areas of the sky
+             
+\item[Transformation]
+               A service that transforms data
+             
+\item[Education]
+               Collection of materials appropriate for educational use, such
+               as teaching resources, curricula, etc.
+             
+\item[Outreach]
+               Collection of materials appropriate for public outreach, such
+               as press releases and photo galleries
+             
+\item[EPOResource]
+               Collection of materials that may be suitable for EPO
+               products but which are not in final product form, as in Type 
+               Outreach or Type Education.  EPOResource would apply,
+               e.g., to archives with easily accessed preview images or to
+               surveys with easy-to-use images.
+             
+\item[Animation]
+               Animation clips of astronomical phenomena
+             
+\item[Artwork]
+               Artists' renderings of astronomical phenomena or objects
+             
+\item[Background]
+               Background information on astronomical phenomena or objects
+             
+\item[BasicData]
+               Compilations of basic astronomical facts about objects,
+               such as approximate distance or membership in constellation.
+             
+\item[Historical]
+               Historical information about astronomical objects
+             
+\item[Photographic]
+               Publication-quality photographs of astronomical objects
+             
+\item[Press]
+               Press releases about astronomical objects
+             
+\item[Organisation]
+               An organization that is a publisher or curator of other 
+               resources.
+             
+\item[Project]
+               A project that is a publisher or curator of other resources
+             
+\item[Registry]
+               a query service for which response is a structured
+               description of resources.
+             
+\end{longtermsdescription}
+
+\end{description}
+\item[Element \xmlel{contentLevel}]
+\begin{description}
+Subject, Subject.ContentLevel
+\item[Type] string with controlled vocabulary
+\item[Meaning] 
+                Description of the content level or intended audience
+             
+\item[Occurrence] optional; multiple occurrences allowed.
+\item[Allowed Values]\hfil\begin{longtermsdescription}
+\item[General]
+               Resource provides information appropriate for all users
+             
+\item[Elementary Education]
+               Resource provides information appropriate for use in elementary
+               education (e.g. approximate ages 6-11)
+             
+\item[Middle School Education]
+               Resource provides information appropriate for use in middle
+               school education (e.g. approximate ages 11-14)
+             
+\item[Secondary Education]
+               Resource provides information appropriate for use in elementary
+               education (e.g. approximate ages 14-18)
+             
+\item[Community College]
+               Resource provides information appropriate for use in 
+               community/junior college or early university education.
+             
+\item[University]
+               Resource provides information appropriate for use in
+               university education
+             
+\item[Research]
+               Resource provides information appropriate for
+               supporting scientific research.
+             
+\item[Amateur]
+               Resource provides information of interest to
+               amateur astronomers.
+             
+\item[Informal Education]
+               Resource provides information appropriate for education
+               at museums, planetariums, and other centers of informal learning.
+             
+\end{longtermsdescription}
+
+\end{description}
+\item[Element \xmlel{relationship}]
+\begin{description}
+\item[Type] composite: \xmlel{vr:Relationship}
+\item[Meaning] 
+               a description of a relationship to another resource.  
+             
+\item[Occurrence] optional; multiple occurrences allowed.
+\item[Comment] 
+                Because this element's type is abstract, an xsi:type must be 
+                to indicate the set of relationship types that are valid.
+             
+
+\end{description}
+
+
+\end{bigdescription}\endgroup
+
+\endgroup
 % /GENERATED
 
 
@@ -1013,6 +1838,38 @@ The \xmlel{source} element's type,
 
 
 % GENERATED: !schemadoc VOResource-v1.0.xsd Source
+\begingroup
+      	\renewcommand*\descriptionlabel[1]{%
+      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{1ex}\noindent\textbf{\xmlel{vr:Source} Type Schema Definition}
+
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<xs:complexType name="Source" >
+  <xs:simpleContent >
+    <xs:extension base="xs:token" >
+      <xs:attribute name="format" type="xs:string" />
+    </xs:extension>
+  </xs:simpleContent>
+</xs:complexType>
+\end{lstlisting}
+
+\vspace{0.5ex}\noindent\textbf{\xmlel{vr:Source} Attributes}
+
+\begingroup\small\begin{bigdescription}
+\item[format]
+\begin{description}
+\item[Type] string: \xmlel{xs:string}
+\item[Meaning] 
+                 The reference format.  Recognized values include {"}bibcode{"}, 
+                 referring to a standard astronomical bibcode 
+                 (http://cdsweb.u-strasbg.fr/simbad/refcode.html).  
+               
+\item[Occurrence] optional
+\end{description}
+
+
+\end{bigdescription}\endgroup
+
+\endgroup
 % /GENERATED
 
 
@@ -1023,6 +1880,57 @@ RM metadata \emph{Relationship} and
 
 
 % GENERATED: !schemadoc VOResource-v1.0.xsd Relationship
+\begingroup
+      	\renewcommand*\descriptionlabel[1]{%
+      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{vr:Relationship} Type Schema Documentation}
+
+\noindent{\small
+           A description of the relationship between one resource and one or
+           more other resources.
+         \par}
+
+\vspace{1ex}\noindent\textbf{\xmlel{vr:Relationship} Type Schema Definition}
+
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<xs:complexType name="Relationship" >
+  <xs:sequence >
+    <xs:element name="relationshipType" type="xs:token" />
+    <xs:element name="relatedResource" type="vr:ResourceName" minOccurs="1"
+              maxOccurs="unbounded" />
+  </xs:sequence>
+</xs:complexType>
+\end{lstlisting}
+
+\vspace{0.5ex}\noindent\textbf{\xmlel{vr:Relationship} Metadata Elements}
+
+\begingroup\small\begin{bigdescription}\item[Element \xmlel{relationshipType}]
+\begin{description}
+\item[Type] string: \xmlel{xs:token}
+\item[Meaning] 
+                  the named type of relationship
+               
+\item[Occurrence] required
+\item[Comment] 
+                  The VOResource Core specification defines a standard
+                  set of names that are not enforced by this schema,
+                  but are otherwise required by the spec.
+               
+
+\end{description}
+\item[Element \xmlel{relatedResource}]
+\begin{description}
+\item[Type] string with ID attribute: vr:ResourceName
+\item[Meaning] 
+                  the name of resource that this resource is related to.
+               
+\item[Occurrence] required; multiple occurrences allowed.
+
+\end{description}
+
+
+\end{bigdescription}\endgroup
+
+\endgroup
 % /GENERATED
 
 
@@ -1053,6 +1961,46 @@ assigned by different organisations.
 
 
 % GENERATED: !schemadoc VOResource-v1.0.xsd Validation
+\begingroup
+      	\renewcommand*\descriptionlabel[1]{%
+      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{vr:Validation} Type Schema Documentation}
+
+\noindent{\small
+         a validation stamp combining a validation level and the ID of 
+         the validator.
+       \par}
+
+\vspace{1ex}\noindent\textbf{\xmlel{vr:Validation} Type Schema Definition}
+
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<xs:complexType name="Validation" >
+  <xs:simpleContent >
+    <xs:extension base="vr:ValidationLevel" >
+      <xs:attribute name="validatedBy" type="vr:IdentifierURI" use="required" />
+    </xs:extension>
+  </xs:simpleContent>
+</xs:complexType>
+\end{lstlisting}
+
+\vspace{0.5ex}\noindent\textbf{\xmlel{vr:Validation} Attributes}
+
+\begingroup\small\begin{bigdescription}
+\item[validatedBy]
+\begin{description}
+\item[Type] an IVOA Identifier URI: vr:IdentifierURI
+\item[Meaning] 
+               The IVOA ID of the registry or organisation that
+               assigned the validation level.  
+             
+\item[Occurrence] required
+\item[Allowed Values]\hfil\begin{longtermsdescription}
+\end{longtermsdescription}
+\end{description}
+
+
+\end{bigdescription}\endgroup
+
+\endgroup
 % /GENERATED
 
 \subsection{Resource Type Extensions:  Organisation and Service}
@@ -1090,6 +2038,74 @@ elements to the core set of metadata, \xmlel{facility} and
 
 
 % GENERATED: !schemadoc VOResource-v1.0.xsd Organisation
+\begingroup
+      	\renewcommand*\descriptionlabel[1]{%
+      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{vr:Organisation} Type Schema Documentation}
+
+\noindent{\small
+           A named group of one or more persons brought together to pursue 
+           participation in VO applications.  
+         \par}
+
+\noindent{\small
+           According to the Resource Metadata Recommendation, organisations 
+           "can be hierarchical and range in size and scope.  At a high level, 
+           an organisation could be a university, observatory, or government
+           agency.  At a finer level, it could be a specific scientific 
+           project, mission, or individual researcher."  
+         \par}
+
+\noindent{\small
+           The main purpose of an organisation as a registered resource is 
+           to serve as a publisher of other resources.  
+         \par}
+
+\vspace{1ex}\noindent\textbf{\xmlel{vr:Organisation} Type Schema Definition}
+
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<xs:complexType name="Organisation" >
+  <xs:complexContent >
+    <xs:extension base="vr:Resource" >
+      <xs:sequence >
+        <xs:element name="facility" type="vr:ResourceName" minOccurs="0"
+                  maxOccurs="unbounded" />
+        <xs:element name="instrument" type="vr:ResourceName" minOccurs="0"
+                  maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+\end{lstlisting}
+
+\vspace{0.5ex}\noindent\textbf{\xmlel{vr:Organisation} Extension Metadata Elements}
+
+\begingroup\small\begin{bigdescription}\item[Element \xmlel{facility}]
+\begin{description}
+Subject
+\item[Type] string with ID attribute: vr:ResourceName
+\item[Meaning] 
+                       the observatory or facility used to collect the data 
+                       contained or managed by this resource.  
+                     
+\item[Occurrence] optional; multiple occurrences allowed.
+
+\end{description}
+\item[Element \xmlel{instrument}]
+\begin{description}
+Subject, Subject.Instrument
+\item[Type] string with ID attribute: vr:ResourceName
+\item[Meaning] 
+                       the Instrument used to collect the data contain or 
+                       managed by a resource.  
+                     
+\item[Occurrence] optional; multiple occurrences allowed.
+
+\end{description}
+
+
+\end{bigdescription}\endgroup
+
+\endgroup
 % /GENERATED
 
 The main role of an organisation in the VO (that is, the main reason
@@ -1124,6 +2140,85 @@ invoked.
 
 
 % GENERATED: !schemadoc VOResource-v1.0.xsd Service
+\begingroup
+      	\renewcommand*\descriptionlabel[1]{%
+      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{vr:Service} Type Schema Documentation}
+
+\noindent{\small
+           a resource that can be invoked by a client to perform some action
+           on its behalf.  
+         \par}
+
+\vspace{1ex}\noindent\textbf{\xmlel{vr:Service} Type Schema Definition}
+
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<xs:complexType name="Service" >
+  <xs:complexContent >
+    <xs:extension base="vr:Resource" >
+      <xs:sequence >
+        <xs:element name="rights" type="vr:Rights" minOccurs="0"
+                  maxOccurs="unbounded" />
+        <xs:element name="capability" type="vr:Capability" minOccurs="0"
+                  maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+\end{lstlisting}
+
+\vspace{0.5ex}\noindent\textbf{\xmlel{vr:Service} Extension Metadata Elements}
+
+\begingroup\small\begin{bigdescription}\item[Element \xmlel{rights}]
+\begin{description}
+Rights
+\item[Type] string with controlled vocabulary
+\item[Meaning] 
+                       Information about rights held in and over the resource.
+                     
+\item[Occurrence] optional; multiple occurrences allowed.
+\item[Allowed Values]\hfil\begin{longtermsdescription}
+\item[public]
+                  unrestricted, public access is allowed without 
+                  authentication.
+               
+\item[secure]
+                  authenticated, public access is allowed.
+               
+\item[proprietary]
+                  only proprietary access is allowed with authentication.
+               
+\end{longtermsdescription}
+\item[Comment] 
+                       This should be repeated for all Rights values that apply.
+                     
+
+\end{description}
+\item[Element \xmlel{capability}]
+\begin{description}
+\item[Type] composite: \xmlel{vr:Capability}
+\item[Meaning] 
+                        a description of a general capability of the
+                        service and how to use it.
+                     
+\item[Occurrence] optional; multiple occurrences allowed.
+\item[Comment] 
+                        This describes a general function of the
+                        service, usually in terms of a standard
+                        service protocol (e.g. SIA), but not
+                        necessarily.  
+                     
+\item[Comment] 
+                        A service can have many capabilities
+                        associated with it, each reflecting different
+                        aspects of the functionality it provides.  
+                     
+
+\end{description}
+
+
+\end{bigdescription}\endgroup
+
+\endgroup
 % /GENERATED
 
 As described in sect.~\ref{sect:servicemodel}, multiple
@@ -1132,6 +2227,118 @@ different capability of the service.
 
 
 % GENERATED: !schemadoc VOResource-v1.0.xsd Capability
+\begingroup
+      	\renewcommand*\descriptionlabel[1]{%
+      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{vr:Capability} Type Schema Documentation}
+
+\noindent{\small
+            a description of what the service does (in terms of 
+            context-specific behavior), and how to use it (in terms of
+            an interface)
+         \par}
+
+\vspace{1ex}\noindent\textbf{\xmlel{vr:Capability} Type Schema Definition}
+
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<xs:complexType name="Capability" >
+  <xs:sequence >
+    <xs:element name="validationLevel" type="vr:Validation" minOccurs="0"
+              maxOccurs="unbounded" />
+    <xs:element name="description" type="xs:token" minOccurs="0" />
+    <xs:element name="interface" type="vr:Interface" minOccurs="0"
+              maxOccurs="unbounded" />
+  </xs:sequence>
+  <xs:attribute name="standardID" type="xs:anyURI" />
+</xs:complexType>
+\end{lstlisting}
+
+\vspace{0.5ex}\noindent\textbf{\xmlel{vr:Capability} Attributes}
+
+\begingroup\small\begin{bigdescription}
+\item[standardID]
+\begin{description}
+\item[Type] a URI: \xmlel{xs:anyURI}
+\item[Meaning] 
+               A URI identifier for a standard service. 
+            
+\item[Occurrence] optional
+\item[Comment] 
+               This provides a unique way to refer to a service
+               specification standard, such as a Simple Image Access service.
+               The use of an IVOA identifier here implies that a
+               VOResource description of the standard is registered and 
+               accessible.  
+            
+\end{description}
+
+
+\end{bigdescription}\endgroup
+
+
+
+\vspace{0.5ex}\noindent\textbf{\xmlel{vr:Capability} Metadata Elements}
+
+\begingroup\small\begin{bigdescription}\item[Element \xmlel{validationLevel}]
+\begin{description}
+\item[Type] \xmlel{vr:ValidationLevel} with optional attributes
+\item[Meaning] 
+                  A numeric grade describing the quality of the
+                  capability description and interface, when applicable, 
+                  to be used to indicate the confidence an end-user
+                  can put in the resource as part of a VO application
+                  or research study. 
+               
+\item[Occurrence] optional; multiple occurrences allowed.
+\item[Comment] 
+                  See vr:ValidationLevel for an explanation of the
+                  allowed levels.  
+               
+
+\end{description}
+\item[Element \xmlel{description}]
+\begin{description}
+\item[Type] string: \xmlel{xs:token}
+\item[Meaning] 
+                  A human-readable description of what this capability 
+                  provides as part of the over-all service 
+               
+\item[Occurrence] optional
+\item[Comment] 
+                  Use of this optional element is especially encouraged when
+                  this capability is non-standard and is one of several 
+                  capabilities listed.
+               
+
+\end{description}
+\item[Element \xmlel{interface}]
+\begin{description}
+\item[Type] composite: \xmlel{vr:Interface}
+\item[Meaning] 
+                  a description of how to call the service to access
+                  this capability
+               
+\item[Occurrence] optional; multiple occurrences allowed.
+\item[Comment] 
+                  Since the Interface type is abstract, one must describe
+                  the interface using a subclass of Interface, denoting
+                  it via xsi:type.
+               
+\item[Comment] 
+                  Multiple occurances can describe different interfaces to 
+                  the logically same capability--i.e. data or functionality.
+                  That is, the inputs accepted and the output provides should
+                  be logically the same.  For example, a WebBrowser interface
+                  given in addition to a WebService interface would simply 
+                  provide an interactive, human-targeted interface to the 
+                  underlying WebService interface.  
+               
+
+\end{description}
+
+
+\end{bigdescription}\endgroup
+
+\endgroup
 % /GENERATED
 
 
@@ -1161,6 +2368,124 @@ The \xmlel{interface} element is of the complex type
 
 
 % GENERATED: !schemadoc VOResource-v1.0.xsd Interface
+\begingroup
+      	\renewcommand*\descriptionlabel[1]{%
+      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{vr:Interface} Type Schema Documentation}
+
+\noindent{\small
+            A description of a service interface.
+         \par}
+
+\noindent{\small
+            Since this type is abstract, one must use an Interface subclass
+            to describe an actual interface.
+         \par}
+
+\noindent{\small
+           Additional interface subtypes (beyond WebService and WebBrowser) are 
+           defined in the VODataService schema.
+         \par}
+
+\vspace{1ex}\noindent\textbf{\xmlel{vr:Interface} Type Schema Definition}
+
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<xs:complexType name="Interface" abstract="true" >
+  <xs:sequence >
+    <xs:element name="accessURL" type="vr:AccessURL" minOccurs="1"
+              maxOccurs="unbounded" />
+    <xs:element name="securityMethod" type="vr:SecurityMethod" minOccurs="0"
+              maxOccurs="unbounded" />
+  </xs:sequence>
+  <xs:attribute name="version" type="xs:string" default="1.0" />
+  <xs:attribute name="role" type="xs:NMTOKEN" />
+</xs:complexType>
+\end{lstlisting}
+
+\vspace{0.5ex}\noindent\textbf{\xmlel{vr:Interface} Attributes}
+
+\begingroup\small\begin{bigdescription}
+\item[version]
+\begin{description}
+\item[Type] string: \xmlel{xs:string}
+\item[Meaning] 
+               The version of a standard interface specification that this 
+               interface complies with.  When the interface is
+               provided in the context of a Capability element, then
+               the standard being refered to is the one identified by
+               the Capability's standardID element.  If the standardID
+               is not provided, the meaning of this attribute is
+               undefined.  
+            
+\item[Occurrence] optional
+1.0
+\end{description}
+\item[role]
+\begin{description}
+\item[Type] \xmlel{xs:NMTOKEN}
+\item[Meaning] 
+               A tag name the identifies the role the interface plays
+               in the particular capability.  If the value is equal to
+               {"}std{"} or begins with {"}std:{"}, then the interface refers
+               to a standard interface defined by the standard
+               referred to by the capability's standardID attribute.  
+            
+\item[Occurrence] optional
+\item[Comment] 
+               For an interface complying with some registered
+               standard (i.e. has a legal standardID), the role can be
+               match against interface roles enumerated in standard 
+               resource record.  The interface descriptions in
+               the standard record can provide default descriptions 
+               so that such details need not be repeated here.  
+            
+\end{description}
+
+
+\end{bigdescription}\endgroup
+
+
+
+\vspace{0.5ex}\noindent\textbf{\xmlel{vr:Interface} Metadata Elements}
+
+\begingroup\small\begin{bigdescription}\item[Element \xmlel{accessURL}]
+\begin{description}
+\item[Type] a URI with optional attributes
+\item[Meaning] 
+                 The URL (or base URL) that a client uses to access the
+                 service.  How this URL is to be interpreted and used 
+                 depends on the specific Interface subclass
+               
+\item[Occurrence] required; multiple occurrences allowed.
+\item[Comment] 
+                 When more than one URL is given, each represents an
+                 alternative (i.e. mirror) endpoint whose behavior is
+                 identical to all the other accessURLs listed.  
+               
+\item[Comment] 
+                 Editor's note: this element assumes that
+                 all registered services are inherently web based.
+               
+
+\end{description}
+\item[Element \xmlel{securityMethod}]
+\begin{description}
+\item[Type] composite: \xmlel{vr:SecurityMethod}
+\item[Meaning] 
+                  the mechanism the client must employ to gain secure
+                  access to the service.  
+               
+\item[Occurrence] optional; multiple occurrences allowed.
+\item[Comment] 
+                  when more than one method is listed, each one must
+                  be employed to gain access.  
+               
+
+\end{description}
+
+
+\end{bigdescription}\endgroup
+
+\endgroup
 % /GENERATED
 
 
@@ -1188,6 +2513,65 @@ the word use) which takes a controlled vocabulary:
 
 
 % GENERATED: !schemadoc VOResource-v1.0.xsd AccessURL
+\begingroup
+      	\renewcommand*\descriptionlabel[1]{%
+      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{1ex}\noindent\textbf{\xmlel{vr:AccessURL} Type Schema Definition}
+
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<xs:complexType name="AccessURL" >
+  <xs:simpleContent >
+    <xs:extension base="xs:anyURI" >
+      <xs:attribute name="use" >
+        <xs:simpleType >
+          <xs:restriction base="xs:NMTOKEN" >
+            <xs:enumeration value="full" />
+            <xs:enumeration value="base" />
+            <xs:enumeration value="dir" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:extension>
+  </xs:simpleContent>
+</xs:complexType>
+\end{lstlisting}
+
+\vspace{0.5ex}\noindent\textbf{\xmlel{vr:AccessURL} Attributes}
+
+\begingroup\small\begin{bigdescription}
+\item[use]
+\begin{description}
+\item[Type] string
+\item[Meaning] 
+               A flag indicating whether this should be interpreted as a base
+               URL, a full URL, or a URL to a directory that will produce a 
+               listing of files.
+             
+\item[Occurrence] optional
+\item[Allowed Values]\hfil\begin{longtermsdescription}
+\item[full]
+                     Assume a full URL--that is, one that can be invoked 
+                     directly without alteration.  This usually returns a 
+                     single document or file.  
+                   
+\item[base]
+                     Assume a base URL--that is, one requiring an extra portion
+                     to be appended before being invoked.  
+                   
+\item[dir]
+                     Assume URL points to a directory that will return a listing
+                     of files.  
+                   
+\end{longtermsdescription}
+\item[Comment] 
+               The default value assumed when one is not given depends on the 
+               context.  
+             
+\end{description}
+
+
+\end{bigdescription}\endgroup
+
+\endgroup
 % /GENERATED
 
 
@@ -1196,6 +2580,50 @@ defined as a complex type but with empty content:
 
 
 % GENERATED: !schemadoc VOResource-v1.0.xsd SecurityMethod
+\begingroup
+      	\renewcommand*\descriptionlabel[1]{%
+      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{vr:SecurityMethod} Type Schema Documentation}
+
+\noindent{\small
+            a description of a security mechanism.
+         \par}
+
+\noindent{\small
+            this type only allows one to refer to the mechanism via a
+            URI.  Derived types would allow for more metadata.  
+         \par}
+
+\vspace{1ex}\noindent\textbf{\xmlel{vr:SecurityMethod} Type Schema Definition}
+
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<xs:complexType name="SecurityMethod" >
+  <xs:sequence />
+  <xs:attribute name="standardID" type="xs:anyURI" />
+</xs:complexType>
+\end{lstlisting}
+
+\vspace{0.5ex}\noindent\textbf{\xmlel{vr:SecurityMethod} Attributes}
+
+\begingroup\small\begin{bigdescription}
+\item[standardID]
+\begin{description}
+\item[Type] a URI: \xmlel{xs:anyURI}
+\item[Meaning] 
+               A URI identifier for a standard security mechanism. 
+            
+\item[Occurrence] optional
+\item[Comment] 
+               This provides a unique way to refer to a security
+               specification standard.  The use of an IVOA identifier here 
+               implies that a VOResource description of the standard is 
+               registered and accessible.  
+            
+\end{description}
+
+
+\end{bigdescription}\endgroup
+
+\endgroup
 % /GENERATED
 
 While this simple element (when the \xmlel{standardID} attribute
@@ -1219,6 +2647,30 @@ service.
 
 
 % GENERATED: !schemadoc VOResource-v1.0.xsd WebBrowser
+\begingroup
+      	\renewcommand*\descriptionlabel[1]{%
+      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{vr:WebBrowser} Type Schema Documentation}
+
+\noindent{\small
+            A (form-based) interface intended to be accesed interactively 
+            by a user via a web browser.
+         \par}
+
+\noindent{\small
+            The accessURL represents the URL of the web form itself.
+         \par}
+
+\vspace{1ex}\noindent\textbf{\xmlel{vr:WebBrowser} Type Schema Definition}
+
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<xs:complexType name="WebBrowser" >
+  <xs:complexContent >
+    <xs:extension base="vr:Interface" >
+      <xs:sequence />
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+\end{lstlisting}\endgroup
 % /GENERATED
 
 
@@ -1233,6 +2685,55 @@ may).  Thus, this type is provide purely for its semantic meaning.
 sub-type available from the VOResource schema:
 
 % GENERATED: !schemadoc VOResource-v1.0.xsd WebService
+\begingroup
+      	\renewcommand*\descriptionlabel[1]{%
+      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{vr:WebService} Type Schema Documentation}
+
+\noindent{\small
+            A Web Service that is describable by a WSDL document.
+         \par}
+
+\noindent{\small
+            The accessURL element gives the Web Service's endpoint URL.
+         \par}
+
+\vspace{1ex}\noindent\textbf{\xmlel{vr:WebService} Type Schema Definition}
+
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<xs:complexType name="WebService" >
+  <xs:complexContent >
+    <xs:extension base="vr:Interface" >
+      <xs:sequence >
+        <xs:element name="wsdlURL" type="xs:anyURI" minOccurs="0"
+                  maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+\end{lstlisting}
+
+\vspace{0.5ex}\noindent\textbf{\xmlel{vr:WebService} Extension Metadata Elements}
+
+\begingroup\small\begin{bigdescription}\item[Element \xmlel{wsdlURL}]
+\begin{description}
+\item[Type] a URI: \xmlel{xs:anyURI}
+\item[Meaning] 
+                        The location of the WSDL that describes this
+                        Web Service.  If not provided, the location is 
+                        assumed to be the accessURL with {"}?wsdl{"} appended.
+                     
+\item[Occurrence] optional; multiple occurrences allowed.
+\item[Comment] 
+                        Multiple occurances should represent mirror copies of 
+                        the same WSDL file.  
+                     
+
+\end{description}
+
+
+\end{bigdescription}\endgroup
+
+\endgroup
 % /GENERATED
 
 
