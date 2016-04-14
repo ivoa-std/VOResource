@@ -93,11 +93,13 @@ repository, the one in the document repository is authoritative.
 Reference to specific elements and types defined in the VOResource
 schema include the namespaces prefix \xmlel{vr} as in
 \xmlel{vr:Resource} (a type defined in the VOResource schema).
-% TODO: stronger language discouraging non-vr prefixes.
-Use of the \xmlel{vr} prefix in compliant instance documents is 
-not required (see sect.~\ref{sect:namespace}); its use in this
-document is simply to indicate that it is an entity defined in the
-VOResource schema.
+While in generic XML processing, the concrete prefix used is irrelevant
+as long as the namespace URI mapped (see sect.~\ref{sect:namespace}) is
+the one given by this specification, in the Virtual Observatory context
+generators are strongly encouraged to use the \xmlel{vr} prefix.  This
+is particularly important when this prefix appears in attribute values
+(e.g., \xmlel{xsi:type}), as non-schema aware XML processors cannot
+URI-normalize such occurrences.
 
 \section{Introduction}
 
