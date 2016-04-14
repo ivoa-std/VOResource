@@ -93,13 +93,6 @@ repository, the one in the document repository is authoritative.
 Reference to specific elements and types defined in the VOResource
 schema include the namespaces prefix \xmlel{vr} as in
 \xmlel{vr:Resource} (a type defined in the VOResource schema).
-While in generic XML processing, the concrete prefix used is irrelevant
-as long as the namespace URI mapped (see sect.~\ref{sect:namespace}) is
-the one given by this specification, in the Virtual Observatory context
-generators are strongly encouraged to use the \xmlel{vr} prefix.  This
-is particularly important when this prefix appears in attribute values
-(e.g., \xmlel{xsi:type}), as non-schema aware XML processors cannot
-URI-normalize such occurrences.
 
 \section{Introduction}
 
@@ -264,6 +257,16 @@ The namespace URI has been chosen to allow it to be resolved as a URL
 to the XML Schema document that defines the VOResource schema.
 Applications may assume that the namespace URI is so resolvable.
 
+Document authors are strongly encouraged to bind this namespace to the
+\xmlel{vr:} prefix.  While in generic XML processing, the concrete
+prefix used is irrelevant as long as the namespace URI mapped is the one
+given by this specification, in the Virtual Observatory context uniform,
+per-major-version prefixes are viewed as helping interoperability.  This
+is particularly true when prefixes appear in attribute values (e.g.,
+\xmlel{xsi:type}), as non-schema aware XML processors cannot
+URI-normalize such occurrences.  Also, non-XML-aware software (e.g., SQL
+databases) will use these prefixes rather than the full namespace URIs.
+
 Authors of instance documents that use the VOResource schema may choose
 to provide a location for VOResource XML Schema document using the
 \xmlel{xsi:schemaLocation} attribute; the choice of the location value
@@ -273,35 +276,21 @@ a the namespace URI given as the location as illustrated in the example
 above, unless the application prefers otherwise.
 
 
-\begin{lstlisting}
+\begin{verbatim}
 xsi:schemaLocation="http://www.ivoa.net/xml/VOResource/v1.0
                     http://www.ivoa.net/xml/VOResource/v1.0"
-\end{lstlisting}
+\end{verbatim}
 
-% TODO: always require namespace declaration
-Whenever instance validation is needed, use of
-the VOResource schema and its legal extensions must be declared using
-the standard namespace declaration attribute, 
-\verb|xmlns:prefix| (where \verb|prefix| is an arbitrary
-prefix).  The prefix \xmlel{vr} is used by convention as the
-prefix defined for the VOResource schema; however, instance documents
-may use any prefix of the author's choosing.  In this document, the
-\xmlel{vr} prefix is used to label, as shorthand, a type or
-element name that is defined in the VOResource schema, as in
-\xmlel{vr:Resource}. 
-
-Because the VOResource XML schema sets
-\verb|elementFormDefault="unqualified"|, documents that use the
-VOResource schema should not use the namespace declaration attribute
-\xmlel{xmlns} (used to set the default namespace), anywhere in
-the document where the VOResource schema is in effect.  (This is a
-restriction set by the rules of XML Schema.)  Furthermore, in
-accordance with the Schema rules for unqualified elements, the
-VOResource namespace prefix must not used to qualify VOResource
-elements.  In general, namespace prefixes are only used to qualify
-type names given as values to the \xmlel{xsi:type} attribute (see
-next section).  Legal extensions of the VOResource schema SHOULD also
-set \verb|elementFormDefault="unqualified"| for consistancy.
+Because the VOResource XML schema sets \xmlel{elementFormDefault} to
+unqualified, documents that use the VOResource schema must not bind the
+empty namespace (using \verb|xmlns="..."|), anywhere in the document
+where the VOResource schema is in effect.  (This is a restriction set by
+the rules of XML Schema.)  Furthermore, in accordance with the Schema
+rules for unqualified elements, the VOResource namespace prefix must not
+used to qualify VOResource elements.  In general, namespace prefixes are
+only used to qualify type names given as values to the \xmlel{xsi:type}
+attribute (see next section).  Legal extensions of the VOResource schema
+SHOULD also set \verb|elementFormDefault="unqualified"| for consistancy.
 
 
 
@@ -2792,9 +2781,11 @@ authoritative for VOResource (we'd have to change RM before we change
 VOResource otherwise)
 \item References to the RM terms in the metadata definition dropped
 (could add support in ivoates/schemadoc if we want them back).
-\item Ported document source to \ivoatex.
+\item Strongly advising the use of the vr: prefix, removing some
+duplicated advice regarding prefixes
 \item Removed example for deriving a SIA capability (this is now
 in the document repository)
+\item Ported document source to \ivoatex.
 \end{itemize}
 
 \subsection{Changes from v1.02}
