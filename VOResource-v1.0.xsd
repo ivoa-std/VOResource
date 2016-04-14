@@ -436,7 +436,7 @@
    <xs:complexType name="ResourceName">
      <xs:annotation>
        <xs:documentation>
-         the name of a potentially registered resource.  That is, the entity
+         The name of a potentially registered resource.  That is, the entity
          referred to may have an associated identifier.
        </xs:documentation>
      </xs:annotation>
@@ -447,7 +447,7 @@
          <xs:attribute name="ivo-id" type="vr:IdentifierURI">
             <xs:annotation>
               <xs:documentation>
-                The URI form of the IVOA identifier for the resource refered to
+                The IVOA identifier for the resource referred to.
               </xs:documentation>
             </xs:annotation>
          </xs:attribute>
@@ -1250,7 +1250,7 @@
                The version of a standard interface specification that this 
                interface complies with.  When the interface is
                provided in the context of a Capability element, then
-               the standard being refered to is the one identified by
+               the standard being referred to is the one identified by
                the Capability's standardID element.  If the standardID
                is not provided, the meaning of this attribute is
                undefined.  

@@ -1,6 +1,7 @@
 \documentclass[11pt,a4paper]{ivoa}
 \input tthdefs
 
+\usepackage{todonotes}
 \usepackage{listings}
 \lstloadlanguages{XML}
 \lstset{flexiblecolumns=true,tagstyle=\ttfamily, showstringspaces=False}
@@ -142,14 +143,14 @@ extended.  The model for doing this is described in
 sect.~\ref{sect:extending}.
 
 \begin{admonition}{Note}
-The name "VOResource" has in practice had two meanings within
+The name ``VOResource'' has in practice had two meanings within
 IVOA discussions.  The first refers specifically to the core
 XML schema defined by this document.  The second refers more
 broadly to the core schema plus the set of legal extensions.
-In this document, use of the name "VOResource" corresponds to
+In this document, use of the name ``VOResource'' corresponds to
 the first meaning.  Reference to the broader set of schemas
-will be indicated explicitly with the annotating phrase, "and
-its legal extensions."
+will be indicated explicitly with the annotating phrase, ``and
+its legal extensions.''
 \end{admonition}
 
 \subsection{Role within the VO Architecture}
@@ -255,7 +256,8 @@ record:
 \label{sect:namespace}
 
 
-The VOResource schema namespace is "http://www.ivoa.net/xml/VOResource/v1.0".
+The VOResource schema namespace is 
+$$\hbox{\texttt{http://www.ivoa.net/xml/VOResource/v1.0}}.$$
 The namespace URI has been chosen to allow it to be resolved as a URL
 to the XML Schema document that defines the VOResource schema.
 Applications may assume that the namespace URI is so resolvable.
@@ -305,7 +307,7 @@ set \verb|elementFormDefault="unqualified"| for consistancy.
 \label{sect:core}
 
 The VOResource schema only defines global types; it does not define
-any global elements (often refered to as root elements).  It is the
+any global elements (often referred to as root elements).  It is the
 responsibility of the application to define the root element of the
 VOResource-employing documents it operates on.  Typically, the root
 element is defined in a separate application-specific schema.  The
@@ -348,7 +350,7 @@ names of elements and types:
   \item Locally defined elements begin with a lower-case character. 
   \item For all types and element names that are made up of multiple
        words, such as \xmlel{shortName}, upper-case letters are
-       used demarcate the start of appended word (the "camel"
+       used demarcate the start of appended word (the ``camel''
        format).  
   \item Names that include abbreviations, such as
        \xmlel{IdentifierURI}, all letters in the abbreviation are
@@ -477,7 +479,7 @@ VOResource entities:
 % TODO: reference  example?
 Additional semantics are transmitted through the use of derived types
 using the \xmlel{xsi:type} attribute.  In the sample instance document
-above, the use of \xmlel{xsi:type="Organisation"} means that the
+above, the use of \verb|xsi:type="Organisation"| means that the
 resource being described is specifically an organisation as defined by
 the \xmlel{vr:Organisation} type.  This type provides additional
 metadata that are not part of the core resource metadata.  The semantics
@@ -675,16 +677,16 @@ When a standard capability is being described (i.e. either the
 \xmlel{standardID} is provided), then at least one of the
 \xmlel{interface} elements should describe an interface required
 by the standard.  The \xmlel{role} attribute is used to mark the
-standard interfaces (typically with the value "std"; see section XX
-for details).  All other interfaces are considered non-standard
+standard interfaces (typically with the value ``std'').
+All other interfaces are considered non-standard
 alternatives.
 
 
-
+% TODO: We probably don't want this any more
 Another important way \xmlel{interface}s inside the same
 \xmlel{capability} element can be different is in the version of
 the service standard the interface supports.  Whenever, an interface
-supports a version other than "1.0", the \xmlel{interface}
+supports a version other than \texttt{"1.0"}, the \xmlel{interface}
 element must include a \xmlel{version} attribute set to the
 version being supported.  Valid values for \xmlel{version} are
 defined by the standard.  
@@ -761,10 +763,10 @@ VOResource.  In particular:
   \item \emph{Choose semantically meaningful names for derived
        types.}  When the derived type appears in the pattern
        \verb|<elname xsi:type="derivedType"|,
-       choose a \textit{derivedType} name such that the sentence, "a
-       \textit{derivedType} is a kind of \textit{elname}" makes natural
-       and obvious sense.  For example, "an \textit{Organisation} is a
-       kind of \textit{resource}." 
+       choose a \textit{derivedType} name such that the sentence, ``a
+       \textit{derivedType} is a kind of \textit{elname}'' makes natural
+       and obvious sense.  For example, ``an \textit{Organisation} is a
+       kind of \textit{resource}.'' 
 
   \item \emph{Follow the VOResource naming conventions}. 
 \end{itemize}
@@ -815,7 +817,7 @@ should be done by first deriving from \xmlel{vr:Capability} by
 \emph{restriction} (i.e. using
 \xmlel{xsd:restriction}), keeping all of the parent's
 content model except adding to the \xmlel{standardID}'s attribute
-definition \xmlel{use="required"} along with the
+definition \verb|use="required"| along with the
 \xmlel{fixed} modifier set to the desired URI.  Since this
 restricted type is not intended for direct use in an instance
 document, it should be marked as abstract.  The restricted type should
@@ -860,9 +862,9 @@ appropriate.
 \begin{admonition}{Note}
 The Simple Image Access Protocol \citep{2009ivoa.spec.1111H} is an
 example of a standard service that defines capability
-metadata.  These include "maxRecords" that list the maximum
+metadata.  These include ``maxRecords'' that list the maximum
 number of records the SIA implementation can return at a time,
-and "MaxImageSize" gives the maximum image size that the
+and ``MaxImageSize'' gives the maximum image size that the
 service can return.
 \end{admonition}
 
@@ -1019,7 +1021,6 @@ by the VOResource schema definition.
 \end{description}
 \item[Element \xmlel{title}]
 \begin{description}
-Title
 \item[Type] string: \xmlel{xs:token}
 \item[Meaning] 
                   the full name given to the resource
@@ -1048,7 +1049,6 @@ Title
 \end{description}
 \item[Element \xmlel{identifier}]
 \begin{description}
-Identifier
 \item[Type] an IVOA Identifier URI: vr:IdentifierURI
 \item[Meaning] 
                  Unambiguous reference to the resource conforming to the IVOA
@@ -1083,27 +1083,31 @@ Identifier
 \endgroup
 % /GENERATED
 
+Note that the \xmlel{vr:Resource} attributes (\xmlel{created},
+\xmlel{updated}, \xmlel{status}) represent a special class of
+metadata: they describe the resource metadata description contained
+within the \xmlel{vr:Resource} itself as opposed to the resource being
+described. 
 
-The following sections define the elements that encode the specific
-metadata from the RM.  In all cases, the semantic meaning of an element
-is defined by the RM metadatum it corresponds to (labeled "\emph{RM
-Name}" below).  All rules and advice given in the "Comments" portions in
-the RM definition apply.  Any textual differences in the semantic
-definitions given below from those given in the RM are intended only for
-clarification for the XML encoding context.  
+The following sections discuss the items mentioned in the above
+definitions.
+All rules and advice given in the ``Comments'' portions in
+the RM definition for the individual items 
+apply. In some details, in particular as regards enumerations of values,
+this document deviates from RM in content.
 
-
-% TODO: That's probably already in the Resource docs
 \subsubsection{Identity Metadata}
-
 
 The identity metadata described in the RM (section
 3.1) are represented as top-level children of the
 \xmlel{vr:Resource} type.
 
-
+\todo{I think we should deprecate IdentifierURI (what's that URI in
+there now?  And then there'd be IVOID (which may have query parts and
+fragments) and perhaps RegistryReference (as in ``Reference into the
+registry'' with the current IdentifierURI's pattern.}
 Two special types, \xmlel{vr:ShortName} and
-\xmlel{vr:identifierURI} are defined to support identity
+\xmlel{vr:IdentifierURI} are defined to support identity
 metadata.  The \xmlel{vr:ShortName} definition enforces the
 16-character limit on shortNames.  
 
@@ -1138,50 +1142,6 @@ metadata.  The \xmlel{vr:ShortName} definition enforces the
 \end{lstlisting}\endgroup
 % /GENERATED
 
-
-
-The \xmlel{vr:IdentifierURI} enforces the URI syntax for IVOA
-Identifiers as defined by the IVOA Identifier standard
-\citep{std:Identifiers}.
-
-% GENERATED: !schemadoc VOResource-v1.0.xsd IdentifierURI
-\begingroup
-      	\renewcommand*\descriptionlabel[1]{%
-      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{1ex}\noindent\textbf{\xmlel{vr:IdentifierURI} Type Schema Definition}
-
-\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
-<xs:simpleType name="IdentifierURI" >
-  <xs:restriction base="xs:anyURI" >
-    <xs:pattern
-              value="ivo://[\w\d][\w\d\-_\.!~\*'\(\)\+=]{2,}(/[\w\d\-_\.!~\*'\(\)\+=]+(/[\w\d\-_\.!~\*'\(\)\+=]+)*)?" />
-  </xs:restriction>
-</xs:simpleType>
-\end{lstlisting}\endgroup
-% /GENERATED
-
-
-
-Two additional types which are not used within the
-\xmlel{vr:Resource} type but are available to support the two
-components of an IVOA Identifier,
-\xmlel{vr:AuthorityID} and \xmlel{vr:ResourceKey}.  
-
-
-% GENERATED: !schemadoc VOResource-v1.0.xsd AuthorityID
-\begingroup
-      	\renewcommand*\descriptionlabel[1]{%
-      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{1ex}\noindent\textbf{\xmlel{vr:AuthorityID} Type Schema Definition}
-
-\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
-<xs:simpleType name="AuthorityID" >
-  <xs:restriction base="xs:token" >
-    <xs:pattern
-              value="[\w\d][\w\d\-_\.!~\*'\(\)\+=]{2,}" />
-  </xs:restriction>
-</xs:simpleType>
-\end{lstlisting}\endgroup
-% /GENERATED
-
 % GENERATED: !schemadoc VOResource-v1.0.xsd ResourceKey
 \begingroup
       	\renewcommand*\descriptionlabel[1]{%
@@ -1203,7 +1163,7 @@ components of an IVOA Identifier,
 
 
 The curation metadata described in the RM (section
-3.2) are bundled together into the \xmlel{vr:Resource} child element,
+3.2) are bundled together into the \xmlel{vr:Resource} child element
 \xmlel{curation}.  Its content is defined by the
 \xmlel{vr:Curation} complex type.
 
@@ -1240,7 +1200,6 @@ The curation metadata described in the RM (section
 
 \begingroup\small\begin{bigdescription}\item[Element \xmlel{publisher}]
 \begin{description}
-Publisher
 \item[Type] string with ID attribute: vr:ResourceName
 \item[Meaning] 
                Entity (e.g. person or organisation) responsible for making the 
@@ -1251,7 +1210,6 @@ Publisher
 \end{description}
 \item[Element \xmlel{creator}]
 \begin{description}
-Creator
 \item[Type] composite: \xmlel{vr:Creator}
 \item[Meaning] 
                 The entity (e.g. person or organisation) primarily responsible 
@@ -1268,7 +1226,6 @@ Creator
 \end{description}
 \item[Element \xmlel{contributor}]
 \begin{description}
-Contributor
 \item[Type] string with ID attribute: vr:ResourceName
 \item[Meaning] 
                Entity responsible for contributions to the content of
@@ -1279,7 +1236,6 @@ Contributor
 \end{description}
 \item[Element \xmlel{date}]
 \begin{description}
-Date
 \item[Type] \xmlel{vr:UTCDateTime} with optional attributes
 \item[Meaning] 
                Date associated with an event in the life cycle of the
@@ -1321,10 +1277,10 @@ Date
 % /GENERATED
 
 Several of the curation elements (most importantly,
-\xmlel{publisher}) make use of the
+\xmlel{publisher}\/) make use of the
 \xmlel{vr:ResourceName} type.  This type is provides a means of
 refering to another resource both by name and by its IVOA
-identifier.  Not all resources refered to using this type will
+identifier.  Not all resources referred to using this type will
 necessarily be registered and, therefore, will have an identifier;
 thus, the identifier (which is encoded as an attribute) is optional. 
 
@@ -1335,7 +1291,7 @@ thus, the identifier (which is encoded as an attribute) is optional.
       	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{vr:ResourceName} Type Schema Documentation}
 
 \noindent{\small
-         the name of a potentially registered resource.  That is, the entity
+         The name of a potentially registered resource.  That is, the entity
          referred to may have an associated identifier.
        \par}
 
@@ -1358,7 +1314,7 @@ thus, the identifier (which is encoded as an attribute) is optional.
 \begin{description}
 \item[Type] an IVOA Identifier URI: vr:IdentifierURI
 \item[Meaning] 
-                The URI form of the IVOA identifier for the resource refered to
+                The IVOA identifier for the resource referred to.
               
 \item[Occurrence] optional
 
@@ -1435,6 +1391,13 @@ The \xmlel{Date} element's type, \xmlel{vr:Date}, is an extension of the
 \xmlel{UTCDateTime} type that adds an
 optional attribute called \xmlel{role}.  
 
+The purpose of the role attribute is to indicate what aspect of the
+resource the date describes. This allows several \xmlel{date} elements to be
+provided, each with a different role. The possible values for this
+attribute are not controlled; however, several values are recommended
+below and may be recognized by applications. Other roles may be given.
+If a role is not given, applications should interpret the date as
+representative as defined below.
 
 % GENERATED: !schemadoc VOResource-v1.0.xsd Date
 \begingroup
@@ -1483,12 +1446,6 @@ representative
 
 \endgroup
 % /GENERATED
-
-
-It is important to note that the \xmlel{date} element describes the
-resource itself, not the resource record that describes it.  Dates
-describing the resource record are covered by \xmlel{vr:Resource}
-attributes \xmlel{created} and \xmlel{updated}
 
 
 
@@ -1577,9 +1534,9 @@ and \emph{Contact.Email}.
 \subsubsection{General Content Metadata}
 
 
-The general content metadata described in the RM.
+The general content metadata described in the RM
 (section 3.3) are bundled together into the \xmlel{vr:Resource}
-child element, \xmlel{content}.  Its content is
+child element \xmlel{content}.  Its content is
 defined by the \xmlel{vr:Content} complex type.
 
 
@@ -1615,7 +1572,6 @@ defined by the \xmlel{vr:Content} complex type.
 
 \begingroup\small\begin{bigdescription}\item[Element \xmlel{subject}]
 \begin{description}
-Subject
 \item[Type] string: \xmlel{xs:token}
 \item[Meaning] 
                a topic, object type, or other descriptive keywords 
@@ -1630,7 +1586,6 @@ Subject
 \end{description}
 \item[Element \xmlel{description}]
 \begin{description}
-Description
 \item[Type] string: \xmlel{xs:token}
 \item[Meaning] 
                An account of the nature of the resource
@@ -1645,7 +1600,6 @@ Description
 \end{description}
 \item[Element \xmlel{source}]
 \begin{description}
-Source
 \item[Type] a string with optional attributes
 \item[Meaning] 
                 a bibliographic reference from which the present resource is 
@@ -1671,7 +1625,6 @@ Source
 \end{description}
 \item[Element \xmlel{type}]
 \begin{description}
-Type
 \item[Type] string with controlled vocabulary
 \item[Meaning] 
                Nature or genre of the content of the resource
@@ -1764,7 +1717,6 @@ Type
 \end{description}
 \item[Element \xmlel{contentLevel}]
 \begin{description}
-Subject, Subject.ContentLevel
 \item[Type] string with controlled vocabulary
 \item[Meaning] 
                 Description of the content level or intended audience
@@ -1949,18 +1901,83 @@ terms without requiring a change in the XML Schema document.
 The RM's \emph{ResourceValidationLevel} is encoded in the VOResource
 schema with the \xmlel{validationLevel} element, which can appear in
 multiple places within a \xmlel{vr:Resource} type or sub-type.  It may
-appear one or more times as the first children of a \xmlel{vr:Resource}
+appear zero or more times as direct children of a \xmlel{vr:Resource}
 type and/or, if the resource is a \xmlel{vr:Service} type or sub-type,
 one or more times as the first children of any \xmlel{capability}
 element.  
 
 The \xmlel{validationLevel} element requires an attribute called
-\xmlel{validatedBy} which takes an IVOA ID as a value.  This ID
+\xmlel{validatedBy} which takes an IVOID as a value.  This IVOID
 must refer to a registered organisation or registry that assigned the
 numerical value.  This element can appear multiple times, each with
 a different \xmlel{validatedBy} value, to reflect the code
 assigned by different organisations. 
 
+
+% GENERATED: !schemadoc VOResource-v1.0.xsd ValidationLevel
+\begingroup
+      	\renewcommand*\descriptionlabel[1]{%
+      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{vr:ValidationLevel} Type Schema Documentation}
+
+\noindent{\small
+         the allowed values for describing the resource descriptions
+         and interfaces.  
+       \par}
+
+\noindent{\small
+         See the RM (v1.1, section 4) for more guidance on the use of
+         these values.  
+       \par}
+
+\vspace{2ex}\noindent\textbf{\xmlel{vr:ValidationLevel} Type Allowed Values}
+
+\begin{longtermsdescription}\item[0]
+              The resource has a description that is stored in a
+              registry. This level does not imply a compliant
+              description. 
+            
+\item[1]
+              In addition to meeting the level 0 definition, the
+              resource description conforms syntactically to this
+              standard and to the encoding scheme used. 
+            
+\item[2]
+              In addition to meeting the level 1 definition, the
+              resource description refers to an existing resource that
+              has demonstrated to be functionally compliant. 
+            
+\item[3]
+              In addition to meeting the level 2 definition, the
+              resource description has been inspected by a human and
+              judged to comply semantically to this standard as well
+              as meeting any additional minimum quality criteria (e.g.,
+              providing values for important but non-required
+              metadata) set by the human inspector.
+            
+\item[4]
+              In addition to meeting the level 3 definition, the
+              resource description meets additional quality criteria
+              set by the human inspector and is therefore considered
+              an excellent description of the resource. Consequently,
+              the resource is expected to be operate well as part of a
+              VO application or research study.
+            
+\end{longtermsdescription}
+\vspace{1ex}\noindent\textbf{\xmlel{vr:ValidationLevel} Type Schema Definition}
+
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<xs:simpleType name="ValidationLevel" >
+  <xs:restriction base="xs:integer" >
+    <xs:whiteSpace value="collapse" />
+    <xs:enumeration value="0" />
+    <xs:enumeration value="1" />
+    <xs:enumeration value="2" />
+    <xs:enumeration value="3" />
+    <xs:enumeration value="4" />
+  </xs:restriction>
+</xs:simpleType>
+\end{lstlisting}\endgroup
+% /GENERATED
 
 % GENERATED: !schemadoc VOResource-v1.0.xsd Validation
 \begingroup
@@ -2082,7 +2099,6 @@ elements to the core set of metadata, \xmlel{facility} and
 
 \begingroup\small\begin{bigdescription}\item[Element \xmlel{facility}]
 \begin{description}
-Subject
 \item[Type] string with ID attribute: vr:ResourceName
 \item[Meaning] 
                        the observatory or facility used to collect the data 
@@ -2093,7 +2109,6 @@ Subject
 \end{description}
 \item[Element \xmlel{instrument}]
 \begin{description}
-Subject, Subject.Instrument
 \item[Type] string with ID attribute: vr:ResourceName
 \item[Meaning] 
                        the Instrument used to collect the data contain or 
@@ -2110,7 +2125,7 @@ Subject, Subject.Instrument
 % /GENERATED
 
 The main role of an organisation in the VO (that is, the main reason
-for describing organisations in a registery) is as a provider or
+for describing organisations in a registry) is as a provider or
 publishier of other resources.  In particular, an organisation
 description in a registry declares the association of an IVOA
 identifier with the organisation.  The
@@ -2171,7 +2186,6 @@ invoked.
 
 \begingroup\small\begin{bigdescription}\item[Element \xmlel{rights}]
 \begin{description}
-Rights
 \item[Type] string with controlled vocabulary
 \item[Meaning] 
                        Information about rights held in and over the resource.
@@ -2369,6 +2383,18 @@ elements in a type derived from \xmlel{vr:Capability}.
 The \xmlel{interface} element is of the complex type 
 \xmlel{vr:Interface}.
 
+The \xmlel{vr:Interface} type is defined as abstract, so as described in
+sect.~\ref{sect:servicemodel}, the \xmlel{interface} element must not be
+used as part of a \xmlel{vr:Service} description unless it includes an
+\xmlel{xsi:type} attribute that refers to a type derived from
+\xmlel{vr:Interface}. The VOResource schema defines two derived
+\xmlel{vr:Interface} types: \xmlel{vr:WebBrowser} and
+\xmlel{vr:WebService}.
+
+As described in sect.~\ref{sect:servicemodel}, the \xmlel{vr:Interface}
+attributes help distinguish between multiple interfaces within the same
+\xmlel{capability} element:
+
 
 % GENERATED: !schemadoc VOResource-v1.0.xsd Interface
 \begingroup
@@ -2414,7 +2440,7 @@ The \xmlel{interface} element is of the complex type
                The version of a standard interface specification that this 
                interface complies with.  When the interface is
                provided in the context of a Capability element, then
-               the standard being refered to is the one identified by
+               the standard being referred to is the one identified by
                the Capability's standardID element.  If the standardID
                is not provided, the meaning of this attribute is
                undefined.  
@@ -2500,7 +2526,7 @@ provide documentation that explains the exact use of the
 \xmlel{accessURL}; this documentation should follow the
 documention conventions described in sect.~\ref{sect:core}.  If multiple
 \xmlel{accessURL} may be provide; however, each URL should
-point to a functionally identical or "mirror" installation of the same
+point to a functionally identical or ``mirror'' installation of the same
 service and administered by the same publisher listed above.  An
 \xmlel{accessURL} must not point to an installation
 that is outside the administrative control of the service's listed
@@ -2645,7 +2671,7 @@ invoked via a \xmlel{xsi:type} attribute to the
 \xmlel{vr:WebBrowser} is one of the two \xmlel{vr:Interface}
 sub-types defined by the VOResource schema.  This type indicates that
 the service is intended to be accessed interactively by a user through
-a web browser.  The \xmlel{accessURL}, then, reprensents
+a web browser.  The \xmlel{accessURL}, then, represents
 the URL of a web page containing one or more forms used to invoke the
 service. 
 
@@ -2740,14 +2766,12 @@ sub-type available from the VOResource schema:
 \endgroup
 % /GENERATED
 
-
-\begin{admonition}{Note}
-It is intended that other \xmlel{vr:Interface} types,
-along with additional resource types derived from
-\xmlel{vr:Service}, will be defined in at least one other
-IVOA standard extension that is specifically geared to
-services.  
-\end{admonition}
+The \xmlel{vr:WebService} interface is one that is described by a Web
+Service Description Language \citep{booth07} document. This is typically
+realized as one that employs the Simple Object Access Protocol
+\citep{std:SOAP}; however, like WSDL, this interface type is not
+restricted to it. With this interface, the \xmlel{vr:accessURL} must
+refer to the service endpoint URL.
 
 \appendix
 
@@ -2756,7 +2780,16 @@ services.
 \subsection{Changes from REC-1.03}
 
 \begin{itemize}
-\item removed SOAP/WSDL example and a bit of the accompanying language.
+\item Removed SOAP/WSDL example and a bit of the accompanying language.
+\item Section 3 needed some refactoring since the schema documentation
+is now generated from the schema document.  To accomodate this, some
+text manually embedded within the schema documentation had to be moved
+out of the generated material or removed.
+\item While we still reference RM, it is now no longer informally
+authoritative for VOResource (we'd have to change RM before we change
+VOResource otherwise)
+\item References to the RM terms in the metadata definition dropped
+(could add support in ivoates/schemadoc if we want them back).
 \item Ported document source to \ivoatex.
 \item Removed example for deriving a SIA capability (this is now
 in the document repository)
