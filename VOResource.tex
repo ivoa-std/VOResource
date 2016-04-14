@@ -308,16 +308,13 @@ legal extensions).  In fact, it need not be of a type from the
 VOResource at all; rather, VOResource types may appear anywhere in the
 document.   
 
-
-
-\begin{admonition}{Note}
-The IVOA Registry Interface standard, for example, includes a
+The IVOA Registry Interface standard \citep{2009ivoa.spec.1104B}, 
+for example, includes a
 small schema that defines a single global element,
 \xmlel{VOResources}, that can contain a series of
 \xmlel{resource} child elements.  The child
 element is defined to be of the type \xmlel{Resource} from
 the VOResource schema.
-\end{admonition}
 
 \begin{admonition}{Note}
 In the example instance
@@ -329,7 +326,8 @@ the \xmlel{xsi:type} attribute.
 \end{admonition}
 
 
-% TODO: subsection name convention?
+% TODO: subsubsection name convention?  What are the further subsections
+% then?
 
 VOResource uses the following conventions for
 names of elements and types:
@@ -386,14 +384,22 @@ occurrences of spaces with a single space, and then remove all leading
 and trailing spaces.  
 
 
-% TODO: Actually specify time format
 All VOResource elements and attributes that contain dates must be
 interpreted as UTC dates and must be encoded in compliance with ISO8601
+\citep{std:iso8601}
 standard Date and Time Format.  The \xmlel{vr:UTCTimestamp} type
 provides a special restriction of the format that requires includsion of
-date and time, but disallows the timezone format.  This enforces a
-restricted form of this format which allows encoding of the date and
-time, but disallows the timezone format:
+date and time, but enforces the use of the UTC timezone.  The Time
+format to be used by both VOResource itself and by OAI-PMH
+\citep{std:oaipmh}, a protocol frequently used to transport VOResource
+records, therefore requires timestamps like
+$$\hbox{\texttt{2008-02-22T12:22:34Z,}}$$
+where optional fractional seconds are allowed (see the schema
+documentation for the actual regular expression pattern.
+
+For historical reasons, VOResource also allows a form without any
+timezone marker.  Such timestamps are to be interpreted as  if they had
+a trailing Z.
 
 % GENERATED: !schemadoc VOResource-v1.0.xsd UTCTimestamp
 \begingroup
@@ -2771,6 +2777,10 @@ refer to the service endpoint URL.
 \subsection{Changes from REC-1.03}
 
 \begin{itemize}
+\item Now allowing a Z timezone marker in UTCTimestamp, indeed
+discouraging non-timezone use.  This is in line with OAI-PMH use.
+Therefore, while technically changing the schema such that legacy
+clients  might be confused, we do not expect incompatibilites.
 \item Removed SOAP/WSDL example and a bit of the accompanying language.
 \item Section 3 needed some refactoring since the schema documentation
 is now generated from the schema document.  To accomodate this, some
