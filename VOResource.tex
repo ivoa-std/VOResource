@@ -2808,7 +2808,10 @@ enumeration.  In addition, it now has a rightsURI attribute,
 DataCite-style.
 \item content/type is now xs:token rather than a special restriction.
 The vocabulary is now managed as an external resource.
-Consequently, the vr:Type type will vanish from the XSD.
+Consequently, the vr:Type type vanishes from the XSD.
+\item content/level is now xs:token rather than a special restriction.
+The vocabulary is now managed as an external resource.
+Consequently, the vr:ContentLevel type vanishes from the XSD.
 \item Now allowing a Z timezone marker in UTCTimestamp, indeed
 discouraging non-timezone use.  This is in line with OAI-PMH use.
 Therefore, while technically changing the schema such that legacy
@@ -2839,7 +2842,7 @@ in the document repository)
   \item converted to Recommendation
 \end{itemize}
 
-\subsection{Changes from v1.01:}
+\subsection{Changes from v1.01}
 \begin{itemize}
   \item \xmlel{status} attribute is now required.
   \item added this Change History appendix.

@@ -654,7 +654,7 @@
           </xs:annotation>
        </xs:element>
 
-       <xs:element name="contentLevel" type="vr:ContentLevel" 
+       <xs:element name="contentLevel" type="xs:token" 
                    minOccurs="0" maxOccurs="unbounded">
           <xs:annotation>
              <xs:appinfo>
@@ -662,7 +662,9 @@
                <vm:dcterm>Subject.ContentLevel</vm:dcterm>
              </xs:appinfo>           
              <xs:documentation>
-                Description of the content level or intended audience
+                Description of the content level or intended audience.
+                The terms should be taken from the controlled vocabulary at
+                http://www.ivoa.net/rdf/voresource/content_level.
              </xs:documentation>
           </xs:annotation>
        </xs:element>
@@ -699,82 +701,6 @@
          </xs:extension>
       </xs:simpleContent>
    </xs:complexType>
-
-   <xs:simpleType name="ContentLevel">
-       <xs:restriction base="xs:token">
-         <xs:enumeration value="General">
-           <xs:annotation>
-             <xs:documentation>
-               Resource provides information appropriate for all users
-             </xs:documentation>
-           </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Elementary Education">
-           <xs:annotation>
-             <xs:documentation>
-               Resource provides information appropriate for use in elementary
-               education (e.g. approximate ages 6-11)
-             </xs:documentation>
-           </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Middle School Education">
-           <xs:annotation>
-             <xs:documentation>
-               Resource provides information appropriate for use in middle
-               school education (e.g. approximate ages 11-14)
-             </xs:documentation>
-           </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Secondary Education">
-           <xs:annotation>
-             <xs:documentation>
-               Resource provides information appropriate for use in elementary
-               education (e.g. approximate ages 14-18)
-             </xs:documentation>
-           </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Community College">
-           <xs:annotation>
-             <xs:documentation>
-               Resource provides information appropriate for use in 
-               community/junior college or early university education.
-             </xs:documentation>
-           </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="University">
-           <xs:annotation>
-             <xs:documentation>
-               Resource provides information appropriate for use in
-               university education
-             </xs:documentation>
-           </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Research">
-           <xs:annotation>
-             <xs:documentation>
-               Resource provides information appropriate for
-               supporting scientific research.
-             </xs:documentation>
-           </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Amateur">
-           <xs:annotation>
-             <xs:documentation>
-               Resource provides information of interest to
-               amateur astronomers.
-             </xs:documentation>
-           </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Informal Education">
-           <xs:annotation>
-             <xs:documentation>
-               Resource provides information appropriate for education
-               at museums, planetariums, and other centers of informal learning.
-             </xs:documentation>
-           </xs:annotation>
-         </xs:enumeration>
-       </xs:restriction>
-   </xs:simpleType>
 
    <xs:complexType name="Relationship">
       <xs:annotation>
