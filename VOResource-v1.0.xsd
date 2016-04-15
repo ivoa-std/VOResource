@@ -640,14 +640,16 @@
           </xs:annotation>
        </xs:element>
 
-       <xs:element name="type" type="vr:Type" 
+       <xs:element name="type" type="xs:token" 
                    minOccurs="0" maxOccurs="unbounded">
           <xs:annotation>
              <xs:appinfo>
                <vm:dcterm>Type</vm:dcterm>
              </xs:appinfo>
              <xs:documentation>
-               Nature or genre of the content of the resource
+               Nature or genre of the content of the resource.  Terms here
+               should taken from the RDF vocabulary at
+               http://www.ivoa.net/rdf/voresource/content_type
              </xs:documentation>
           </xs:annotation>
        </xs:element>
@@ -697,178 +699,6 @@
          </xs:extension>
       </xs:simpleContent>
    </xs:complexType>
-
-   <xs:simpleType name="Type">
-     <xs:restriction base="xs:token">
-         <xs:enumeration value="Other">
-           <xs:annotation>
-             <xs:documentation>
-               resource that does not fall into any of the category names
-               currently defined.
-             </xs:documentation>
-           </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Archive">
-           <xs:annotation>
-             <xs:documentation>
-               Collection of pointed observations
-             </xs:documentation>
-           </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Bibliography">
-           <xs:annotation>
-             <xs:documentation>
-               Collection of bibliographic reference, abstracts, and 
-               publications
-             </xs:documentation>
-           </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Catalog">
-           <xs:annotation>
-             <xs:documentation>
-               Collection of derived data, primarily in tabular form
-             </xs:documentation>
-           </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Journal">
-           <xs:annotation>
-             <xs:documentation>
-               Collection of scholarly publications under common editorial 
-               policy
-             </xs:documentation>
-           </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Library">
-           <xs:annotation>
-             <xs:documentation>
-               Collection of published materials (journals, books, etc.)
-             </xs:documentation>
-           </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Simulation">
-           <xs:annotation>
-             <xs:documentation>
-               Theoretical simulation or model
-             </xs:documentation>
-           </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Survey">
-           <xs:annotation>
-             <xs:documentation>
-               Collection of observations covering substantial and
-               contiguous areas of the sky
-             </xs:documentation>
-           </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Transformation">
-           <xs:annotation>
-             <xs:documentation>
-               A service that transforms data
-             </xs:documentation>
-           </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Education">
-           <xs:annotation>
-             <xs:documentation>
-               Collection of materials appropriate for educational use, such
-               as teaching resources, curricula, etc.
-             </xs:documentation>
-           </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Outreach">
-           <xs:annotation>
-             <xs:documentation>
-               Collection of materials appropriate for public outreach, such
-               as press releases and photo galleries
-             </xs:documentation>
-           </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="EPOResource">
-           <xs:annotation>
-             <xs:documentation>
-               Collection of materials that may be suitable for EPO
-               products but which are not in final product form, as in Type 
-               Outreach or Type Education.  EPOResource would apply,
-               e.g., to archives with easily accessed preview images or to
-               surveys with easy-to-use images.
-             </xs:documentation>
-           </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Animation">
-           <xs:annotation>
-             <xs:documentation>
-               Animation clips of astronomical phenomena
-             </xs:documentation>
-           </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Artwork">
-           <xs:annotation>
-             <xs:documentation>
-               Artists' renderings of astronomical phenomena or objects
-             </xs:documentation>
-           </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Background">
-           <xs:annotation>
-             <xs:documentation>
-               Background information on astronomical phenomena or objects
-             </xs:documentation>
-           </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="BasicData">
-           <xs:annotation>
-             <xs:documentation>
-               Compilations of basic astronomical facts about objects,
-               such as approximate distance or membership in constellation.
-             </xs:documentation>
-           </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Historical">
-           <xs:annotation>
-             <xs:documentation>
-               Historical information about astronomical objects
-             </xs:documentation>
-           </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Photographic">
-           <xs:annotation>
-             <xs:documentation>
-               Publication-quality photographs of astronomical objects
-             </xs:documentation>
-           </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Press">
-           <xs:annotation>
-             <xs:documentation>
-               Press releases about astronomical objects
-             </xs:documentation>
-           </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Organisation">
-           <xs:annotation>
-             <xs:documentation>
-               An organization that is a publisher or curator of other 
-               resources.
-             </xs:documentation>
-           </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Project">
-           <xs:annotation>
-             <xs:documentation>
-               A project that is a publisher or curator of other resources
-             </xs:documentation>
-           </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Registry">
-           <xs:annotation>
-             <xs:documentation>
-               a query service for which response is a structured
-               description of resources.
-             </xs:documentation>
-           </xs:annotation>
-         </xs:enumeration>
-       </xs:restriction>
-   </xs:simpleType>
 
    <xs:simpleType name="ContentLevel">
        <xs:restriction base="xs:token">
@@ -1092,32 +922,33 @@
       </xs:complexContent>
    </xs:complexType>
 
-   <xs:simpleType name="Rights">
-      <xs:restriction base="xs:token">
-         <xs:enumeration value="public">
-            <xs:annotation>
-               <xs:documentation>
-                  unrestricted, public access is allowed without 
-                  authentication.
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="secure">
-            <xs:annotation>
-               <xs:documentation>
-                  authenticated, public access is allowed.
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="proprietary">
-            <xs:annotation>
-               <xs:documentation>
-                  only proprietary access is allowed with authentication.
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
-   </xs:simpleType>
+   <xs:complexType name="Rights">
+      <xs:annotation>
+         <xs:documentation>
+            A statement of usage rights.  This will typically be a license,
+            which should be given as a full string (e.g., Creative Commons
+            Attribution 3.0 International).  Further free-text information,
+            e.g., on how to attribute or on embargo periods is allowed.
+         </xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="xs:token">
+            <xs:attribute name="rightsURI" type="xs:anyURI">
+               <xs:annotation>
+                  <xs:documentation>
+                     A URI identifier for a license
+                  </xs:documentation>
+                  <xs:documentation>
+                     Where formal licenses are available, this URI can
+                     reference the full license text.  The IVOA may define
+                     standard URIs (probably IVOIDs) for a set of recommended
+                     licenses, in which case these should be used here.
+                  </xs:documentation>
+               </xs:annotation>
+            </xs:attribute>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
 
    <xs:complexType name="Capability">
       <xs:annotation>

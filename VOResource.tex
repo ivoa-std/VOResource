@@ -1379,7 +1379,7 @@ Examples for encouraged use of creator include:
 \end{lstlisting}
 
 While the following uses of creator do not make a resource record
-invalid, they are discouraged:
+technically invalid, they are frowned upon:
 
 \begin{lstlisting}[language=XML]
   <creator>
@@ -1583,7 +1583,7 @@ defined by the \xmlel{vr:Content} complex type.
     <xs:element name="description" type="xs:token" />
     <xs:element name="source" type="vr:Source" minOccurs="0" />
     <xs:element name="referenceURL" type="xs:anyURI" />
-    <xs:element name="type" type="vr:Type" minOccurs="0"
+    <xs:element name="type" type="xs:token" minOccurs="0"
               maxOccurs="unbounded" />
     <xs:element name="contentLevel" type="vr:ContentLevel" minOccurs="0"
               maxOccurs="unbounded" />
@@ -1650,94 +1650,13 @@ defined by the \xmlel{vr:Content} complex type.
 \end{description}
 \item[Element \xmlel{type}]
 \begin{description}
-\item[Type] string with controlled vocabulary
+\item[Type] string: \xmlel{xs:token}
 \item[Meaning] 
-               Nature or genre of the content of the resource
+               Nature or genre of the content of the resource.  Terms here
+               should taken from the RDF vocabulary at
+               http://www.ivoa.net/rdf/voresource/content\_type
              
 \item[Occurrence] optional; multiple occurrences allowed.
-
-\item[Allowed Values]\hfil
-\begin{longtermsdescription}
-\item[Other]
-               resource that does not fall into any of the category names
-               currently defined.
-             
-\item[Archive]
-               Collection of pointed observations
-             
-\item[Bibliography]
-               Collection of bibliographic reference, abstracts, and 
-               publications
-             
-\item[Catalog]
-               Collection of derived data, primarily in tabular form
-             
-\item[Journal]
-               Collection of scholarly publications under common editorial 
-               policy
-             
-\item[Library]
-               Collection of published materials (journals, books, etc.)
-             
-\item[Simulation]
-               Theoretical simulation or model
-             
-\item[Survey]
-               Collection of observations covering substantial and
-               contiguous areas of the sky
-             
-\item[Transformation]
-               A service that transforms data
-             
-\item[Education]
-               Collection of materials appropriate for educational use, such
-               as teaching resources, curricula, etc.
-             
-\item[Outreach]
-               Collection of materials appropriate for public outreach, such
-               as press releases and photo galleries
-             
-\item[EPOResource]
-               Collection of materials that may be suitable for EPO
-               products but which are not in final product form, as in Type 
-               Outreach or Type Education.  EPOResource would apply,
-               e.g., to archives with easily accessed preview images or to
-               surveys with easy-to-use images.
-             
-\item[Animation]
-               Animation clips of astronomical phenomena
-             
-\item[Artwork]
-               Artists' renderings of astronomical phenomena or objects
-             
-\item[Background]
-               Background information on astronomical phenomena or objects
-             
-\item[BasicData]
-               Compilations of basic astronomical facts about objects,
-               such as approximate distance or membership in constellation.
-             
-\item[Historical]
-               Historical information about astronomical objects
-             
-\item[Photographic]
-               Publication-quality photographs of astronomical objects
-             
-\item[Press]
-               Press releases about astronomical objects
-             
-\item[Organisation]
-               An organization that is a publisher or curator of other 
-               resources.
-             
-\item[Project]
-               A project that is a publisher or curator of other resources
-             
-\item[Registry]
-               a query service for which response is a structured
-               description of resources.
-             
-\end{longtermsdescription}
 
 \end{description}
 \item[Element \xmlel{contentLevel}]
@@ -2194,7 +2113,7 @@ perform some action on their behalf.
 
 The general data model is described in sect.~\ref{sect:servicemodel}.
 The Service type extends the Resource type by adding two elements:
-\xmlel{rights} which indicates who may access it, and
+\xmlel{rights} which indicates the modalities of service use and access, and
 \xmlel{capability} which describes how the service behaves and how it is
 invoked.
 
@@ -2230,25 +2149,11 @@ invoked.
 
 \begingroup\small\begin{bigdescription}\item[Element \xmlel{rights}]
 \begin{description}
-\item[Type] string with controlled vocabulary
+\item[Type] composite: \xmlel{vr:Rights}
 \item[Meaning] 
                        Information about rights held in and over the resource.
                      
 \item[Occurrence] optional; multiple occurrences allowed.
-
-\item[Allowed Values]\hfil
-\begin{longtermsdescription}
-\item[public]
-                  unrestricted, public access is allowed without 
-                  authentication.
-               
-\item[secure]
-                  authenticated, public access is allowed.
-               
-\item[proprietary]
-                  only proprietary access is allowed with authentication.
-               
-\end{longtermsdescription}
 \item[Comment] 
                        This should be repeated for all Rights values that apply.
                      
@@ -2281,6 +2186,74 @@ invoked.
 
 \endgroup
 % /GENERATED
+
+The \xmlel{rights} element contains freetext, where it is recommended
+that standard licenses are named and special circumstances like embargos
+are mentioned.  The \xmlel{rightsURI} attribute can be used to link to
+full license text.  By re-using the license author URIs, machines can
+identify ussage conditions.
+
+
+% GENERATED: !schemadoc VOResource-v1.0.xsd Rights
+\begingroup
+      	\renewcommand*\descriptionlabel[1]{%
+      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{vr:Rights} Type Schema Documentation}
+
+\noindent{\small
+            A statement of usage rights.  This will typically be a license,
+            which should be given as a full string (e.g., Creative Commons
+            Attribution 3.0 International).  Further free-text information,
+            e.g., on how to attribute or on embargo periods is allowed.
+         \par}
+
+\vspace{1ex}\noindent\textbf{\xmlel{vr:Rights} Type Schema Definition}
+
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<xs:complexType name="Rights" >
+  <xs:complexContent >
+    <xs:extension base="xs:token" >
+      <xs:attribute name="rightsURI" type="xs:anyURI" />
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+\end{lstlisting}
+
+\vspace{0.5ex}\noindent\textbf{\xmlel{vr:Rights} Attributes}
+
+\begingroup\small\begin{bigdescription}
+\item[rightsURI]
+\begin{description}
+\item[Type] a URI: \xmlel{xs:anyURI}
+\item[Meaning] 
+                     A URI identifier for a license
+                  
+\item[Occurrence] optional
+\item[Comment] 
+                     Where formal licenses are available, this URI can
+                     reference the full license text.  The IVOA may define
+                     standard URIs (probably IVOIDs) for a set of recommended
+                     licenses, in which case these should be used here.
+                  
+\end{description}
+
+
+\end{bigdescription}\endgroup
+
+\endgroup
+% /GENERATED
+
+An example could look like this:
+
+\begin{lstlisting}[language=XML]
+<rights rightsURI="http://creativecommons.org/licenses/by/3.0">
+  The images from the X survey are copyright 2016, the X project.
+  They are published under the creative commons attribution 3.0 unported
+  license.  If you use this data, please cite doi:10.5072/7273288.
+
+  Images are under embargo for one year after their addition to the
+  repository.
+</rights>
+\end{lstlisting}
 
 As described in sect.~\ref{sect:servicemodel}, multiple
 \xmlel{capability} elements may appear, each describing a
@@ -2828,14 +2801,22 @@ refer to the service endpoint URL.
 \item The vocabulary of date/@role is now managed as a separate
 resource; DataCite terms have been added to it, and the old 1.0 terms
 deprecated.
+\item The vocabulary of relationshipType is now managed as a separate
+resoruce; some DataCite terms have been added to it.
+\item Service/rights now is free text rather than the tree-term
+enumeration.  In addition, it now has a rightsURI attribute,
+DataCite-style.
+\item content/type is now xs:token rather than a special restriction.
+The vocabulary is now managed as an external resource.
+Consequently, the vr:Type type will vanish from the XSD.
 \item Now allowing a Z timezone marker in UTCTimestamp, indeed
 discouraging non-timezone use.  This is in line with OAI-PMH use.
 Therefore, while technically changing the schema such that legacy
 clients  might be confused, we do not expect incompatibilites.
-\item Added advice about the use of creator.name
 \item Adding language on using capability/@standardID rather than
 interface/@version to distinguish between different protocol versions in
 the normal case, removed skynode example.
+\item Added advice about the use of creator.name
 \item Removed SOAP/WSDL example and a bit of the accompanying language.
 \item Section 3 needed some refactoring since the schema documentation
 is now generated from the schema document.  To accomodate this, some
