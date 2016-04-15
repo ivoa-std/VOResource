@@ -819,30 +819,12 @@ that the additional metadata be optional unless the metadata is
 absolutely required by clients in order to invoke the service.
 
 
-
-\begin{admonition}{Note}
-It is intended that a set of common generic interface types
-would be defined in a separate VOResource extension schema.
-At the time of this writing, this schema is called
-VODataService.  It currently defines an interface type for
-describing traditional GET and POST services.  More specific
-interfaces, particularly those associated with standard IVOA
-services (like a Registry Service) would derive its specific
-interface descriptions from one of the common types as
-appropriate.
-\end{admonition}
-
-
-\begin{admonition}{Note}
-The Simple Image Access Protocol \citep{2009ivoa.spec.1111H} is an
-example of a standard service that defines capability
-metadata.  These include ``maxRecords'' that list the maximum
-number of records the SIA implementation can return at a time,
-and ``MaxImageSize'' gives the maximum image size that the
-service can return.
-\end{admonition}
-
-% TODO: cite some examples for capability derivations
+Examples for extension schemas can be found in the IVOA Document
+Repository.\footnote{\url{http://ivoa.net/documents}}  At the time of
+this writing, extension schemas are available for generic data services
+(VODataService; this includes an interface type for HTTP GET and POST),
+for several protocols from the IVOA data access layer, and for
+registries, i.e., the entities actually processing VOResource metadata.
 
 
 \section{The VOResource Metadata}
