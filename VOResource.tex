@@ -877,6 +877,8 @@ by the VOResource schema definition.
     <xs:element name="title" type="xs:token" />
     <xs:element name="shortName" type="vr:ShortName" minOccurs="0" />
     <xs:element name="identifier" type="vr:IdentifierURI" />
+    <xs:element name="altIdentifier" type="xs:anyURI" minOccurs="0"
+              maxOccurs="unbounded" />
     <xs:element name="curation" type="vr:Curation" />
     <xs:element name="content" type="vr:Content" />
   </xs:sequence>
@@ -1019,6 +1021,18 @@ by the VOResource schema definition.
                
 \item[Occurrence] required
 
+
+\end{description}
+\item[Element \xmlel{altIdentifier}]
+\begin{description}
+\item[Type] a URI: \xmlel{xs:anyURI}
+\item[Meaning] 
+                  A reference to this resource in a non-IVOA identifier
+                  scheme, e.g., DOI or bibcode.  Always use the an URI scheme
+                  here, e.g., doi:10.1016/j.epsl.2011.11.037.  For bibcodes,
+                  use a form like bibcode:2008ivoa.spec.0222P.
+               
+\item[Occurrence] optional; multiple occurrences allowed.
 
 \end{description}
 \item[Element \xmlel{curation}]
@@ -1313,6 +1327,8 @@ type which bundles together the RM metadata \emph{Creator} and
   <xs:sequence >
     <xs:element name="name" type="vr:ResourceName" />
     <xs:element name="logo" type="xs:anyURI" minOccurs="0" />
+    <xs:element name="altIdentifier" type="xs:anyURI" minOccurs="0"
+              maxOccurs="unbounded" />
   </xs:sequence>
 </xs:complexType>
 \end{lstlisting}
@@ -1343,6 +1359,18 @@ type which bundles together the RM metadata \emph{Creator} and
                 identify the information source
               
 \item[Occurrence] optional
+
+\end{description}
+\item[Element \xmlel{altIdentifier}]
+\begin{description}
+\item[Type] a URI: \xmlel{xs:anyURI}
+\item[Meaning] 
+                  A reference to this entitiy in a non-IVOA identifier
+                  scheme, e.g., orcid.  Always use a URI form including
+                  a scheme here.  For Orcid, use a pattern like
+                  orcid:0000-0000-0000-000X.
+               
+\item[Occurrence] optional; multiple occurrences allowed.
 
 \end{description}
 
@@ -2797,6 +2825,7 @@ Consequently, the vr:Type type vanishes from the XSD.
 \item content/level is now xs:token rather than a special restriction.
 The vocabulary is now managed as an external resource.
 Consequently, the vr:ContentLevel type vanishes from the XSD.
+\item Adding altIdentifier elements to creator and resource.
 \item Now allowing a Z timezone marker in UTCTimestamp, indeed
 discouraging non-timezone use.  This is in line with OAI-PMH use.
 Therefore, while technically changing the schema such that legacy
