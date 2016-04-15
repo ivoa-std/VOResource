@@ -1,0 +1,19 @@
+# Terms for VOResource date/@role; the non-deprecated terms are from 
+# the DataCite Metadata Scheme version 3.1
+#
+# NAMESPACE: http://www.ivoa.net/rdf/voresource/date_role
+#
+# predicate,parent,label,description
+Accepted,1,Accepted,"The date that the publisher accepted the  resource into their system"
+Available,1,Available,"The date the resource is made publicly  available."
+Copyrighted,1,Copyrighted,"The specific, documented date at which the  resource receives a copyrighted status, if  applicable."
+Collected,1,Collected,"A (representative) date at which the resource  content was collected."
+representative,2,Representative,"A rough indication of the resource's time coverage (deprecated in favour of Collected)"
+Created,1,Created,"The date the resource itself was put together"
+creation,2,Creation,The date that the resource was created (deprecated in favour of Created)
+Issued,1,Issued,"The date that the resource is published or  distributed e.g. to a data center"
+Submitted,1,Submitted,"The date the creator submits the resource to the publisher. This could be different from Accepted if the publisher then applies a  selection process."
+Updated,1,Updated,"The date of the last update to the resource,  when the resource is being added to."
+update,1,Update,A date on which the resource was updated (deprecated in favour of Updated)
+Valid,1,Valid,A date of validitiy.  This is probably not useful in the VOResource context.
+

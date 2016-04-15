@@ -202,7 +202,7 @@ Imaging Group at the National Center for Supercomputing Applications.
       </creator>
       <date>1993-01-01</date>
       <contact>
-        <name>Dr. Raymond Plante</name>
+        <name>Plante, R.</name>
       	<email>rplante@ncsa.uiuc.edu</email>
       </contact>
     </curation>
@@ -1400,10 +1400,20 @@ optional attribute called \xmlel{role}.
 The purpose of the role attribute is to indicate what aspect of the
 resource the date describes. This allows several \xmlel{date} elements to be
 provided, each with a different role. The possible values for this
-attribute are not controlled; however, several values are recommended
-below and may be recognized by applications. Other roles may be given.
-If a role is not given, applications should interpret the date as
-representative as defined below.
+attribute are not controlled by the schema.  The IVOA, however, defines
+an RDF vocabulary at
+$$\hbox{\texttt{http://www.ivoa.net/rdf/voresource/date_role}}$$ from
+which the \xmlel{role} terms should be taken if at all possible.  At the
+time or writing, the vocabulary consists of three old-style VOResource
+1.0 terms and terms from the DataCite Metadata 3.1.
+
+The vocabulary can evolve independently of this specification.
+Applications can rely on the presence of the \textsl{Updated}
+(deprecated VOResource 1.0 synonym: \textsl{update}) and
+\textsl{Created} (deprecated VOResource 1.0 synonym: \textsl{creation})
+terms.  Applications are not expected to support semantic relationsships
+between the terms (except for mapping the deprecated VOResource 1.0
+terms to the modern DataCite Metadata ones).
 
 % GENERATED: !schemadoc VOResource-v1.0.xsd Date
 \begingroup
@@ -2787,6 +2797,9 @@ refer to the service endpoint URL.
 
 \begin{itemize}
 \item Adopting DataCite as another ``upstream'' in addtion to RM.
+\item The vocabulary of date/@role is now managed as a separate
+resource; DataCite terms have been added to it, and the old 1.0 terms
+deprecated.
 \item Now allowing a Z timezone marker in UTCTimestamp, indeed
 discouraging non-timezone use.  This is in line with OAI-PMH use.
 Therefore, while technically changing the schema such that legacy

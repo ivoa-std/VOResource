@@ -549,12 +549,18 @@
                  A string indicating what the date refers to.  
                </xs:documentation>
                <xs:documentation>
-                 While this vocabulary is uncontrolled, recognized strings 
-                 include "creation", indicating the date that the resource 
-                 itself was created, and "update", indicating when the
-                 resource was updated last.  The default value, 
-                 "representative", means that the date is a rough 
-                 representation of the time coverage of the resource.
+               	Role should be from the vocabulary
+               	http://www.ivoa.net/rdf/voresource/date_role
+               	This includes the the traditional and deprecated strings
+                "creation", indicating the date that the resource 
+                itself was created, and "update", indicating when the
+                resource was updated last, and the default value,
+                "representative", meaning the date is a rough 
+                representation of the time coverage of the resource.
+                The preferred terms from that vocabulary are the DataCite
+                Metadata terms.   It is expected that the vocabulary will 
+                be kept synchronous with the corresponding list of terms
+                in the DataCite Metadata schema.
                </xs:documentation>
                <xs:documentation>
                  Note that this date refers to the resource; dates describing
