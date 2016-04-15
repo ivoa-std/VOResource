@@ -549,8 +549,8 @@
                  A string indicating what the date refers to.  
                </xs:documentation>
                <xs:documentation>
-               	Role should be from the vocabulary
-               	http://www.ivoa.net/rdf/voresource/date_role
+               	The value of role should be taken from the RDF vocabulary
+               	http://www.ivoa.net/rdf/voresource/date_role.
                	This includes the the traditional and deprecated strings
                 "creation", indicating the date that the resource 
                 itself was created, and "update", indicating when the
@@ -961,9 +961,9 @@
                   the named type of relationship
                </xs:documentation>
                <xs:documentation>
-                  The VOResource Core specification defines a standard
-                  set of names that are not enforced by this schema,
-                  but are otherwise required by the spec.
+                 The value  of relationshipType should be taken from the RDF
+                 vocabulary
+                 http://www.ivoa.net/rdf/voresource/relationshipType.
                </xs:documentation>
             </xs:annotation>
          </xs:element>

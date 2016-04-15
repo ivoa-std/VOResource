@@ -424,7 +424,7 @@ a trailing Z.
 <xs:simpleType name="UTCTimestamp" >
   <xs:restriction base="xs:dateTime" >
     <xs:pattern
-              value="\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(\.\d+)?" />
+              value="\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(\.\d+)?Z?" />
   </xs:restriction>
 </xs:simpleType>
 \end{lstlisting}\endgroup
@@ -1329,6 +1329,9 @@ type which bundles together the RM metadata \emph{Creator} and
 \item[Comment] 
                   Users of the creation should use this name in
                   subsequent credits and acknowledgements.
+
+                  This should be exactly one name, preferably last name
+                  first (as in {"}van der Waals, Johannes Diderik{"}).
               
 
 \end{description}
@@ -1402,7 +1405,7 @@ resource the date describes. This allows several \xmlel{date} elements to be
 provided, each with a different role. The possible values for this
 attribute are not controlled by the schema.  The IVOA, however, defines
 an RDF vocabulary at
-$$\hbox{\texttt{http://www.ivoa.net/rdf/voresource/date_role}}$$ from
+\url{http://www.ivoa.net/rdf/voresource/date_role} from
 which the \xmlel{role} terms should be taken if at all possible.  At the
 time or writing, the vocabulary consists of three old-style VOResource
 1.0 terms and terms from the DataCite Metadata 3.1.
@@ -1442,12 +1445,18 @@ terms to the modern DataCite Metadata ones).
 \item[Occurrence] optional
 representative
 \item[Comment] 
-                 While this vocabulary is uncontrolled, recognized strings 
-                 include {"}creation{"}, indicating the date that the resource 
-                 itself was created, and {"}update{"}, indicating when the
-                 resource was updated last.  The default value, 
-                 {"}representative{"}, means that the date is a rough 
-                 representation of the time coverage of the resource.
+               	The value of role should be taken from the RDF vocabulary
+               	http://www.ivoa.net/rdf/voresource/date\_role.
+               	This includes the the traditional and deprecated strings
+                {"}creation{"}, indicating the date that the resource 
+                itself was created, and {"}update{"}, indicating when the
+                resource was updated last, and the default value,
+                {"}representative{"}, meaning the date is a rough 
+                representation of the time coverage of the resource.
+                The preferred terms from that vocabulary are the DataCite
+                Metadata terms.   It is expected that the vocabulary will 
+                be kept synchronous with the corresponding list of terms
+                in the DataCite Metadata schema.
                
 \item[Comment] 
                  Note that this date refers to the resource; dates describing
@@ -1848,6 +1857,25 @@ The \xmlel{relationship} is defined by the
 RM metadata \emph{Relationship} and
 \emph{RelationshipID}.  
 
+The nature of the relationship is given by relationshipType.  The values
+of this are taken from a vocabulary that is available in RDF form at
+\url{http://www.ivoa.net/rdf/voresource/relationshipType}.  This
+vocabulary at the time of writing consists of 
+
+\begin{itemize}
+\item the terms from VOResource 1.0 (mirror-of, service-for, served-by,
+derived-from, and related-to); these are guaranteed to remain within
+VOResource 1.x
+\item selected terms from the DataCite Metadata relationType enumeration.
+\end{itemize}
+
+The resulting mix of term styles might be considered an aesthetic defect
+but will not be homogenized in VOResource 1.x so as to neither
+needlessly override DataCite practices or interfere with existing uses
+of the VOResource terms.
+
+With the exception of the five VOResource 1.0 terms, the vocabulary may
+change without changes to the recommendation.
 
 % GENERATED: !schemadoc VOResource-v1.0.xsd Relationship
 \begingroup
@@ -1881,9 +1909,9 @@ RM metadata \emph{Relationship} and
                
 \item[Occurrence] required
 \item[Comment] 
-                  The VOResource Core specification defines a standard
-                  set of names that are not enforced by this schema,
-                  but are otherwise required by the spec.
+                 The value  of relationshipType should be taken from the RDF
+                 vocabulary
+                 http://www.ivoa.net/rdf/voresource/relationshipType.
                
 
 \end{description}
