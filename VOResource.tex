@@ -473,7 +473,6 @@ VOResource entities:
 \end{enumerate}
 
 
-% TODO: reference  example?
 Additional semantics are transmitted through the use of derived types
 using the \xmlel{xsi:type} attribute.  In the sample instance document
 above, the use of \verb|xsi:type="Organisation"| means that the
@@ -679,42 +678,20 @@ All other interfaces are considered non-standard
 alternatives.
 
 
-% TODO: We probably don't want this any more
-Another important way \xmlel{interface}s inside the same
-\xmlel{capability} element can be different is in the version of
-the service standard the interface supports.  Whenever, an interface
-supports a version other than \texttt{"1.0"}, the \xmlel{interface}
-element must include a \xmlel{version} attribute set to the
-version being supported.  Valid values for \xmlel{version} are
-defined by the standard.  
+Another way \xmlel{interface}s inside the same
+\xmlel{capability} element can be used is if a standard forsees
+different versions of a protocol within the same capability.  Different
+interfaces can then be distinguished by different values of the
+interface's \xmlel{version} attribute.  Previous versions of this
+document in effect recommended this pattern for VO standards.
 
-Here is an example for describing multiple interfaces for the same
-capability. It is assumed that SkyNode extension type is defined in a
-separate schema document.
-
-\begin{lstlisting}[language=XML]
-<capability xsi:type="sn:SkyNode"
-            standardID="ivo://ivoa.net/std/SkyNode">
-
-  <!--  version 1.0 of the standard SkyNode interface --> 
-  <interface xsi:type="vr:WebService" role="std" version="1.0">
-     <accessURL> http://archive.org/service/skynode </accessURL>
-  </interface>
-
-  <!--  version 1.1 of the standard SkyNode interface --> 
-  <interface xsi:type="vr:WebService" role="std" version="1.1">
-     <accessURL> http://archive.org/service/skynode1.1 </accessURL>
-  </interface>
-
-  <!--  a interactive alternative interface, assesible via a browser  --> 
-  <interface xsi:type="vr:WebBrowser">
-     <accessURL> http://archive.org/skynode.html </accessURL>
-  </interface>
-  ...
-</capability>
-\end{lstlisting}
-
-% TODO: discourage this pattern
+While this pattern can still be employed, most VO standards that
+actually have different versions distinguish their endpoints by
+different standard identifiers, as described in section 4.2 of IVOA
+Identifiers 2.0 \citep{std:identifiers2}.  In these cases -- where the
+\xmlel{capability}'s \xmlel{standardID} attribute already uniquely
+determines the protocol spoken --, the speficication of \xmlel{version}
+on \xmlel{interface} elements is optional, though encouraged.
 
 \subsection{Extending the VOResource Schema}
 
@@ -2781,6 +2758,9 @@ refer to the service endpoint URL.
 discouraging non-timezone use.  This is in line with OAI-PMH use.
 Therefore, while technically changing the schema such that legacy
 clients  might be confused, we do not expect incompatibilites.
+\item Adding language on using capability/@standardID rather than
+interface/@version to distinguish between different protocol versions in
+the normal case, removed skynode example.
 \item Removed SOAP/WSDL example and a bit of the accompanying language.
 \item Section 3 needed some refactoring since the schema documentation
 is now generated from the schema document.  To accomodate this, some
