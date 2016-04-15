@@ -1585,7 +1585,7 @@ defined by the \xmlel{vr:Content} complex type.
     <xs:element name="referenceURL" type="xs:anyURI" />
     <xs:element name="type" type="xs:token" minOccurs="0"
               maxOccurs="unbounded" />
-    <xs:element name="contentLevel" type="vr:ContentLevel" minOccurs="0"
+    <xs:element name="contentLevel" type="xs:token" minOccurs="0"
               maxOccurs="unbounded" />
     <xs:element name="relationship" type="vr:Relationship" minOccurs="0"
               maxOccurs="unbounded" />
@@ -1661,50 +1661,13 @@ defined by the \xmlel{vr:Content} complex type.
 \end{description}
 \item[Element \xmlel{contentLevel}]
 \begin{description}
-\item[Type] string with controlled vocabulary
+\item[Type] string: \xmlel{xs:token}
 \item[Meaning] 
-                Description of the content level or intended audience
+                Description of the content level or intended audience.
+                The terms should be taken from the controlled vocabulary at
+                http://www.ivoa.net/rdf/voresource/content\_level.
              
 \item[Occurrence] optional; multiple occurrences allowed.
-
-\item[Allowed Values]\hfil
-\begin{longtermsdescription}
-\item[General]
-               Resource provides information appropriate for all users
-             
-\item[Elementary Education]
-               Resource provides information appropriate for use in elementary
-               education (e.g. approximate ages 6-11)
-             
-\item[Middle School Education]
-               Resource provides information appropriate for use in middle
-               school education (e.g. approximate ages 11-14)
-             
-\item[Secondary Education]
-               Resource provides information appropriate for use in elementary
-               education (e.g. approximate ages 14-18)
-             
-\item[Community College]
-               Resource provides information appropriate for use in 
-               community/junior college or early university education.
-             
-\item[University]
-               Resource provides information appropriate for use in
-               university education
-             
-\item[Research]
-               Resource provides information appropriate for
-               supporting scientific research.
-             
-\item[Amateur]
-               Resource provides information of interest to
-               amateur astronomers.
-             
-\item[Informal Education]
-               Resource provides information appropriate for education
-               at museums, planetariums, and other centers of informal learning.
-             
-\end{longtermsdescription}
 
 \end{description}
 \item[Element \xmlel{relationship}]
@@ -2441,6 +2404,8 @@ attributes help distinguish between multiple interfaces within the same
               maxOccurs="unbounded" />
     <xs:element name="securityMethod" type="vr:SecurityMethod" minOccurs="0"
               maxOccurs="unbounded" />
+    <xs:element name="testQueryString" type="xs:token" minOccurs="0"
+              maxOccurs="unbounded" />
   </xs:sequence>
   <xs:attribute name="version" type="xs:string" default="1.0" />
   <xs:attribute name="role" type="xs:NMTOKEN" />
@@ -2524,6 +2489,26 @@ attributes help distinguish between multiple interfaces within the same
 \item[Comment] 
                   when more than one method is listed, each one must
                   be employed to gain access.  
+               
+
+\end{description}
+\item[Element \xmlel{testQueryString}]
+\begin{description}
+\item[Type] string: \xmlel{xs:token}
+\item[Meaning] 
+                  Test data for exercising the service.
+               
+\item[Occurrence] optional; multiple occurrences allowed.
+\item[Comment] 
+                  This contains data that can be passed to the interface to
+                  retrieve a non-empty result.  This can be used by validators
+                  within test suites.
+
+                  Exactly how agents should use the data contained in
+                  the testQueryString depends on the concrete interface class.
+                  For interfaces employing the HTTP GET method, however,
+                  this will typically be urlencoded parameters (as for
+                  the application/x-www-form-urlencoded media type).
                
 
 \end{description}

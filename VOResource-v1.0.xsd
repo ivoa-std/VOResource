@@ -1008,6 +1008,25 @@
             </xs:annotation>
          </xs:element>
 
+         <xs:element name="testQueryString" type="xs:token"
+                     minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+               <xs:documentation>
+                  Test data for exercising the service.
+               </xs:documentation>
+               <xs:documentation>
+                  This contains data that can be passed to the interface to
+                  retrieve a non-empty result.  This can be used by validators
+                  within test suites.
+
+                  Exactly how agents should use the data contained in
+                  the testQueryString depends on the concrete interface class.
+                  For interfaces employing the HTTP GET method, however,
+                  this will typically be urlencoded parameters (as for
+                  the application/x-www-form-urlencoded media type).
+               </xs:documentation>
+            </xs:annotation>
+         </xs:element>
       </xs:sequence>
 
       <xs:attribute name="version" type="xs:string" default="1.0">
