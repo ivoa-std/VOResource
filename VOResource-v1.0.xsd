@@ -521,6 +521,9 @@
               <xs:documentation>
                   Users of the creation should use this name in
                   subsequent credits and acknowledgements.
+
+                  This should be exactly one name, preferably last name
+                  first (as in "van der Waals, Johannes Diderik").
               </xs:documentation>
            </xs:annotation>
         </xs:element>

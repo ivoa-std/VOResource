@@ -107,7 +107,7 @@ Just about anything can be a resource: it can be an abstract idea,
 such as sky coverage or an instrumental setup, or it can be fairly
 concrete, like an organization or a data collection.  This definition
 is consistent with its use in the general Web community as
-``anything that has an identity'' \citep{std:RFC2396}.  We
+``anything that has an identity'' \citep{std:RFC3986}.  We
 expand on this definition by saying that it is also describable.  
 \end{quotation}
 
@@ -128,7 +128,7 @@ Another inended use is as a language for services to describe themselves
 directly.  VOResource may be used in other ways, in whole or in part,
 using the standard XML mechanisms (e.g., import, include).  
 
-The VOResource schema provides XML encoding for so-called core
+The VOResource schema provides XML encoding for core
 metadata from the RM that (with a few exceptions)
 can apply to all resources; however, it is recognized that a full and
 useful description of a \emph{specific} resource will require
@@ -136,6 +136,12 @@ additional metadata that is relevant only to a resource of its type.
 Thus, the VOResource schema has been especially designed to be
 extended.  The model for doing this is described in
 sect.~\ref{sect:extending}.
+
+In addition to concepts and structures laid down in the RM, VOResource
+also acknowledges other (though mostly related) metadata schemes.  Of
+particular importance here is the metadata scheme employed by DataCite,
+which at the time of writing is at version 3.1 \citep{std:DataCite31}.
+This, in particular, concerns the alignment of vocabularies.
 
 \begin{admonition}{Note}
 The name ``VOResource'' has in practice had two meanings within
@@ -161,6 +167,7 @@ its legal extensions.''
 Fig.~\ref{fig:archdiag} shows the VOResource plays within the
 IVOA architecture \citep{note:VOARCH}.
 
+TODO: Write this.
 
 
 \section{The VOResource Data Model}
@@ -188,7 +195,7 @@ Imaging Group at the National Center for Supercomputing Applications.
          National Center for Supercomputing Applications
       </publisher>
       <creator>
-        <name>   Dr. Richard Crutcher    </name>
+        <name>   Crutcher, Richard    </name>
         <logo>
            http://rai.ncsa.uiuc.edu/rai.jpg
         </logo>
@@ -1342,6 +1349,49 @@ type which bundles together the RM metadata \emph{Creator} and
 \endgroup
 % /GENERATED
 
+The \xmlel{Creator}'s \xmlel{name} should contain exactly one name.
+Since the creator name is what Registry users use when searching for
+resources ``by author'', it should be set with care.  To make sensible
+collation simple for clients, person names should be formatted last name
+first whereever appropriate.
+
+In collaborative efforts, multiple creator elements should be used, one
+element per person or organization involved.
+
+Examples for encouraged use of creator include:
+
+\begin{lstlisting}[language=XML]
+  <creator>
+    <name>van der Waals, Johannes Diderik</name>
+  </creator>
+  <creator>
+    <name>de Vaucouleurs, G.</name>
+  </creator>
+  <creator>
+    <name>Zhang Hailong</name>
+  </creator>
+  <creator>
+    IVOA Registry Working Group
+  </creator>
+\end{lstlisting}
+
+While the following uses of creator do not make a resource record
+invalid, they are discouraged:
+
+\begin{lstlisting}[language=XML]
+  <creator>
+    <!-- do not include multiple names in one name element -->
+    <name>Mornilov, V.G., Polkov, I.M., Bakharov, A.I</name>
+  </creator>
+  <creator>
+    <!-- Do not include functions or similar -->
+    <name>PI: Ita Varajedini</name>
+  </creator>
+  <creator>
+    <!-- Do not abuse creator for provenance, do not include markup -->
+    <name>All data is downloaded from the &lt;a href=http:...</name>
+  </creator>
+\end{lstlisting}
 
 The \xmlel{Date} element's type, \xmlel{vr:Date}, is an extension of the
 \xmlel{UTCDateTime} type that adds an
@@ -2736,10 +2786,12 @@ refer to the service endpoint URL.
 \subsection{Changes from REC-1.03}
 
 \begin{itemize}
+\item Adopting DataCite as another ``upstream'' in addtion to RM.
 \item Now allowing a Z timezone marker in UTCTimestamp, indeed
 discouraging non-timezone use.  This is in line with OAI-PMH use.
 Therefore, while technically changing the schema such that legacy
 clients  might be confused, we do not expect incompatibilites.
+\item Added advice about the use of creator.name
 \item Adding language on using capability/@standardID rather than
 interface/@version to distinguish between different protocol versions in
 the normal case, removed skynode example.
