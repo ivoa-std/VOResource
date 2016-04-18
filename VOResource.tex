@@ -163,6 +163,7 @@ its legal extensions.''
 \end{admonition}
 
 \subsection{Role within the VO Architecture}
+\label{sect:role}
 
 \begin{figure}
 \centering
@@ -277,8 +278,9 @@ record:
   \item the specific type of resource indicated by
        the value of the \xmlel{xsi:type} attribute (line 2),
   \item the location of the schema documents used by
-       this description (lines 5f),
-  \item values for the three main types core metadata:
+       this description (lines 5f) -- this is to facilitate document
+       validation --,
+  \item values for the three main types of core metadata:
        identity, curation, and content,
   \item a reference to another resource is made by
        providing that resource's IVOA identifier (line 13),
@@ -306,7 +308,7 @@ prefix used is irrelevant as long as the namespace URI mapped is the one
 given by this specification, in the Virtual Observatory context uniform,
 per-major-version prefixes are viewed as helping interoperability.  This
 is particularly true when prefixes appear in attribute values (e.g.,
-\xmlel{xsi:type}), as non-schema aware XML processors cannot
+of \xmlel{xsi:type}), as non-schema aware XML processors cannot
 URI-normalize such occurrences.  Also, non-XML-aware software (e.g., SQL
 databases) will use these prefixes rather than the full namespace URIs.
 
@@ -327,13 +329,13 @@ xsi:schemaLocation="http://www.ivoa.net/xml/VOResource/v1.0
 Because the VOResource XML schema sets \xmlel{elementFormDefault} to
 unqualified, documents that use the VOResource schema must not bind the
 empty namespace (using \verb|xmlns="..."|), anywhere in the document
-where the VOResource schema is in effect.  (This is a restriction set by
-the rules of XML Schema.)  Furthermore, in accordance with the Schema
+where the VOResource schema is in effect.  This is a restriction set by
+the rules of XML Schema.  Furthermore, in accordance with the Schema
 rules for unqualified elements, the VOResource namespace prefix must not
 used to qualify VOResource elements.  In general, namespace prefixes are
 only used to qualify type names given as values to the \xmlel{xsi:type}
 attribute (see next section).  Legal extensions of the VOResource schema
-SHOULD also set \verb|elementFormDefault="unqualified"| for consistancy.
+should also set \verb|elementFormDefault="unqualified"| for consistancy.
 
 
 
@@ -352,46 +354,13 @@ VOResource at all; rather, VOResource types may appear anywhere in the
 document.   
 
 The IVOA Registry Interface standard \citep{2009ivoa.spec.1104B}, 
-for example, includes a
-small schema that defines a single global element,
-\xmlel{VOResources}, that can contain a series of
-\xmlel{resource} child elements.  The child
-element is defined to be of the type \xmlel{Resource} from
-the VOResource schema.
-
-\begin{admonition}{Note}
-In the example instance
-document at the beginning of section~\ref{sect:model}, the root element,
-\xmlel{resource} is not defined in any schema.
-Nevertheless, this document is still legal and verifiable XML.
-This is because the element's type is explicitly specified with
-the \xmlel{xsi:type} attribute.
-\end{admonition}
-
-
-% TODO: subsubsection name convention?  What are the further subsections
-% then?
-
-VOResource uses the following conventions for
-names of elements and types:
-
-\begin{itemize}
-  \item all global types it defines have names that are capitalized.
-       (This practice would extend to global elements, if they existed
-       in the VOResource.)   
-  \item Locally defined elements begin with a lower-case character. 
-  \item For all types and element names that are made up of multiple
-       words, such as \xmlel{shortName}, upper-case letters are
-       used demarcate the start of appended word (the ``camel''
-       format).  
-  \item Names that include abbreviations, such as
-       \xmlel{IdentifierURI}, all letters in the abbreviation are
-       capitalized.  
-\end{itemize}
-
-It is recommended that this convention be followed in other schemas
-that either use the VOResource schema (via an \xmlel{xsd:import} or
-\xmlel{xsd:include}) or extend it.  
+for example, at the time of writing includes a small schema that defines
+a global element \xmlel{ri:Resource} of default type
+\xmlel{vr:Resource}.  It is primarily intended as the child of
+\xmlel{oai:metadata} in OAI-PMH responses \citep{std:oaipmh}, a protocol
+frequently used to transport VOResource records.  When describing actual
+resources, \xmlel{ri:Resource} will still use \xmlel{xsi:type} to
+indicate the actual resource type.
 
 Applications describe a single resource using an element of the type
 \xmlel{vr:Resource} or a legal derivation of it.  The content of the
@@ -415,29 +384,65 @@ sections 3.1, 3.2, 3.3, and 4 of the RM):
 These elements are defined in more detail in sect.~\ref{sect:metadata}.
 
 
+\begin{admonition}{Note}
+In the example instance
+document at the beginning of section~\ref{sect:model}, the root element,
+\xmlel{resource} is not defined in any schema.
+Nevertheless, this document is still legal and verifiable XML.
+This is because the element's type is explicitly specified with
+the \xmlel{xsi:type} attribute.
+\end{admonition}
+
+
+\subsubsection{Naming Convention}
+
+VOResource uses the following conventions for
+names of elements and types:
+
+\begin{itemize}
+  \item all global types it defines have names that are capitalized.
+       (This practice would extend to global elements, if they existed
+       in the VOResource.)   
+  \item Locally defined elements begin with a lower-case character. 
+  \item For all types and element names that are made up of multiple
+       words, such as \xmlel{shortName}, upper-case letters are
+       used demarcate the start of appended word (the ``camel''
+       format).  
+  \item Names that include abbreviations, such as
+       \xmlel{IdentifierURI}, all letters in the abbreviation are
+       capitalized.  
+\end{itemize}
+
+It is recommended that this convention be followed in other schemas
+that either use the VOResource schema (via an \xmlel{xsd:import} or
+\xmlel{xsd:include}) or extend it.  
+
+
+\subsubsection{String Values}
 
 Many of the elements in VOResource that are meant to have string or
 URI values are defined as being of the type \xmlel{xs:token}.
 This allows authors of VOResource instance documents to pad string and
 URI values with spaces and include carriage returns to improve
 readability.  The definition of these types will cause an XML
-Schema-compliant parser to replace tab, line feed, and carraige return
+Schema-compliant parser to replace tab, line feed, and carriage return
 characters with simple spaces, then replace multiple sequential
 occurrences of spaces with a single space, and then remove all leading
 and trailing spaces.  
 
+\subsubsection{Dates and Times}
 
 All VOResource elements and attributes that contain dates must be
 interpreted as UTC dates and must be encoded in compliance with ISO8601
 \citep{std:iso8601}
 standard Date and Time Format.  The \xmlel{vr:UTCTimestamp} type
-provides a special restriction of the format that requires includsion of
-date and time, but enforces the use of the UTC timezone.  The Time
-format to be used by both VOResource itself and by OAI-PMH
-\citep{std:oaipmh}, a protocol frequently used to transport VOResource
-records, therefore requires timestamps like
+provides a special restriction of the format that requires inclusion of
+date and time, but enforces the use of the UTC timezone.  The time
+format to be used by VOResource (designed to coincide with
+what the OAI-PMH transport protocol mentioned above defines)
+therefore requires timestamps like
 $$\hbox{\texttt{2008-02-22T12:22:34Z,}}$$
-where optional fractional seconds are allowed (see the schema
+where optional fractional seconds are allowed.  See the schema
 documentation for the actual regular expression pattern.
 
 For historical reasons, VOResource also allows a form without any
@@ -450,8 +455,11 @@ a trailing Z.
       	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{vr:UTCTimestamp} Type Schema Documentation}
 
 \noindent{\small
-           A timestamp that is compliant with ISO8601 but disallows
-           the use of a timezone indicator.
+           A timestamp that is compliant with ISO8601 and fixes
+           the timezone indicator, if present, to "Z" (UTC).  VOResource
+           writers should always include the timezone marker.  VOResource
+           readers must interpret timestamps without a timezone marker as
+           UTC.
          \par}
 
 \vspace{1ex}\noindent\textbf{\xmlel{vr:UTCTimestamp} Type Schema Definition}
@@ -467,12 +475,31 @@ a trailing Z.
 % /GENERATED
 
 
-The \xmlel{vr:UTCDateTime} type allows the date to appear either
-as a simple date--i.e. conforming to \xmlel{xs:date}--or as a
-date and time as restricted by \xmlel{vr:UTCTimestamp}.  
-When either of these VOResource types is used, authors must provide an
-applicable UTC date and time, and applications must interpret the time
-and date as UTC. 
+Where day granularity might suffice, VOResource and extensions can
+employ the \xmlel{vr:UTCDateTime} type.
+
+% GENERATED: !schemadoc VOResource-v1.0.xsd UTCDateTime
+\begingroup
+      	\renewcommand*\descriptionlabel[1]{%
+      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{vr:UTCDateTime} Type Schema Documentation}
+
+\noindent{\small
+           A date stamp that can be given to a precision of either a
+           day (type xs:date) or seconds (type xs:dateTime).  Where only a
+           date is given, it is to be interpreted as the span of the day 
+           on the UTC timezone if such distinctions are relevant.
+         \par}
+
+\vspace{1ex}\noindent\textbf{\xmlel{vr:UTCDateTime} Type Schema Definition}
+
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<xs:simpleType name="UTCDateTime" >
+  <xs:union memberTypes="xs:date vr:UTCTimestamp" />
+</xs:simpleType>
+\end{lstlisting}\endgroup
+% /GENERATED
+
+\subsubsection{VOResource Semantics}
 
 All VOResource types and elements have an associated semantic meaning
 which is given in the first \xmlel{xsd:documentation}
@@ -621,7 +648,7 @@ records is expected to be the choice of the VOResource record
 author.  However, it is also expected that resource registry
 providers will provide some guidance to authors on best
 practices.  This guidance could in part come in the form of a
-GUI that naturally encourage or contrains to aggregation of
+GUI that naturally encourage or constrain aggregation of
 capabilities in a single record.
 \end{admonition}
 
@@ -632,10 +659,13 @@ behavior, the base \xmlel{vr:Capability} type only provides a
 \xmlel{description} element that can contain human-readable text on what
 this capability provides.  More structured behavioral information must
 be provided through specialized \xmlel{vr:Capability} extensions.  In
-particular, it is expected that a service standard (e.g. Simple Image
-Access Protocol) would define an extension of \xmlel{vr:Capability} that
+particular, a service standard (e.g. Simple Image
+Access Protocol) will define an extension of \xmlel{vr:Capability} that
 adds additional metadata that can describe the service's behavior in
-relation to the standard; for example, the added metadata can describe
+relation to the standard (in practice, the Registry extension is
+frequently defined in an separate ancillary standard). 
+
+The added metadata can describe
 limitations of the service implementation or indicate support for
 optional features.  The specific \xmlel{vr:Capability} type is invoked
 using the \xmlel{xsi:type} mechanism described in
@@ -644,49 +674,31 @@ sect.~\ref{sect:namespace}.
 
 Here is an example for assigning a specialized Capability type for
 a standard service capability.  In this example, it is assumed that
-\xmlel{SimpleImageAccess} extension type is defined in a separate
-schema document.
+\xmlel{ExampleCapType} extension type is defined in a separate
+schema document, the target namespace of which as been bound to the
+\xmlel{ex:} prefix:
+.
 \begin{lstlisting}[language=XML]
-<capability xsi:type="sia:SimpleImageAccess"
-            standardID="ivo://ivoa.net/std/SIA">
+<capability xsi:type="ex:ExampleCapType"
+            standardID="ivo://example.com/std/exampleAccess">
   ...
 </capability>
 \end{lstlisting}
 
-
-As the example above suggests, a common way for locating or otherwise
-identifying support for a standard service capability is by looking for
-the appropriate value in a \xmlel{capability}'s \xmlel{xsi:type}
-attribute.  
-
+Note that the \xmlel{xsi:type} and the \xmlel{standardID} can vary
+independently of each other.  There is no requirement to use a given
+capability type for an endpoint conforming to a certain standard, as
+indicated by the capability's \xmlel{standardID}. Conversely,
+it may make sense to re-use a certain capability type in a different
+standard; historically, several VOResource extension types have
+fixed \xmlel{standardID}s.  This is now discouraged, as it needlessly
+limits the applicability of the encoded metadata models.
 
 If the service capability being described does not conform to any
 standard or if the standard does not require any specialized
 capability metadata for describing an implementation's behavior, then
-no \xmlel{vr:Capability} extension is required.  In this case,
-the base \xmlel{capability} element is simply used without any
-\xmlel{xsi:type} attribute provided.  It is expected that the
-metadata provided outside of the \xmlel{capability} element as
-well as (optionally) it's \xmlel{description} element is
-sufficient for describing what the service does.  
-
-
-
-Because each \xmlel{vr:Capability} extension features a different
-set of behavioral metadata, introducing a new
-\xmlel{vr:Capability} extension can impose a non-trivial cost on
-applications that process VOResource records.  Thus, an alternative
-way to indicate support for a service standard is provided by the
-\xmlel{standardID} attribute which is useful when the standard
-does not require any specialized behavioral metadata to be provided.
-The value is set to a URI which represents the service standard.  Some
-service standards that do extend \xmlel{vr:Capability}
-\emph{may} force the value of this attribute to be set to the
-appropriate value (see sect.~\ref{sect:derivedtypes});
-this allows one to use, when appropriate, the \xmlel{standardID}
-as a way to locate support for a standard regardless of whether an
-extension type has been defined or not.   
-
+\xmlel{vr:Capability} can be used as-is, possibly with the appropriate
+\xmlel{standardID}.
 
 
 Each \xmlel{capability} element can contain one or more child
@@ -711,14 +723,16 @@ overall type (e.g. \xmlel{vr:WebBrowser},
 output products.  
 
 
-When a standard capability is being described (i.e. either the
-\xmlel{vr:Capability} sub-type is defined by a standard or the
-\xmlel{standardID} is provided), then at least one of the
+When a standard capability is being described (by means of providing a
+\xmlel{standardID}), then at least one of the
 \xmlel{interface} elements should describe an interface required
 by the standard.  The \xmlel{role} attribute is used to mark the
 standard interfaces (typically with the value ``std'').
 All other interfaces are considered non-standard
-alternatives.
+alternatives.  To best support real-world discovery strategies, it is
+recommended to avoid having non-standard interfaces in capabilities
+with well-known \xmlel{standardID}s with the exception of
+\xmlel{vr:WebBrowser}-typed ones.
 
 
 Another way \xmlel{interface}s inside the same
@@ -825,7 +839,7 @@ section 5.2 of the RM
 (e.g. \emph{Service.MaxReturnRecords}, \emph{Service.MaxReturnSize})
 but can also include other concepts that are specific to that standard.
 
-
+% TODO: discourage this
 
 The standard's extension schema \emph{may} create a derived
 \xmlel{vr:Capability} type that forces the value of the
@@ -863,11 +877,9 @@ absolutely required by clients in order to invoke the service.
 
 
 Examples for extension schemas can be found in the IVOA Document
-Repository.\footnote{\url{http://ivoa.net/documents}}  At the time of
-this writing, extension schemas are available for generic data services
-(VODataService; this includes an interface type for HTTP GET and POST),
-for several protocols from the IVOA data access layer, and for
-registries, i.e., the entities actually processing VOResource metadata.
+Repository.\footnote{\url{http://ivoa.net/documents}}
+Sect.~\ref{sect:role} enumerates the ones in Recommendation state at the
+time of writing.
 
 
 \section{The VOResource Metadata}
@@ -2862,6 +2874,9 @@ Consequently, the vr:Type type vanishes from the XSD.
 The vocabulary is now managed as an external resource.
 Consequently, the vr:ContentLevel type vanishes from the XSD.
 \item Adding altIdentifier elements to creator and resource.
+\item Now discouraging fixing standardID in VOResource extensions.
+Also, removed indication that capability/@xsi:type should be used for
+service discovery.
 \item Now allowing a Z timezone marker in UTCTimestamp, indeed
 discouraging non-timezone use.  This is in line with OAI-PMH use.
 Therefore, while technically changing the schema such that legacy
