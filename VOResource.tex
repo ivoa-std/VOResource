@@ -839,28 +839,6 @@ section 5.2 of the RM
 (e.g. \emph{Service.MaxReturnRecords}, \emph{Service.MaxReturnSize})
 but can also include other concepts that are specific to that standard.
 
-% TODO: discourage this
-
-The standard's extension schema \emph{may} create a derived
-\xmlel{vr:Capability} type that forces the value of the
-\xmlel{standardID} attribute to be set to a given URI.  This
-should be done by first deriving from \xmlel{vr:Capability} by
-\emph{restriction} (i.e. using
-\xmlel{xsd:restriction}), keeping all of the parent's
-content model except adding to the \xmlel{standardID}'s attribute
-definition \verb|use="required"| along with the
-\xmlel{fixed} modifier set to the desired URI.  Since this
-restricted type is not intended for direct use in an instance
-document, it should be marked as abstract.  The restricted type should
-then be extended to add the specialized capability metadata required
-by the standard.  (See the example below.)  
-
-
-
-It is not recommended that standard's extension schema attempt to
-force the inclusion of a required interface type.  
-
-
 
 An extension schema can define new interface types, though not
 necessarily in the context of any specific standard service
