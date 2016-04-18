@@ -175,8 +175,36 @@ its legal extensions.''
 Fig.~\ref{fig:archdiag} shows the VOResource plays within the
 IVOA architecture \citep{note:VOARCH}.
 
-TODO: Write this.
+VOResource depends on the following other IVOA standards:
 
+\begin{description}
+\item[Resource Metadata, v1.12 \citep{2007ivoa.spec.0302H}] The RM
+provides the central concepts and structures mapped here into an XML
+schema.
+\end{description}
+
+
+There are relationships to the following other IVOA standards:
+
+\begin{description}
+\item[Registry Interfaces \citep{2009ivoa.spec.1104B}] Registry
+Interfaces describes how registries exchange VOResource records, and it
+provides a \xmlel{vr:Resource}-typed element to hold them within XML
+data (VOResource itself has no global element).
+\item[VOResource extensions] VOResource lays the foundations upon which
+description schemes for concrete resources are built in various
+VOResource extensions.  At the time of writing, recommendations have
+been passed for the description of VO Standards
+\citep{2012ivoa.spec.0508H}, various ``simple'' data discovery protocols
+\citep{2013ivoa.spec.1125P}, generic data services
+\citep{2010ivoa.spec.1202P}, and TAP services
+\citep{2012ivoa.spec.0827D}.  The Registry Interfaces standard also
+contains a VOResource extension.
+\item[RegTAP \citep{2014ivoa.spec.1208D}] The Registry Relational Schema
+gives a relational mapping of the models discussed here.
+\item[VOSI \citep{2011ivoa.spec.0531G}] The VO support interfaces re-use
+the service model developed here to facilitate service self-description.
+\end{description}
 
 \section{The VOResource Data Model}
 \label{sect:model}
