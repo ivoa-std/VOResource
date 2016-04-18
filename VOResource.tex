@@ -38,9 +38,11 @@ Metadata, referred to as VOResource.  This schema is primarily
 intended to support interoperable registries used for discovering
 resources; however, any application that needs to describe resources
 may use this schema.  In this document, we define the types and
-elements that make up the schema as representations of metadata terms
+elements that make up the schema in close alignment to the metadata terms
 defined in Resource Metadata for the Virtual Observatory
-\citep{2007ivoa.spec.0302H}.  We also describe the general model for the
+\citep{2007ivoa.spec.0302H}, but also taking into account other metadata
+standards as well as experiences from the operation of the VO Registry.
+We also describe the general model for the
 schema and explain how it may be extended to add new metadata terms and
 describe more specific types of resources.  
 \end{abstract}
@@ -82,22 +84,26 @@ rules for their use is referred to as the document schema.  One way to
 formally define a schema for XML documents is using the W3C standard
 known as XML Schema \citep{std:XSD}.
 
-This document defines the VOResource schema using XML Schema, the
-authoritative version of which is available at the IVOA document
+The XML Schema of VOResource is
+available from the IVOA document
 repository\footnote{\url{http://www.ivoa.net/xml}} at any time.
 Parts of the schema appear within the main sections of this document;
-however, documentation nodes have been left out for the sake of brevity,
-and where their content diverges from the one in the document
-repository, the one in the document repository is authoritative.
+however, documentation nodes have been left out for the sake of brevity.
+Where the content of the pieces of schema embedded in this text
+diverges from the schema document in the IVOA document
+repository, the version in the document repository is authoritative.
 
-Reference to specific elements and types defined in the VOResource
+References to specific elements and types defined in the VOResource
 schema include the namespaces prefix \xmlel{vr} as in
-\xmlel{vr:Resource} (a type defined in the VOResource schema).
+\xmlel{vr:Resource} (a type defined in the VOResource schema).  For more
+details on the intended interpretation, refer to
+sect.~\ref{sect:namespace}.
 
 \section{Introduction}
 
-The IVOA Standard Resource Metadata for the Virtual Observatory
-\citep{2007ivoa.spec.0302H}, hereafter referred to as RM, defines
+The IVOA recommendation ``Resource Metadata for the Virtual
+Observatory''
+\citep{2007ivoa.spec.0302H}, hereafter referred to as the RM, defines
 metadata terms for describing resources.  The RM defines a resource as: 
 
 \begin{quotation}
@@ -116,8 +122,16 @@ a resource in general.  The RM defines the terms as well as describes
 reasonable or allowed values; it does not, however, describe how the
 terms and values should be encoded.  This is because resource metadata
 may be encoded in several different formats, depending on the
-context.  This document specifically describes an encoding called
-VOResource.  
+context
+
+In addition to concepts and structures laid down in the RM, VOResource
+also acknowledges other (though mostly related) metadata schemes.  Of
+particular importance here is the metadata scheme employed by DataCite,
+which at the time of writing is at version 3.1 \citep{std:DataCite31}.
+This, in particular, concerns the alignment of vocabularies.
+
+This document provides a concrete encoding of the resulting metadata
+model.
 
 The primary intended use of VOResource is to provide an XML interchange
 format for use with resource registries.  A registry is a repository of
@@ -136,12 +150,6 @@ additional metadata that is relevant only to a resource of its type.
 Thus, the VOResource schema has been especially designed to be
 extended.  The model for doing this is described in
 sect.~\ref{sect:extending}.
-
-In addition to concepts and structures laid down in the RM, VOResource
-also acknowledges other (though mostly related) metadata schemes.  Of
-particular importance here is the metadata scheme employed by DataCite,
-which at the time of writing is at version 3.1 \citep{std:DataCite31}.
-This, in particular, concerns the alignment of vocabularies.
 
 \begin{admonition}{Note}
 The name ``VOResource'' has in practice had two meanings within
