@@ -2477,7 +2477,7 @@ attributes help distinguish between multiple interfaces within the same
     <xs:element name="testQueryString" type="xs:token" minOccurs="0"
               maxOccurs="unbounded" />
   </xs:sequence>
-  <xs:attribute name="version" type="xs:string" default="1.0" />
+  <xs:attribute name="version" type="xs:string" />
   <xs:attribute name="role" type="xs:NMTOKEN" />
 </xs:complexType>
 \end{lstlisting}
@@ -2490,15 +2490,11 @@ attributes help distinguish between multiple interfaces within the same
 \item[Type] string: \xmlel{xs:string}
 \item[Meaning] 
                The version of a standard interface specification that this 
-               interface complies with.  When the interface is
-               provided in the context of a Capability element, then
-               the standard being referred to is the one identified by
-               the Capability's standardID element.  If the standardID
-               is not provided, the meaning of this attribute is
-               undefined.  
+               interface complies with.  Most VO standards indicate the
+               version in the standardID attribute of the capability.  For
+               these standards, the version attribute should not be used.
             
 \item[Occurrence] optional
-1.0
 \end{description}
 \item[role]
 \begin{description}
@@ -2849,48 +2845,68 @@ refer to the service endpoint URL.
 
 \begin{itemize}
 \item Adopting DataCite as another ``upstream'' in addtion to RM.
+
+\item Adding altIdentifier elements to creator and resource.
+
 \item The vocabulary of date/@role is now managed as a separate
 resource; DataCite terms have been added to it, and the old 1.0 terms
 deprecated.
+
 \item The vocabulary of relationshipType is now managed as a separate
-resoruce; some DataCite terms have been added to it.
+resource; some DataCite terms have been added to it.
+
 \item Service/rights now is free text rather than the tree-term
 enumeration.  In addition, it now has a rightsURI attribute,
 DataCite-style.
+
 \item content/type is now xs:token rather than a special restriction.
 The vocabulary is now managed as an external resource.
 Consequently, the vr:Type type vanishes from the XSD.
+
 \item content/level is now xs:token rather than a special restriction.
 The vocabulary is now managed as an external resource.
 Consequently, the vr:ContentLevel type vanishes from the XSD.
-\item Adding altIdentifier elements to creator and resource.
+
 \item Now discouraging fixing standardID in VOResource extensions.
 Also, removed indication that capability/@xsi:type should be used for
 service discovery.
+
 \item Now allowing a Z timezone marker in UTCTimestamp, indeed
 discouraging non-timezone use.  This is in line with OAI-PMH use.
 Therefore, while technically changing the schema such that legacy
 clients  might be confused, we do not expect incompatibilites.
+
 \item resource/description and capability/description are now xs:string
 to enable simple plain text markup.
+
 \item Adding language on using capability/@standardID rather than
 interface/@version to distinguish between different protocol versions in
 the normal case, removed skynode example.
+
+\item Consequently, removing 1.0 default on interface/@version.
+
 \item Added advice about the use of creator.name
+
 \item Removed SOAP/WSDL example and a bit of the accompanying language.
+
 \item Section 3 needed some refactoring since the schema documentation
 is now generated from the schema document.  To accomodate this, some
 text manually embedded within the schema documentation had to be moved
 out of the generated material or removed.
+
 \item While we still reference RM, it is now no longer informally
 authoritative for VOResource (we'd have to change RM before we change
 VOResource otherwise)
+
 \item References to the RM terms in the metadata definition dropped
 (could add support in ivoates/schemadoc if we want them back).
+
 \item Strongly advising the use of the vr: prefix, removing some
 duplicated advice regarding prefixes
+
 \item Removed example for deriving a SIA capability (this is now
 in the document repository)
+
 \item Ported document source to \ivoatex.
 \end{itemize}
 
