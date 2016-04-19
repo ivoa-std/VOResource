@@ -633,7 +633,7 @@
           </xs:annotation>
        </xs:element>
 
-       <xs:element name="description" type="xs:token">
+       <xs:element name="description" type="xs:string">
           <xs:annotation>
              <xs:appinfo>
                <vm:dcterm>Description</vm:dcterm>
@@ -936,7 +936,7 @@
             </xs:annotation>
          </xs:element>
 
-         <xs:element name="description" type="xs:token" minOccurs="0">
+         <xs:element name="description" type="xs:string" minOccurs="0">
             <xs:annotation>
                <xs:documentation>
                   A human-readable description of what this capability 

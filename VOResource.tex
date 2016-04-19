@@ -428,7 +428,17 @@ readability.  The definition of these types will cause an XML
 Schema-compliant parser to replace tab, line feed, and carriage return
 characters with simple spaces, then replace multiple sequential
 occurrences of spaces with a single space, and then remove all leading
-and trailing spaces.  
+and trailing spaces.
+
+The \xmlel{description} children of resources and capabilities, on the
+other hand, are of type \xmlel{xs:string}, which means that even
+schema-aware processors will preserve whitespace.  This is inteded to
+allow simple markup like paragraphs (empty lines) in the descriptions,
+which may be little texts.  Since in VO practice, constructs like simple
+ASCII tables sometimes appear in such descriptions, clients are
+encouraged to not reflow descriptions and display them in a fixed-with
+font.
+
 
 \subsubsection{Dates and Times}
 
@@ -1646,7 +1656,7 @@ defined by the \xmlel{vr:Content} complex type.
 <xs:complexType name="Content" >
   <xs:sequence >
     <xs:element name="subject" type="xs:token" maxOccurs="unbounded" />
-    <xs:element name="description" type="xs:token" />
+    <xs:element name="description" type="xs:string" />
     <xs:element name="source" type="vr:Source" minOccurs="0" />
     <xs:element name="referenceURL" type="xs:anyURI" />
     <xs:element name="type" type="xs:token" minOccurs="0"
@@ -1677,7 +1687,7 @@ defined by the \xmlel{vr:Content} complex type.
 \end{description}
 \item[Element \xmlel{description}]
 \begin{description}
-\item[Type] string: \xmlel{xs:token}
+\item[Type] string: \xmlel{xs:string}
 \item[Meaning] 
                An account of the nature of the resource
              
@@ -2301,7 +2311,7 @@ different capability of the service.
   <xs:sequence >
     <xs:element name="validationLevel" type="vr:Validation" minOccurs="0"
               maxOccurs="unbounded" />
-    <xs:element name="description" type="xs:token" minOccurs="0" />
+    <xs:element name="description" type="xs:string" minOccurs="0" />
     <xs:element name="interface" type="vr:Interface" minOccurs="0"
               maxOccurs="unbounded" />
   </xs:sequence>
@@ -2354,7 +2364,7 @@ different capability of the service.
 \end{description}
 \item[Element \xmlel{description}]
 \begin{description}
-\item[Type] string: \xmlel{xs:token}
+\item[Type] string: \xmlel{xs:string}
 \item[Meaning] 
                   A human-readable description of what this capability 
                   provides as part of the over-all service 
@@ -2531,10 +2541,6 @@ attributes help distinguish between multiple interfaces within the same
                  When more than one URL is given, each represents an
                  alternative (i.e. mirror) endpoint whose behavior is
                  identical to all the other accessURLs listed.  
-               
-\item[Comment] 
-                 Editor's note: this element assumes that
-                 all registered services are inherently web based.
                
 
 \end{description}
@@ -2865,6 +2871,8 @@ service discovery.
 discouraging non-timezone use.  This is in line with OAI-PMH use.
 Therefore, while technically changing the schema such that legacy
 clients  might be confused, we do not expect incompatibilites.
+\item resource/description and capability/description are now xs:string
+to enable simple plain text markup.
 \item Adding language on using capability/@standardID rather than
 interface/@version to distinguish between different protocol versions in
 the normal case, removed skynode example.
