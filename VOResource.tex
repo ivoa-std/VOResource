@@ -935,6 +935,7 @@ by the VOResource schema definition.
       </xs:restriction>
     </xs:simpleType>
   </xs:attribute>
+  <xs:attribute name="version" type="xs.token" />
 </xs:complexType>
 \end{lstlisting}
 
@@ -991,6 +992,18 @@ by the VOResource schema definition.
                       resource publisher has explicitly deleted the resource.
                    
 \end{longtermsdescription}
+\end{description}
+\item[version]
+\begin{description}
+\item[Type] \xmlel{xs.token}
+\item[Meaning] 
+               The XML schema version for which this instance was written.
+               Implementors should set this to the value of the version
+               attribute of their schema's root (xs:schema) element
+               is.  Clients may assume version 1.0 if this attribute is 
+               missing.
+            
+\item[Occurrence] optional
 \end{description}
 
 
@@ -1114,6 +1127,15 @@ OAI-PMH mandates that \xmlel{oai:metadata} is empty for deleted
 records, and VOResource's \xmlel{status} essentially is a refinement of
 OAI-PMH's \xmlel{status}.  Having VOResource records with \xmlel{status}
 set to \verb|deleted| might still be useful outside of OAI-PMH.
+
+The \xmlel{version} attribute of an \xmlel{vr:Resource} element gives
+the version of the schema it was written against, as prescribed in the
+IVOA Note ``XML Schema Versioning Policies''
+\citep{note:schemaevolution}.  If missing, the value of this attribute
+can be assumed to be 1.0.  This attribute should \emph{not} be used to
+locate the schema file -- clients should either consult
+\xmlel{schemaLocation} or retrieve the latest schema for the \xmlel{vr:}
+namespace from the IVOA schema repository.
 
 The following sections discuss the complex types mentioned in the above
 definitions.
@@ -2919,6 +2941,9 @@ refer to the service endpoint URL.
 \item Adopting DataCite as another ``upstream'' in addtion to RM.
 
 \item Adding altIdentifier elements to creator and resource.
+
+\item Adding a version attribute to vr:Resource for compliance with XML
+Schema Versioning Policies
 
 \item The vocabulary of date/@role is now managed as a separate
 resource; DataCite terms have been added to it, and the old 1.0 terms

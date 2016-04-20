@@ -6,7 +6,7 @@
            xmlns:vm="http://www.ivoa.net/xml/VOMetadata/v0.1"
            elementFormDefault="unqualified"
            attributeFormDefault="unqualified"
-           version="1.02">
+           version="1.1">
 
    <xs:annotation>
      <xs:appinfo>
@@ -216,6 +216,18 @@
                </xs:enumeration>
             </xs:restriction>
          </xs:simpleType>
+      </xs:attribute>
+
+      <xs:attribute name="version" type="xs.token">
+         <xs:annotation>
+            <xs:documentation>
+               The XML schema version for which this instance was written.
+               Implementors should set this to the value of the version
+               attribute of their schema's root (xs:schema) element
+               is.  Clients may assume version 1.0 if this attribute is 
+               missing.
+            </xs:documentation>
+         </xs:annotation>
       </xs:attribute>
    </xs:complexType>
 
