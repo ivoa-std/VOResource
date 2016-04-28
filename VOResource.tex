@@ -215,60 +215,8 @@ using the metadata concepts defined in the RM.  Here is an example of a
 VOResource document describing an organisation, the Radio Astronomy
 Imaging Group at the National Center for Supercomputing Applications.  
 
-\begin{lstlisting}[language=XML,numbers=right,basicstyle=\footnotesize]
-<?xml version="1.0" encoding="UTF-8"?>
-<resource xsi:type="Organisation"
-  xmlns:vr="http://www.ivoa.net/xml/VOResource/v1.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.ivoa.net/xml/VOResource/v1.0
-                      http://www.ivoa.net/xml/VOResource/v1.0">
-
-    <title>NCSA Radio Astronomy Imaging</title>
-    <shortName>NCSA-RAI</shortName>
-    <identifier>ivo://rai.ncsa/RAI</identifier>
-
-    <curation>
-      <publisher ivo-id="ivo://ncsa.uiuc/NCSA">
-         National Center for Supercomputing Applications
-      </publisher>
-      <creator>
-        <name>   Crutcher, Richard    </name>
-        <logo>
-           http://rai.ncsa.uiuc.edu/rai.jpg
-        </logo>
-      </creator>
-      <date>1993-01-01</date>
-      <contact>
-        <name>Plante, R.</name>
-      	<email>rplante@ncsa.uiuc.edu</email>
-      </contact>
-    </curation>
-
-    <content>
-      <subject>radio astronomy</subject>
-      <subject>data repositories</subject>
-      <subject>digital libraries</subject>
-      <subject>grid-based processing</subject>
-      <description>
-        The Radio Astronomy Imaging Group at the National Center for
-        Supercomputing Applications is focused on applying
-        high-performance computing to astronomical research.  Our
-        projects include the NCSA Astronomy Digital Image Library, 
-        the BIMA Data Archive, the BIMA Image Pipeline, and the
-        National Virtual Observatory. 
-      </description>
-      <referenceURL>http://rai.ncsa.uiuc.edu/</referenceURL>
-      <type>Organisation</type>
-      <contentLevel>Research</contentLevel>
-    </content>
-
-    <facility>Berkeley-Illinois-Maryland Array (BIMA)</facility>
-    <facility>
-       Combined Array for Research in Millimeter Astronomy (CARMA)
-    </facility>
-
-</resource>
-\end{lstlisting}
+\lstinputlisting[language=XML,numbers=right,basicstyle=\footnotesize]
+   {example-voresource.xml}
 
 This example illustrates some important components of a VOResource
 record:
@@ -309,8 +257,8 @@ given by this specification, in the Virtual Observatory context uniform,
 per-major-version prefixes are viewed as helping interoperability.  This
 is particularly true when prefixes appear in attribute values (e.g.,
 of \xmlel{xsi:type}), as non-schema aware XML processors cannot
-URI-normalize such occurrences.  Also, non-XML-aware software (e.g., SQL
-databases) will use these prefixes rather than the full namespace URIs.
+URI-normalize such occurrences.  Also, non-XML-aware software (e.g., ADQL
+engines) will use these prefixes rather than the full namespace URIs.
 
 Authors of instance documents that use the VOResource schema may choose
 to provide a location for VOResource XML Schema document using the
@@ -355,7 +303,7 @@ document.
 
 The IVOA Registry Interface standard \citep{2009ivoa.spec.1104B}, 
 for example, at the time of writing includes a small schema that defines
-a global element \xmlel{ri:Resource} of default type
+a global element \xmlel{ri:Resource} of base type
 \xmlel{vr:Resource}.  It is primarily intended as the child of
 \xmlel{oai:metadata} in OAI-PMH responses \citep{std:oaipmh}, a protocol
 frequently used to transport VOResource records.  When describing actual
@@ -2940,6 +2888,14 @@ refer to the service endpoint URL.
 \begin{itemize}
 \item Adopting DataCite as another ``upstream'' in addtion to RM.
 
+\item While we still reference RM, it is now no longer informally
+authoritative for VOResource (we'd have to change RM before we change
+VOResource otherwise)
+
+\item References to the RM terms in the metadata definition dropped
+(could add support in ivoates/schemadoc if we want them back).
+
+
 \item Adding altIdentifier elements to creator and resource.
 
 \item Adding a version attribute to vr:Resource for compliance with XML
@@ -2990,13 +2946,6 @@ the normal case, removed skynode example.
 is now generated from the schema document.  To accomodate this, some
 text manually embedded within the schema documentation had to be moved
 out of the generated material or removed.
-
-\item While we still reference RM, it is now no longer informally
-authoritative for VOResource (we'd have to change RM before we change
-VOResource otherwise)
-
-\item References to the RM terms in the metadata definition dropped
-(could add support in ivoates/schemadoc if we want them back).
 
 \item Strongly advising the use of the vr: prefix, removing some
 duplicated advice regarding prefixes
