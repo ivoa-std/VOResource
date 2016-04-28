@@ -122,7 +122,7 @@ a resource in general.  The RM defines the terms as well as describes
 reasonable or allowed values; it does not, however, describe how the
 terms and values should be encoded.  This is because resource metadata
 may be encoded in several different formats, depending on the
-context
+context.
 
 In addition to concepts and structures laid down in the RM, VOResource
 also acknowledges other (though mostly related) metadata schemes.  Of
@@ -138,7 +138,7 @@ format for use with resource registries.  A registry is a repository of
 resource descriptions and is employed by users and applications to
 discover resources.  VOResource can be used to pass descriptions from
 publishers to registries and then from registries to applications.
-Another inended use is as a language for services to describe themselves
+Another intended use is as a language for services to describe themselves
 directly.  VOResource may be used in other ways, in whole or in part,
 using the standard XML mechanisms (e.g., import, include).  
 
@@ -497,7 +497,7 @@ VOResource entities:
        elsewhere.  
 
   \item The \xmlel{title} element gives the title of
-       the resource being described the enclosing
+       the resource being described by the enclosing
        \xmlel{vr:Resource} type and identified by its
        \xmlel{identifier} element.  The
        \xmlel{title} element's type,
@@ -560,7 +560,7 @@ descriptions.  Two other important parent types in the schema are
 \xmlel{vr:Capability} and \xmlel{vr:Interface}; these are
 extended to provide more refined descriptions of services (see
 sect.~\ref{sect:servicemodel}).  The motivation for extending
-these types are the same as for \xmlel{vr:Resource}: to provide
+these types is the same as for \xmlel{vr:Resource}: to provide
 more specific semantic meaning through the derived type's name, and to
 provide additional, specialized metadata that is not part of the
 parent type.  Note, however, that in general, a derived type need not
@@ -602,7 +602,7 @@ an IVOA service standard (e.g. Simple Image Access Protocol).  A service
 resource record may have multiple child \xmlel{capability} elements,
 each describing a different major functionality; however, these
 capabilities should be related in an obvious, logical way by virtue of
-sharing same core VOResource metadata.  
+sharing the same core VOResource metadata.  
 
 
 \begin{admonition}{Note}
@@ -757,7 +757,7 @@ VOResource.  In particular:
 
   \item \emph{Choose semantically meaningful names for derived
        types.}  When the derived type appears in the pattern
-       \verb|<elname xsi:type="derivedType"|,
+       \verb|<elname xsi:type="derivedType">|,
        choose a \textit{derivedType} name such that the sentence, ``a
        \textit{derivedType} is a kind of \textit{elname}'' makes natural
        and obvious sense.  For example, ``an \textit{Organisation} is a
@@ -883,7 +883,7 @@ by the VOResource schema definition.
       </xs:restriction>
     </xs:simpleType>
   </xs:attribute>
-  <xs:attribute name="version" type="xs.token" />
+  <xs:attribute name="version" type="xs:token" />
 </xs:complexType>
 \end{lstlisting}
 
@@ -943,12 +943,12 @@ by the VOResource schema definition.
 \end{description}
 \item[version]
 \begin{description}
-\item[Type] \xmlel{xs.token}
+\item[Type] \xmlel{xs:token}
 \item[Meaning] 
                The XML schema version for which this instance was written.
                Implementors should set this to the value of the version
-               attribute of their schema's root (xs:schema) element
-               is.  Clients may assume version 1.0 if this attribute is 
+               attribute of their schema's root (xs:schema) element.
+               Clients may assume version 1.0 if this attribute is 
                missing.
             
 \item[Occurrence] optional
@@ -1228,7 +1228,7 @@ The curation metadata described in the RM (section
              
 \item[Occurrence] optional; multiple occurrences allowed.
 \item[Comment] 
-                A logo need only be provided for the first occurance.
+                A logo need only be provided for the first occurrence.
                 When multiple logos are supplied via multiple creator 
                 elements, the application is free to choose which to
                 use. 
@@ -1291,7 +1291,7 @@ The curation metadata described in the RM (section
 
 Several of the curation elements (most importantly,
 \xmlel{publisher}\/) make use of the
-\xmlel{vr:ResourceName} type.  This type is provides a means of
+\xmlel{vr:ResourceName} type.  This type provides a means of
 refering to another resource both by name and by its IVOA
 identifier.  Not all resources referred to using this type will
 necessarily be registered and, therefore, will have an identifier;
@@ -1963,7 +1963,7 @@ assigned by different organisations.
               resource description meets additional quality criteria
               set by the human inspector and is therefore considered
               an excellent description of the resource. Consequently,
-              the resource is expected to be operate well as part of a
+              the resource is expected to operate well as part of a
               VO application or research study.
             
 \end{longtermsdescription}
@@ -2138,13 +2138,13 @@ elements to the core set of metadata, \xmlel{facility} and
 
 The main role of an organisation in the VO (that is, the main reason
 for describing organisations in a registry) is as a provider or
-publishier of other resources.  In particular, an organisation
+publisher of other resources.  In particular, an organisation
 description in a registry declares the association of an IVOA
 identifier with the organisation.  The
 organisation can then be referred to in other resource descriptions.
 For example, an organisation identifier will appear as the publisher
 identifier of service resource (as illustrated in the opening
-example in sect.~\ref{sect:model}.
+example in sect.~\ref{sect:model}).
 
 
 \subsubsection{The Service Resource Type}
@@ -2245,7 +2245,7 @@ are mentioned.  The \xmlel{rightsURI} attribute can be used to
 reference the
 full license text.  By re-using standard URIs (e.g., provided by the
 creators of the licenses), machines can
-identify ussage conditions.
+identify usage conditions.
 
 
 % GENERATED: !schemadoc VOResource-v1.1.xsd Rights
@@ -2416,7 +2416,7 @@ different capability of the service.
                   it via xsi:type.
                
 \item[Comment] 
-                  Multiple occurances can describe different interfaces to 
+                  Multiple occurrences can describe different interfaces to 
                   the logically same capability--i.e. data or functionality.
                   That is, the inputs accepted and the output provides should
                   be logically the same.  For example, a WebBrowser interface
@@ -2810,7 +2810,7 @@ service.
 As can be seen in the schema definition above, the
 \xmlel{vr:WebBrowser} type does not define any additional
 interface metadata (though other \xmlel{vr:Interface} derivations
-may).  Thus, this type is provide purely for its semantic meaning.  
+may).  Thus, this type is provided purely for its semantic meaning.  
 
 
 
@@ -2858,7 +2858,7 @@ sub-type available from the VOResource schema:
                      
 \item[Occurrence] optional; multiple occurrences allowed.
 \item[Comment] 
-                        Multiple occurances should represent mirror copies of 
+                        Multiple occurrences should represent mirror copies of 
                         the same WSDL file.  
                      
 
@@ -2893,7 +2893,7 @@ authoritative for VOResource (we'd have to change RM before we change
 VOResource otherwise)
 
 \item References to the RM terms in the metadata definition dropped
-(could add support in ivoates/schemadoc if we want them back).
+(could add support in ivoatex/schemadoc if we want them back).
 
 
 \item Adding altIdentifier elements to creator and resource.
