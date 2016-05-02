@@ -223,8 +223,8 @@
             <xs:documentation>
                The XML schema version for which this instance was written.
                Implementors should set this to the value of the version
-               attribute of their schema's root (xs:schema) element
-               is.  Clients may assume version 1.0 if this attribute is 
+               attribute of their schema's root (xs:schema) element.
+               Clients may assume version 1.0 if this attribute is 
                missing.
             </xs:documentation>
          </xs:annotation>
@@ -301,7 +301,7 @@
               resource description meets additional quality criteria
               set by the human inspector and is therefore considered
               an excellent description of the resource. Consequently,
-              the resource is expected to be operate well as part of a
+              the resource is expected to operate well as part of a
               VO application or research study.
             </xs:documentation>
           </xs:annotation>
@@ -408,7 +408,7 @@
                 for creating the content or constitution of the resource.
              </xs:documentation>
              <xs:documentation>
-                A logo need only be provided for the first occurance.
+                A logo need only be provided for the first occurrence.
                 When multiple logos are supplied via multiple creator 
                 elements, the application is free to choose which to
                 use. 
@@ -975,7 +975,7 @@
                   it via xsi:type.
                </xs:documentation>
                <xs:documentation>
-                  Multiple occurances can describe different interfaces to 
+                  Multiple occurences can describe different interfaces to 
                   the logically same capability--i.e. data or functionality.
                   That is, the inputs accepted and the output provides should
                   be logically the same.  For example, a WebBrowser interface
@@ -1220,7 +1220,7 @@
                         assumed to be the accessURL with "?wsdl" appended.
                      </xs:documentation>
                      <xs:documentation>
-                        Multiple occurances should represent mirror copies of 
+                        Multiple occurrences should represent mirror copies of 
                         the same WSDL file.  
                      </xs:documentation>
                   </xs:annotation>

@@ -509,7 +509,7 @@ VOResource entities:
 
 Additional semantics are transmitted through the use of derived types
 using the \xmlel{xsi:type} attribute.  In the sample instance document
-above, the use of \verb|xsi:type="Organisation"| means that the
+above, the use of \verb|xsi:type="vr:Organisation"| means that the
 resource being described is specifically an organisation as defined by
 the \xmlel{vr:Organisation} type.  This type provides additional
 metadata that are not part of the core resource metadata.  The semantics
@@ -2919,6 +2919,8 @@ Consequently, the vr:Type type vanishes from the XSD.
 \item content/level is now xs:token rather than a special restriction.
 The vocabulary is now managed as an external resource.
 Consequently, the vr:ContentLevel type vanishes from the XSD.
+
+\item New testQueryString child of interface.
 
 \item Now discouraging fixing standardID in VOResource extensions.
 Also, removed indication that capability/@xsi:type should be used for
