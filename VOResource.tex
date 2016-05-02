@@ -56,7 +56,7 @@ Information Technology Research Program under Cooperative Agreement
 AST0122449 with The Johns Hopkins University, from the
 UK Particle Physics and Astronomy
 Research Council (PPARC), and from the
-Eurpean Commission's Sixth
+European Commission's Sixth
 Framework Program via the 
 Optical Infrared Coordination Network (OPTICON).  Funding for the 2016
 update was provided by BMBF grant GAVO-2014, grant number 05A14VHA.
@@ -711,7 +711,7 @@ actually have different versions distinguish their endpoints by
 different standard identifiers, as described in section 4.2 of IVOA
 Identifiers 2.0 \citep{std:identifiers2}.  In these cases -- where the
 \xmlel{capability}'s \xmlel{standardID} attribute already uniquely
-determines the protocol spoken --, the speficication of \xmlel{version}
+determines the protocol spoken --, the specification of \xmlel{version}
 on \xmlel{interface} elements is optional, though encouraged.
 
 \subsection{Extending the VOResource Schema}
@@ -1264,7 +1264,7 @@ The curation metadata described in the RM (section
 \begin{description}
 \item[Type] string: \xmlel{xs:token}
 \item[Meaning] 
-               Label associated with creation or availablilty of a version of 
+               Label associated with creation or availability of a version of 
                a resource.
              
 \item[Occurrence] optional
@@ -1292,7 +1292,7 @@ The curation metadata described in the RM (section
 Several of the curation elements (most importantly,
 \xmlel{publisher}\/) make use of the
 \xmlel{vr:ResourceName} type.  This type provides a means of
-refering to another resource both by name and by its IVOA
+referring to another resource both by name and by its IVOA
 identifier.  Not all resources referred to using this type will
 necessarily be registered and, therefore, will have an identifier;
 thus, the identifier (which is encoded as an attribute) is optional. 
@@ -1426,7 +1426,7 @@ The \xmlel{Creator}'s \xmlel{name} should contain exactly one name.
 Since the creator name is what Registry users use when searching for
 resources ``by author'', it should be set with care.  To make sensible
 collation simple for clients, person names should be formatted last name
-first whereever appropriate.
+first wherever appropriate.
 
 In collaborative efforts, multiple creator elements should be used, one
 element per person or organization involved.
@@ -1484,7 +1484,7 @@ The vocabulary can evolve independently of this specification.
 Applications can rely on the presence of the \textsl{Updated}
 (deprecated VOResource 1.0 synonym: \textsl{update}) and
 \textsl{Created} (deprecated VOResource 1.0 synonym: \textsl{creation})
-terms.  Applications are not expected to support semantic relationsships
+terms.  Applications are not expected to support semantic relationships
 between the terms (except for mapping the deprecated VOResource 1.0
 terms to the modern DataCite Metadata ones).
 
@@ -2240,7 +2240,7 @@ invoked.
 % /GENERATED
 
 The \xmlel{rights} element contains free text, where it is recommended
-that standard licenses are named and special circumstances like embargos
+that standard licenses are named and special circumstances like embargoes
 are mentioned.  The \xmlel{rightsURI} attribute can be used to
 reference the
 full license text.  By re-using standard URIs (e.g., provided by the
@@ -2783,7 +2783,7 @@ service.
       	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{vr:WebBrowser} Type Schema Documentation}
 
 \noindent{\small
-            A (form-based) interface intended to be accesed interactively 
+            A (form-based) interface intended to be accessed interactively 
             by a user via a web browser.
          \par}
 
@@ -2945,7 +2945,7 @@ the normal case, removed skynode example.
 \item Removed SOAP/WSDL example and a bit of the accompanying language.
 
 \item Section 3 needed some refactoring since the schema documentation
-is now generated from the schema document.  To accomodate this, some
+is now generated from the schema document.  To accommodate this, some
 text manually embedded within the schema documentation had to be moved
 out of the generated material or removed.
 
