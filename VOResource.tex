@@ -807,7 +807,7 @@ but can also include other concepts that are specific to that standard.
 An extension schema can define new interface types, though not
 necessarily in the context of any specific standard service
 capability.  The basic \xmlel{vr:Interface} type provides only
-\xmlel{accessURL} and \xmlel{securityMethod} as child
+\xmlel{accessURL}, \xmlel{mirrorURL}, and \xmlel{securityMethod} as child
 elements.  A derived \xmlel{vr:Interface} type must indicate in
 the documentation how the \xmlel{accessURL} should be
 interpreted and used.  The derived type may also include other added
@@ -883,7 +883,7 @@ by the VOResource schema definition.
       </xs:restriction>
     </xs:simpleType>
   </xs:attribute>
-  <xs:attribute name="version" type="xs:token" />
+  <xs:attribute name="version" type="xs.token" />
 </xs:complexType>
 \end{lstlisting}
 
@@ -943,7 +943,7 @@ by the VOResource schema definition.
 \end{description}
 \item[version]
 \begin{description}
-\item[Type] \xmlel{xs:token}
+\item[Type] \xmlel{xs.token}
 \item[Meaning] 
                The XML schema version for which this instance was written.
                Implementors should set this to the value of the version
@@ -2416,7 +2416,7 @@ different capability of the service.
                   it via xsi:type.
                
 \item[Comment] 
-                  Multiple occurrences can describe different interfaces to 
+                  Multiple occurences can describe different interfaces to 
                   the logically same capability--i.e. data or functionality.
                   That is, the inputs accepted and the output provides should
                   be logically the same.  For example, a WebBrowser interface
@@ -2500,6 +2500,8 @@ attributes help distinguish between multiple interfaces within the same
   <xs:sequence >
     <xs:element name="accessURL" type="vr:AccessURL" minOccurs="1"
               maxOccurs="unbounded" />
+    <xs:element name="mirrorURL" type="vr:AccessURL" minOccurs="1"
+              maxOccurs="unbounded" />
     <xs:element name="securityMethod" type="vr:SecurityMethod" minOccurs="0"
               maxOccurs="unbounded" />
     <xs:element name="testQueryString" type="xs:token" minOccurs="0"
@@ -2562,9 +2564,36 @@ attributes help distinguish between multiple interfaces within the same
                
 \item[Occurrence] required; multiple occurrences allowed.
 \item[Comment] 
-                 When more than one URL is given, each represents an
-                 alternative (i.e. mirror) endpoint whose behavior is
-                 identical to all the other accessURLs listed.  
+                 Although the schema allows multiple occurrences of
+                 accessURL, multiple accessURLs are deprecated.  Each
+                 interface should have exactly one access URL.  Where an
+                 interface has several mirrors, the  accessURL should
+                 reflect the “primary” (fastest, best-connected, 
+                 best-maintained) site, the one that non-sophisticated
+                 clients will go to.
+
+                 Additional accessURLs should be put into mirrorURLs.
+                 Advanced clients can retrieve the mirrorURLs and 
+                 empirically determine interfaces closer to their 
+                 network location.
+               
+
+\end{description}
+\item[Element \xmlel{mirrorURL}]
+\begin{description}
+\item[Type] a URI with optional attributes
+\item[Meaning] 
+                 A (base) URL of a mirror of this interface.  As with
+                 accessURL, how this URL is to be interpreted and used 
+                 depends on the specific Interface subclass
+               
+\item[Occurrence] required; multiple occurrences allowed.
+\item[Comment] 
+                This is intended exclusively for true mirrors, i.e.,
+                interfaces that are functionally identical to the
+                original interface and that are operated by the same 
+                publisher.  Other arrangements should be represented as
+                separate services linked by mirror-of relationships.
                
 
 \end{description}
@@ -2618,13 +2647,18 @@ type derived from \xmlel{vr:Interface}.  Extension schemas that
 define non-abstract types derived from \xmlel{vr:Interface } MUST
 provide documentation that explains the exact use of the
 \xmlel{accessURL}; this documentation should follow the
-documention conventions described in sect.~\ref{sect:core}.  If multiple
-\xmlel{accessURL} elements are given, however, each URL should
-point to a functionally identical or ``mirror'' installation of the same
-service and administered by the same publisher listed above.  An
-\xmlel{accessURL} must not point to an installation
+documention conventions described in sect.~\ref{sect:core}.  
+
+In version 1.0, operators of services with multiple mirrors were
+encouraged to give multiple \xmlel{accessURL} elements.  This feature
+was not used in practice, presumably for concerns users might end up on
+remote mirrors.  In version 1.1, we therefore deprecate multiple
+\xmlel{accessURL} within an interface.  Access URLs of actual mirrors
+can now be declared using \xmlel{mirrorURL} elements.
+As before, neither 
+\xmlel{accessURL} nor \xmlel{mirrorURL} must not point to an installation
 that is outside the administrative control of the service's listed
-publisher; such a mirror should be describe in a separate resource
+publisher; such a mirror should be described in a separate resource
 record.  
 
 

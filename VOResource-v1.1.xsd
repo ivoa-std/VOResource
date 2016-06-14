@@ -270,7 +270,7 @@
               has demonstrated to be functionally compliant. 
             </xs:documentation>
             <xs:documentation>
-              When the resource is a service, it is consider to exist
+              When the resource is a service, it is considered to exist
               and functionally compliant if use of the
               service accessURL responds without error when used as
               intended by the resource. If the service is a standard
@@ -1028,9 +1028,36 @@
                  depends on the specific Interface subclass
                </xs:documentation>
                <xs:documentation>
-                 When more than one URL is given, each represents an
-                 alternative (i.e. mirror) endpoint whose behavior is
-                 identical to all the other accessURLs listed.  
+                 Although the schema allows multiple occurrences of
+                 accessURL, multiple accessURLs are deprecated.  Each
+                 interface should have exactly one access URL.  Where an
+                 interface has several mirrors, the  accessURL should
+                 reflect the “primary” (fastest, best-connected, 
+                 best-maintained) site, the one that non-sophisticated
+                 clients will go to.
+
+                 Additional accessURLs should be put into mirrorURLs.
+                 Advanced clients can retrieve the mirrorURLs and 
+                 empirically determine interfaces closer to their 
+                 network location.
+               </xs:documentation>
+            </xs:annotation>
+         </xs:element>
+
+         <xs:element name="mirrorURL" type="vr:AccessURL"
+                     minOccurs="1" maxOccurs="unbounded">
+            <xs:annotation>
+               <xs:documentation>
+                 A (base) URL of a mirror of this interface.  As with
+                 accessURL, how this URL is to be interpreted and used 
+                 depends on the specific Interface subclass
+               </xs:documentation>
+               <xs:documentation>
+                This is intended exclusively for true mirrors, i.e.,
+                interfaces that are functionally identical to the
+                original interface and that are operated by the same 
+                publisher.  Other arrangements should be represented as
+                separate services linked by mirror-of relationships.
                </xs:documentation>
             </xs:annotation>
          </xs:element>
