@@ -1044,7 +1044,7 @@
             </xs:annotation>
          </xs:element>
 
-         <xs:element name="mirrorURL" type="vr:AccessURL"
+         <xs:element name="mirrorURL" type="xs:anyURI"
                      minOccurs="1" maxOccurs="unbounded">
             <xs:annotation>
                <xs:documentation>

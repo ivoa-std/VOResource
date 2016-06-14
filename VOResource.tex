@@ -1264,7 +1264,7 @@ The curation metadata described in the RM (section
 \begin{description}
 \item[Type] string: \xmlel{xs:token}
 \item[Meaning] 
-               Label associated with creation or availability of a version of 
+               Label associated with creation or availablilty of a version of 
                a resource.
              
 \item[Occurrence] optional
@@ -2500,7 +2500,7 @@ attributes help distinguish between multiple interfaces within the same
   <xs:sequence >
     <xs:element name="accessURL" type="vr:AccessURL" minOccurs="1"
               maxOccurs="unbounded" />
-    <xs:element name="mirrorURL" type="vr:AccessURL" minOccurs="1"
+    <xs:element name="mirrorURL" type="xs:anyURI" minOccurs="1"
               maxOccurs="unbounded" />
     <xs:element name="securityMethod" type="vr:SecurityMethod" minOccurs="0"
               maxOccurs="unbounded" />
@@ -2581,7 +2581,7 @@ attributes help distinguish between multiple interfaces within the same
 \end{description}
 \item[Element \xmlel{mirrorURL}]
 \begin{description}
-\item[Type] a URI with optional attributes
+\item[Type] a URI: \xmlel{xs:anyURI}
 \item[Meaning] 
                  A (base) URL of a mirror of this interface.  As with
                  accessURL, how this URL is to be interpreted and used 
@@ -2817,7 +2817,7 @@ service.
       	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{vr:WebBrowser} Type Schema Documentation}
 
 \noindent{\small
-            A (form-based) interface intended to be accessed interactively 
+            A (form-based) interface intended to be accesed interactively 
             by a user via a web browser.
          \par}
 
