@@ -2500,7 +2500,7 @@ attributes help distinguish between multiple interfaces within the same
   <xs:sequence >
     <xs:element name="accessURL" type="vr:AccessURL" minOccurs="1"
               maxOccurs="unbounded" />
-    <xs:element name="mirrorURL" type="xs:anyURI" minOccurs="1"
+    <xs:element name="mirrorURL" type="vr:MirrorURL" minOccurs="1"
               maxOccurs="unbounded" />
     <xs:element name="securityMethod" type="vr:SecurityMethod" minOccurs="0"
               maxOccurs="unbounded" />
@@ -2581,7 +2581,7 @@ attributes help distinguish between multiple interfaces within the same
 \end{description}
 \item[Element \xmlel{mirrorURL}]
 \begin{description}
-\item[Type] a URI: \xmlel{xs:anyURI}
+\item[Type] a URI with optional attributes
 \item[Meaning] 
                  A (base) URL of a mirror of this interface.  As with
                  accessURL, how this URL is to be interpreted and used 
@@ -2659,72 +2659,45 @@ As before, neither
 \xmlel{accessURL} nor \xmlel{mirrorURL} must not point to an installation
 that is outside the administrative control of the service's listed
 publisher; such a mirror should be described in a separate resource
-record.  
+record.  To aid in user interfaces for mirror selection,
+\xmlel{mirrorURL} admits a \xmlel{title} attribute:
 
 
-
-As an additional aid to software agents that will attempt to interpret
-its URL, the \xmlel{vr:AccessURL} includes an optional element,
-\xmlel{use} (pronounced and interpreted as in the noun form of
-the word use) which takes a controlled vocabulary:
-
-
-% GENERATED: !schemadoc VOResource-v1.1.xsd AccessURL
+% GENERATED: !schemadoc VOResource-v1.1.xsd MirrorURL
 \begin{generated}
 \begingroup
       	\renewcommand*\descriptionlabel[1]{%
-      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{1ex}\noindent\textbf{\xmlel{vr:AccessURL} Type Schema Definition}
+      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{vr:MirrorURL} Type Schema Documentation}
+
+\noindent{\small
+            A URL of a mirror (i.e., a functionally identical additional 
+            service interface) to 
+         \par}
+
+\vspace{1ex}\noindent\textbf{\xmlel{vr:MirrorURL} Type Schema Definition}
 
 \begin{lstlisting}[language=XML,basicstyle=\footnotesize]
-<xs:complexType name="AccessURL" >
+<xs:complexType name="MirrorURL" >
   <xs:simpleContent >
     <xs:extension base="xs:anyURI" >
-      <xs:attribute name="use" >
-        <xs:simpleType >
-          <xs:restriction base="xs:NMTOKEN" >
-            <xs:enumeration value="full" />
-            <xs:enumeration value="base" />
-            <xs:enumeration value="dir" />
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:attribute>
+      <xs:attribute name="title" type="xs:token" />
     </xs:extension>
   </xs:simpleContent>
 </xs:complexType>
 \end{lstlisting}
 
-\vspace{0.5ex}\noindent\textbf{\xmlel{vr:AccessURL} Attributes}
+\vspace{0.5ex}\noindent\textbf{\xmlel{vr:MirrorURL} Attributes}
 
 \begingroup\small\begin{bigdescription}
-\item[use]
+\item[title]
 \begin{description}
-\item[Type] string
+\item[Type] string: \xmlel{xs:token}
 \item[Meaning] 
-               A flag indicating whether this should be interpreted as a base
-               URL, a full URL, or a URL to a directory that will produce a 
-               listing of files.
-             
+                  A terse, human-readable phrase indicating the function
+                  or location of this mirror, e.g., {"}Primary Backup{"} or
+                  {"}European Mirror{"}.
+               
 \item[Occurrence] optional
-
-\item[Allowed Values]\hfil
-\begin{longtermsdescription}\item[full]
-                     Assume a full URL--that is, one that can be invoked 
-                     directly without alteration.  This usually returns a 
-                     single document or file.  
-                   
-\item[base]
-                     Assume a base URL--that is, one requiring an extra portion
-                     to be appended before being invoked.  
-                   
-\item[dir]
-                     Assume URL points to a directory that will return a listing
-                     of files.  
-                   
-\end{longtermsdescription}
-\item[Comment] 
-               The default value assumed when one is not given depends on the 
-               context.  
-             
 \end{description}
 
 
