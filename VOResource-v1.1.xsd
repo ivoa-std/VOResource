@@ -318,7 +318,7 @@
      </xs:annotation>
      <xs:simpleContent>
        <xs:extension base="vr:ValidationLevel">
-         <xs:attribute name="validatedBy" type="vr:IdentifierURI" 
+         <xs:attribute name="validatedBy" type="xs:anyURI"
                        use="required">
            <xs:annotation>
              <xs:documentation>

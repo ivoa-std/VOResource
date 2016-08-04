@@ -387,6 +387,27 @@ ASCII tables sometimes appear in such descriptions, clients are
 encouraged to not reflow descriptions and display them in a fixed-with
 font.
 
+\subsubsection{Language and Transliteration}
+
+Several VOResource elements contain natural language (e.g.,
+\xmlel{description}, \xmlel{title}, \xmlel{subject}).  In order to
+ensure reliable discovery, in core VOResource, these elements must
+contain English text, with US spelling strongly preferred; technically,
+an \xmlel{xml:lang} value of \texttt{en-US} is implied.
+
+Registry extensions may allow \xmlel{xml:lang} attributes on elements.
+If they do, such elements must be repeatable, and an element without
+\xmlel{xml:lang} (and hence, \texttt{en-US} implied) should be required
+for global discoverability.  The requirements on \xmlel{xml:lang} from
+the XML specification \citep{std:XML} apply.  Additionally, in
+VOResource documents RFC 3066 language identifiers must be written in
+lowercase.
+
+Several VOResource elements contain names.  Again, for reliable global
+discoverability, such names must be given in (common) English
+transliteration where their original form uses non-Latin scripts.
+Latin letters with diacritics should also be transliterated.
+
 
 \subsubsection{Dates and Times}
 
