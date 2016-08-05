@@ -15,10 +15,12 @@
        <vm:targetPrefix>vr</vm:targetPrefix>
      </xs:appinfo>
       <xs:documentation>
-        Implementation of an XML Schema describing a resource to 
-        be used in the Virtual Observatory Project.  Based on "Resource 
-        Metadata for the Virtual Observatory", Version 0.8, 
-        February 2002 by Bob Hanisch et al.
+        An XML Schema describing a resource to be used in the Virtual 
+        Observatory Project.
+
+        Please see http://www.ivoa.net/documents/latest/VOResource.html
+        for further  information on the standard governing this
+        schema.
       </xs:documentation>
    </xs:annotation>
 
