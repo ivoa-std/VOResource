@@ -1,0 +1,4 @@
+VOResource 1.1 has externalised most of the enumerations of terms.  These term
+lists are maintained in this directory in simple CSV format, together with a
+little python script to create from them standards-conforming vocabulary
+resources for the Web.
