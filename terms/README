@@ -2,3 +2,6 @@ VOResource 1.1 has externalised most of the enumerations of terms.  These term
 lists are maintained in this directory in simple CSV format, together with a
 little python script to create from them standards-conforming vocabulary
 resources for the Web.
+
+NOTE: CSV separator is ";".  Since our descriptions will have lots of commas in
+them, this helps to keep the necessity for quoting low.
