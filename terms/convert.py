@@ -3,6 +3,8 @@
 """
 A little script to convert the CSV input format to various outputs.
 
+Dependencies: python2, rapper.
+
 This is re-using ideas of Norman Gray, applied to the datalink vocabulary, 
 but adapted for the present case with multiple vocabularies.
 
@@ -14,8 +16,8 @@ are mandatory.  Here's how to configure a vocabulary myterms::
 	baseuri: "http://www.ivoa.net/rdf/myterms"
 	timestamp: 2016-08-17
 	title: My terms as an example
-	description: This is a collection of terms not actually used \
-		anywhere.  But then, the CSV we're referencing in a moment \
+	description: This is a collection of terms not actually used 
+		anywhere.  But then, the CSV we're referencing in a moment
 		doesn't exist either.
 	authors: John Doe; Fred Flintstone
 
@@ -28,7 +30,8 @@ level is 1 for "root" terms, 2 for child terms, etc.
 synonym, is given, references the "canonical" term for the concept.
 synonym can be left out.  Note that we use the semicolon as the
 delimiter because description frequently has commas in it and we don't
-want to do too much quoting.
+want to do too much quoting.  Non-ASCII is allowed in label and description;
+files must be in UTF-8.
 
 This program is in the public domain.
 
@@ -36,24 +39,46 @@ In case of problems, please contact Markus Demleitner
 <msdemlei@ari.uni-heidelberg.de>
 """
 
-# The central data structure here is meta, a list of vocabulary defintion
-# dictionaries.  Each dict maps the items in the config to their values;
-# in addition, the have name and terms_fname keys built from the
-# section names in the config file.
-
-
 from ConfigParser import ConfigParser
+from xml.etree import ElementTree as etree
+
 import contextlib
 import csv
 import os
 import re
+import subprocess
 import sys
 
 
 MANDATORY_KEYS = frozenset([
 	"baseuri", "timestamp", "title", "description", "authors"])
 
-TTL_HEADER_TEMPLATE = """@base {baseuri}
+HT_ACCESS_TEMPLATE = """# .htaccess for content negotiation
+
+# This file is patterned after Recipe 3 in the W3C document 'Best
+# Practice Recipes for Publishing RDF Vocabularies', at
+# <http://www.w3.org/TR/swbp-vocab-pub/>
+
+AddType application/rdf+xml .rdf
+AddType text/turtle .ttl
+AddCharset UTF-8 .ttl
+AddCharset UTF-8 .html
+
+RewriteEngine On
+RewriteBase {install_base}
+
+RewriteCond %{{HTTP_ACCEPT}} application/rdf\+xml
+RewriteRule ^$ {timestamp}/{name}.rdf [R=303]
+
+RewriteCond %{{HTTP_ACCEPT}} text/turtle
+RewriteRule ^$ {timestamp}/{name}.ttl [R=303]
+
+# No accept conditions: make the .html version the default
+RewriteRule ^$ {timestamp}/{name}.html [R=303]
+"""
+
+
+TTL_HEADER_TEMPLATE = """@base {baseuri}.
 @prefix : <#>.
 
 @prefix dc: <http://purl.org/dc/terms/> .
@@ -64,11 +89,11 @@ TTL_HEADER_TEMPLATE = """@base {baseuri}
 @prefix foaf: <http://xmlns.com/foaf/0.1/>.
 
 <> a owl:Ontology;
-  dc:created {timestamp};
-  dc:creator {creators};
-  rdfs:label {title}@en;
-  dc:title {title}@en;
-  dc:description {description}.
+	dc:created {timestamp};
+	dc:creator {creators};
+	rdfs:label {title}@en;
+	dc:title {title}@en;
+	dc:description {description}.
 
 dc:created a owl:AnnotationProperty.
 dc:creator a owl:AnnotationProperty.
@@ -83,6 +108,8 @@ class ReportableError(Exception):
 	All other exceptions lead to tracbacks for further debugging.
 	"""
 
+
+############ some utility functions
 
 @contextlib.contextmanager
 def work_dir(dir_name):
@@ -105,8 +132,83 @@ def is_URI(s):
 
 	This is a simple, RE-based heuristic.
 	"""
-	return bool(re.match("[a-zA-Z]://|#", s))
+	return bool(re.match("[a-zA-Z]+://|#", s))
 
+
+############ tiny DOM start (snarfed and simplified from DaCHS stanxml)
+# (used to write HTML)
+
+class _Element(object):
+		"""An element within a DOM.
+
+		Essentially, this is a simple way to build elementtrees.  You can
+		reach the embedded elementtree Element as node.
+
+		Add elements, sequences, etc, using indexation, attributes using function
+		calls; names with dashes are written with underscores, python
+		reserved words have a trailing underscore.
+		"""
+		_generator_t = type((x for x in ()))
+
+		def __init__(self, name):
+				self.node = etree.Element(name)
+
+		def add_text(self, tx):
+				"""appends tx either the end of the current content.
+				"""
+				if len(self.node):
+						self.node[-1].tail = (self.node[-1].tail or "")+tx
+				else:
+						self.node.text = (self.node.text or "")+tx
+
+		def __getitem__(self, child):
+				if child is None:
+						return
+
+				elif isinstance(child, basestring):
+						self.add_text(child)
+
+				elif isinstance(child, (int, float)):
+						self.add_text(str(child))
+
+				elif isinstance(child, _Element):
+						self.node.append(child.node)
+
+				elif isinstance(child, (list, tuple, self._generator_t)):
+						for c in child:
+								self[c]
+				else:
+						raise Exception("%s element %s cannot be added to %s node"%(
+								type(child), repr(child), self.node.tag))
+				return self
+		
+		def __call__(self, **kwargs):
+				for k, v in kwargs.iteritems():
+						if k.endswith("_"):
+								k = k[:-1]
+						k = k.replace("_", "-")
+						self.node.attrib[k] = v
+				return self
+
+		def dump(self, encoding="utf-8", dest_file=sys.stdout):
+			etree.ElementTree(self.node).write(dest_file)
+
+
+class _T(object):
+		"""a very simple templating engine.
+
+		Essentially, you get HTML elements by saying T.elementname, and
+		you'll get an _Element with that tag name.
+
+		This is supposed to be instanciated to a singleton (here, T).
+		"""
+		def __getattr__(self, key):
+				return  _Element(key)
+
+T = _T()
+
+
+############ The term class and associated code
 
 def make_ttl_literal(ob):
 	"""returns a turtle literal for an object.
@@ -119,9 +221,9 @@ def make_ttl_literal(ob):
 		return "<{}>".format(ob)
 	else:
 		if "\n" in ob:
-			return '"""{}"""'.format(ob)
+			return '"""{}"""'.format(ob.encode("utf-8"))
 		else:
-			return '"{}"'.format(ob.replace('"', '\\"'))
+			return '"{}"'.format(ob.encode("utf-8").replace('"', '\\"'))
 
 
 class Term(object):
@@ -146,20 +248,32 @@ class Term(object):
 			"comment": make_ttl_literal(self.description),
 			}
 		template = [
-			"<#{predicate}> a rdf:Property;",
-			"  rdfs:label {label};",
-			"  rdfs:comment {comment};"]
+			"<#{predicate}> a rdf:Property",
+			"rdfs:label {label}",
+			"rdfs:comment {comment}"]
 
 		if self.parent:
-			template.append("  rdfs.subPropertyOf {parent}")
+			template.append("rdfs:subPropertyOf {parent}")
 			fillers["parent"] = make_ttl_literal(self.parent)
 
 		if self.synonym:
-			template.append("  rdfs.synonymOf {synonym}")
-			fillers["parent"] = make_ttl_literal(self.synonym)
+			template.append("rdfs:isDefinedBy {synonym}")
+			fillers["synonym"] = make_ttl_literal(self.synonym)
 
-		return "\n".join(template).format(**fillers)+"."
+		return ";\n  ".join(template).format(**fillers)+"."
 
+	def as_html(self):
+		"""returns elementtree for an HTML table line for this term.
+		"""
+		return T.tr[
+			T.td(class_="predicate")[self.predicate],
+			T.td(class_="parent")[self.parent or ""],
+			T.td(class_="label")[self.label],
+			T.td(class_="preferred")[self.synonym or ""],
+			T.td(class_="description")[self.description],]
+
+
+########### Parsing our input files, generating our output files
 
 def _make_vocab_meta(parser, vocab_name):
 	"""returns a vocabulary dictionary for vocab_name from a ConfigParser
@@ -207,8 +321,25 @@ def read_meta(input_name):
 	return meta
 
 
+def add_rdf_file(turtle_name):
+	"""uses rapper to turn our generated turtle file into a suitably named
+	RDF file.
+	"""
+	with open(turtle_name[:-3]+"rdf", "w") as f:
+		rapper = subprocess.Popen(["rapper", "-iturtle", "-ordfxml",
+				turtle_name],
+			stdout=f,
+			stderr=subprocess.PIPE)
+		_, msgs = rapper.communicate()
+
+	if rapper.returncode!=0:
+		sys.stderr.write("Output of the failed rapper run:\n")
+		sys.stderr.write(msgs)
+		raise ReportableError("Conversion to RDF+XML failed; see output above.")
+	
+
 def write_ontology(vocab_def, terms):
-	"""write a turtle file for terms into the current directory.
+	"""writes a turtle file for terms into the current directory.
 
 	The file will be called vocab_def["name"].ttl.
 	"""
@@ -223,6 +354,63 @@ def write_ontology(vocab_def, terms):
 		for term in terms:
 			f.write(term.as_ttl())
 			f.write("\n\n")
+	
+	add_rdf_file(vocab_def["name"]+".ttl")
+
+
+def write_html(vocab_def, terms):
+	"""writes an HTML-format documentation for terms into the current
+	directory.
+
+	The file will be called vocab_def["name"].html.
+	"""
+	term_table = T.table(class_="terms")[
+		T.thead[
+			T.tr[
+				T.th["Predicate"],
+				T.th["Parent"],
+				T.th["Label"],
+				T.th["Preferred"],
+				T.th["Description"],
+			],
+		],
+		T.tbody[
+			[t.as_html() for t in terms]
+		]
+	]
+
+	doc = T.html(xmlns="http://www.w3.org/1999/xhtml")[
+		T.head[
+			T.title["IVOA Vocabulary: "+vocab_def["title"]],
+			T.meta(http_equiv="content-type", 
+				content="text/html;charset=utf-8"),],
+		T.body[
+			T.h1["IVOA Vocabulary: "+vocab_def["title"]],
+			T.p["This is the description of the namespace ",
+				T.code[vocab_def["baseuri"]],
+			" as of {}.".format(vocab_def["timestamp"])],
+			T.p(class_="description")[vocab_def["description"]],
+			term_table,
+			T.p["Alternate formats: ",
+				T.a(href=vocab_def["name"]+".rdf")["RDF"],
+				", ",
+				T.a(href=vocab_def["name"]+".ttl")["Turtle"],
+				"."]]]
+
+	with open(vocab_def["name"]+".html", "w") as f:
+		doc.dump(dest_file=f)
+
+
+def write_htaccess(vocab_def, root_url):
+	"""writes a customised .htaccess for content negotiation.
+
+	This must be called one level up from the ttl and html files.
+	"""
+	with open(".htaccess", "w") as f:
+		f.write(HT_ACCESS_TEMPLATE.format(
+			install_base=root_url+vocab_def["name"]+"/",
+			timestamp=vocab_def["timestamp"],
+			name=vocab_def["name"]))
 
 
 def parse_terms(src_name):
@@ -252,21 +440,42 @@ def parse_terms(src_name):
 			if len(rec)<5:
 				synonym = None
 			else:
-				synonym = rec[5]
+				synonym = rec[4]
+				if not is_URI(synonym):
+					synonym = "#"+synonym
 
 			terms.append(
-				Term(rec[0], rec[2], rec[3], parent, synonym))
+				Term(rec[0], rec[2].decode("utf-8"), 
+					rec[3].decode("utf-8"), parent, synonym))
 	
 	return terms
 
 
-def build_vocab(vocab_def):
-	"""builds, in a subdirectory named vocab_def["name"], all files
+def build_vocab(vocab_def, install_root):
+	"""builds, in a subdirectory named <name>/<timestamp>, all files
 	necessary on the server side.
+
+	It also puts an .htaccess into the <name>/ directory that will redirect 
+	clients to the appropriate files of this release based using content 
+	negotiation.
+
+	install_root is the URI of the directory the result will reside in.
 	"""
-	terms = parse_terms(vocab_def["terms_fname"])
-	with work_dir(vocab_def["name"]):
+	try:
+		terms = parse_terms(vocab_def["terms_fname"])
+	except:
+		sys.stderr.write(
+			"The following error was raised from within {}:\n".format(
+				vocab_def["terms_fname"]))
+		raise
+	dest_dir = "{}/{}".format(vocab_def["name"], vocab_def["timestamp"])
+
+	with work_dir(dest_dir):
 		write_ontology(vocab_def, terms)
+		write_html(vocab_def, terms)
+
+	with work_dir(vocab_def["name"]):
+		write_htaccess(vocab_def, install_root)
 
 
 def parse_command_line():
@@ -276,7 +485,20 @@ def parse_command_line():
 	parser.add_argument("vocab_config", 
 		help="Name of the vocabularies configuration file.",
 		type=str)
-	return parser.parse_args()
+	parser.add_argument("--install-root", 
+		help="Use URI instead of"
+		" the official IVOA location as the root of the vocabulary"
+		" hierarchy.  This is for test installations.",
+		action="store", 
+		dest="install_root", 
+		default="http://www.ivoa.net/std/rdf/",
+		metavar="URI")
+	args = parser.parse_args()
+	
+	if not args.install_root.endswith("/"):
+		args.install_root = args.install_root+"/"
+	
+	return args
 
 
 def main():
@@ -284,7 +506,7 @@ def main():
 	meta = read_meta(args.vocab_config)
 		
 	for vocab_def in meta:
-		build_vocab(vocab_def)
+		build_vocab(vocab_def, args.install_root)
 
 
 if __name__=="__main__":

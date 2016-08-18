@@ -5,3 +5,14 @@ resources for the Web.
 
 NOTE: CSV separator is ";".  Since our descriptions will have lots of commas in
 them, this helps to keep the necessity for quoting low.
+
+To build the vocabularies, at this point say:
+
+	python convert.py vocabs.conf
+
+To test them before deploying them, you need to set the root URL to 
+where you run an apache, e.g.,
+	
+	python convert.py --install-root=http://localhost/voctest vocabs.conf
+
+You then need to copy the directories generated to the referenced location.

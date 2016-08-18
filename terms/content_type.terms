@@ -1,10 +1,3 @@
-# Terms for VOResource content/type; these currently are the terms and
-# explanations from Hanisch et al, Resource Metadata for the Virtual
-# Observatory.
-#
-# NAMESPACE: http://www.ivoa.net/rdf/voresource/content_type
-#
-# predicate,parent,label,description
 Other;1;Other;"resource that does not fall into any of the category names currently defined."
 Archive;1;Archive;"Collection of pointed observations"
 Bibliography;1;Bibliography;"Collection of bibliographic reference, abstracts, and publications"

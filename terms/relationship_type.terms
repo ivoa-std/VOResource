@@ -1,9 +1,3 @@
-# Terms for VOResource relationshipType; this is a union of the (preferred)
-# VOResource 1.0 terms and a selection of DataCite Metadata relationType terms
-#
-# NAMESPACE: http://www.ivoa.net/rdf/voresource/relationshipType
-#
-# predicate,parent,label,description
 mirror-of;1;is a mirror of;This resource is a mirror (reasonably faithful reproduction) of the referenced resource (maps to DataCite's IdenticalTo)
 service-for;1;is a service for;This resource makes data from the referenced resource (typcally some sort for data collection) available (inverse of served-by)
 served-by;1;is served by;This resource can be accessed or otherwise used through the referenced service (inverse of service-of)
