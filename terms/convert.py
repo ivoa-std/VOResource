@@ -257,7 +257,8 @@ class Term(object):
 			fillers["parent"] = make_ttl_literal(self.parent)
 
 		if self.synonym:
-			template.append("rdfs:isDefinedBy {synonym}")
+			template.append("owl:equivalentProperty {synonym}")
+			template.append("a owl:DeprecatedProperty")
 			fillers["synonym"] = make_ttl_literal(self.synonym)
 
 		return ";\n  ".join(template).format(**fillers)+"."
