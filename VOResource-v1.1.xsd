@@ -598,7 +598,7 @@
                  A string indicating what the date refers to.  
                </xs:documentation>
                <xs:documentation>
-               	The value of role should be taken from the RDF vocabulary
+               	The value of role should be taken from the vocabulary
                	http://www.ivoa.net/rdf/voresource/date_role.
                	This includes the the traditional and deprecated strings
                 "creation", indicating the date that the resource 
@@ -698,7 +698,7 @@
              <xs:documentation>
                Nature or genre of the content of the resource.  Values for
                type should be taken from a controlled vocabulary, available 
-               in RDF form from
+               in various forms from
                http://www.ivoa.net/rdf/voresource/content_type
              </xs:documentation>
           </xs:annotation>
@@ -764,9 +764,9 @@
                   the named type of relationship
                </xs:documentation>
                <xs:documentation>
-                 The value  of relationshipType should be taken from the RDF
-                 vocabulary
-                 http://www.ivoa.net/rdf/voresource/relationshipType.
+                 The value  of relationshipType should be taken from the 
+                 vocabulary at
+                 http://www.ivoa.net/rdf/voresource/relationship_type.
                </xs:documentation>
             </xs:annotation>
          </xs:element>

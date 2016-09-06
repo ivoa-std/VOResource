@@ -1540,7 +1540,7 @@ terms to the modern DataCite Metadata ones).
 \item[Occurrence] optional
 representative
 \item[Comment] 
-               	The value of role should be taken from the RDF vocabulary
+               	The value of role should be taken from the vocabulary
                	http://www.ivoa.net/rdf/voresource/date\_role.
                	This includes the the traditional and deprecated strings
                 {"}creation{"}, indicating the date that the resource 
@@ -1755,7 +1755,7 @@ defined by the \xmlel{vr:Content} complex type.
 \item[Meaning] 
                Nature or genre of the content of the resource.  Values for
                type should be taken from a controlled vocabulary, available 
-               in RDF form from
+               in various forms from
                http://www.ivoa.net/rdf/voresource/content\_type
              
 \item[Occurrence] optional; multiple occurrences allowed.
@@ -1791,6 +1791,56 @@ defined by the \xmlel{vr:Content} complex type.
 
 % /GENERATED
 
+The content of \xmlel{contentLevel} should conform to the values from a
+vocabulary.  At the time of writing, this vocabulary contained the terms
+
+\begin{quotation}\noindent
+% GENERATED: sed -e 's/\([^;]*\);.*/\\textsl{\1}/' terms/content_level.terms
+\textsl{Research}
+\textsl{Amateur}
+\textsl{General}
+
+% /GENERATED
+\end{quotation}
+
+For definitions of these terms, their relationships, and the complete,
+up-to date list of the legal terms in HTML, turtle, or RDF-X formats,
+please refer to \url{http://www.ivoa.net/rdf/voresource/content_level}.
+
+The content of \xmlel{type} should conform to the values from a
+vocabulary.  At the time of writing, this vocabulary contained the terms
+
+\begin{quotation}\noindent
+% GENERATED: sed -e 's/\([^;]*\);.*/\\textsl{\1}/' terms/content_type.terms
+\textsl{Other}
+\textsl{Archive}
+\textsl{Bibliography}
+\textsl{Catalog}
+\textsl{Journal}
+\textsl{Library}
+\textsl{Simulation}
+\textsl{Survey}
+\textsl{Transformation}
+\textsl{Education}
+\textsl{Outreach}
+\textsl{EPOResource}
+\textsl{Animation}
+\textsl{Artwork}
+\textsl{Background}
+\textsl{BasicData}
+\textsl{Historical}
+\textsl{Photographic}
+\textsl{Press}
+\textsl{Organisation}
+\textsl{Project}
+\textsl{Registry}
+
+% /GENERATED
+\end{quotation}
+
+For definitions of these terms, their relationships, and the complete,
+up-to date list of the legal terms in HTML, turtle, or RDF-X formats,
+please refer to \url{http://www.ivoa.net/rdf/voresource/content_type}.
 
 
 The \xmlel{source} element's type,
@@ -1896,9 +1946,9 @@ change without changes to the recommendation.
                
 \item[Occurrence] required
 \item[Comment] 
-                 The value  of relationshipType should be taken from the RDF
-                 vocabulary
-                 http://www.ivoa.net/rdf/voresource/relationshipType.
+                 The value  of relationshipType should be taken from the 
+                 vocabulary at
+                 http://www.ivoa.net/rdf/voresource/relationship\_type.
                
 
 \end{description}
@@ -2026,7 +2076,7 @@ assigned by different organisations.
 <xs:complexType name="Validation" >
   <xs:simpleContent >
     <xs:extension base="vr:ValidationLevel" >
-      <xs:attribute name="validatedBy" type="vr:IdentifierURI" use="required" />
+      <xs:attribute name="validatedBy" type="xs:anyURI" use="required" />
     </xs:extension>
   </xs:simpleContent>
 </xs:complexType>
@@ -2037,13 +2087,12 @@ assigned by different organisations.
 \begingroup\small\begin{bigdescription}
 \item[validatedBy]
 \begin{description}
-\item[Type] an IVOA Identifier URI: vr:IdentifierURI
+\item[Type] a URI: \xmlel{xs:anyURI}
 \item[Meaning] 
                The IVOA ID of the registry or organisation that
                assigned the validation level.  
              
 \item[Occurrence] required
-
 \end{description}
 
 
