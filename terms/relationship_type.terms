@@ -5,7 +5,7 @@ derived-from;1;is derived from;This resource was produced using data from the re
 related-to;1;is related to;This resource has some unspecified relationship to the referenced resource (this should be avoided)
 Cites;1;cites;This resource makes use of the referenced resource.  This is in particular to reference tools like programs from educational material like tutorials.  It is not intended to track citations in a bibliographic sense.
 IsSupplementTo;1;is supplement to;This resource augments the referenced resource (inverse  of IsSupplementedBy)
-IsSupplementedBy;1;is supplemented by;Additional material pertaining to this resource  is available at the referenced resource (inverse of IsSupplementedBy)
+IsSupplementedBy;1;is supplemented by;Additional material pertaining to this resource  is available at the referenced resource (inverse of IsSupplementedTo)
 IsContinuedBy;1;is continued by;This resource has been or will be discontinued, and clients should turn to the referenced resource (inverse of Continues)
 Continues;1;continues;This resource has taken up the service of the referenced resource (inverse of IsContinuedBy)
 IsNewVersionOf;1;is new version of;The referenced resource has been developed on, and this resource should be used in preference (inverse of IsPreviousVersionOf)
