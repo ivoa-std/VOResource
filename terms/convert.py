@@ -102,6 +102,66 @@ dc:description a owl:AnnotationProperty.
 """
 
 
+CSS_STYLE = """
+html {
+	font-family: sans;
+}
+
+h1 {
+	margin-bottom: 3ex;
+	border-bottom: 2pt solid #ccc;
+}
+
+tr {
+	padding-top: 2pt;
+	padding-bottom: 2pt;
+	border-bottom: 1pt solid #ccc;
+}
+
+thead tr {
+	border-top: 1pt solid black;
+	border-bottom: 1pt solid black;
+}
+
+th {
+	padding: 4pt;
+}
+
+.intro {
+	max-width: 30em;
+	margin-bottom: 5ex;
+	margin-left: 2ex;
+}
+
+.outro {
+	max-width: 30em;
+	margin-top: 4ex;
+}
+
+table {
+	border-collapse: collapse;
+	border-bottom: 1pt solid black;
+}
+
+td {
+	vertical-align: top;
+	padding: 2pt;
+}
+
+th:nth-child(1),
+td:nth-child(1) {
+  background: #eef;
+}
+
+th:nth-child(3),
+td:nth-child(3) {
+  background: #eef;
+}
+
+
+"""
+
+
 class ReportableError(Exception):
 	"""is raised for expected and explainable error conditions.
 
@@ -268,10 +328,10 @@ class Term(object):
 		"""
 		return T.tr[
 			T.td(class_="predicate")[self.predicate],
-			T.td(class_="parent")[self.parent or ""],
 			T.td(class_="label")[self.label],
-			T.td(class_="preferred")[self.synonym or ""],
-			T.td(class_="description")[self.description],]
+			T.td(class_="description")[self.description],
+			T.td(class_="parent")[self.parent or ""],
+			T.td(class_="preferred")[self.synonym or ""],]
 
 
 ########### Parsing our input files, generating our output files
@@ -368,11 +428,17 @@ def write_html(vocab_def, terms):
 	term_table = T.table(class_="terms")[
 		T.thead[
 			T.tr[
-				T.th["Predicate"],
-				T.th["Parent"],
-				T.th["Label"],
-				T.th["Preferred"],
-				T.th["Description"],
+				T.th(title="The formal name of the predicate as used in URIs"
+					)["Predicate"],
+				T.th(title="Suggested label for the predicate in human-facing UIs"
+					)["Label"],
+				T.th(title="Human-readable description of the predicate"
+					)["Description"],
+				T.th(title="If the predicate is in a wider-narrower relationship"
+					" to other predicates: The more general term.")["Parent"],
+				T.th(title="If the predicate has been superseded by another"
+					" term but is otherwise synonymous with it: The term that"
+					" should now be preferentially used")["Preferred"],
 			],
 		],
 		T.tbody[
@@ -384,15 +450,18 @@ def write_html(vocab_def, terms):
 		T.head[
 			T.title["IVOA Vocabulary: "+vocab_def["title"]],
 			T.meta(http_equiv="content-type", 
-				content="text/html;charset=utf-8"),],
+				content="text/html;charset=utf-8"),
+			T.style(type="text/css")[
+				CSS_STYLE],],
 		T.body[
 			T.h1["IVOA Vocabulary: "+vocab_def["title"]],
-			T.p["This is the description of the namespace ",
-				T.code[vocab_def["baseuri"]],
-			" as of {}.".format(vocab_def["timestamp"])],
-			T.p(class_="description")[vocab_def["description"]],
+			T.div(class_="intro")[
+				T.p["This is the description of the namespace ",
+					T.code[vocab_def["baseuri"]],
+				" as of {}.".format(vocab_def["timestamp"])],
+				T.p(class_="description")[vocab_def["description"]]],
 			term_table,
-			T.p["Alternate formats: ",
+			T.p(class_="outro")["Alternate formats: ",
 				T.a(href=vocab_def["name"]+".rdf")["RDF"],
 				", ",
 				T.a(href=vocab_def["name"]+".ttl")["Turtle"],
