@@ -156,9 +156,8 @@ td:nth-child(1) {
 th:nth-child(3),
 td:nth-child(3) {
   background: #eef;
+  max-width: 20em;
 }
-
-
 """
 
 
