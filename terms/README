@@ -8,11 +8,17 @@ them, this helps to keep the necessity for quoting low.
 
 To build the vocabularies, at this point say:
 
-	python convert.py vocabs.conf
+	make
 
-To test them before deploying them, you need to set the root URL to 
-where you run an apache, e.g.,
-	
-	python convert.py --install-root=http://localhost/voctest vocabs.conf
+This will bulid the vocabulary files in subdirectories of the current
+directory.
 
-You then need to copy the directories generated to the referenced location.
+To test them before deploying them, you need to set TEST_DEST (something
+you can rsync to) and TEST_ROOT_URL (the root URL of where TEST_DEST installs
+to) in the Makefile,
+
+	TEST_DEST=/var/www/html/vocab-test
+	TEST_URL_ROOT=http://localhost/vocab-test
+
+Then, make test-install should to the trick, provided you have the necessary
+privileges.

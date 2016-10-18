@@ -9,6 +9,9 @@ TEST_URL_ROOT=/vocab-test
 
 BUILT_DIRS=content_level content_type date_role relationship_type
 
+test:
+	python convert.py vocabs.conf
+
 test-install:
 	python convert.py --install-root $(TEST_URL_ROOT) vocabs.conf
 	rsync -av $(BUILT_DIRS) $(TEST_DEST)
