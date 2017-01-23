@@ -7,7 +7,7 @@ DOCNAME = VOResource
 DOCVERSION = 1.1
 
 # Publication date, ISO format; update manually for "releases"
-DOCDATE = 2016-10-10
+DOCDATE = 2017-01-23
 
 # What is it you're writing: NOTE, WD, PR, or REC
 DOCTYPE = WD
@@ -23,6 +23,8 @@ FIGURES = archdiag.png
 VECTORFIGURES = 
 
 # Additional files to distribute (e.g., CSS, schema files, examples...)
-AUX_FILES = VOResource-v1.1.xsd
+AUX_FILES = VOResource-v1.1.xsd terms
+
+AUTHOR_EMAIL=msdemlei@ari.uni-heidelberg.de
 
 include ivoatex/Makefile
