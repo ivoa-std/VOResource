@@ -1,10 +1,17 @@
 \documentclass[11pt,a4paper]{ivoa}
 \input tthdefs
 
+% we want a bit more space so our schema definitions don't have to break
+% that often
+\usepackage[a4paper,hmargin={3cm,4cm},vmargin={3cm,4cm}]{geometry}
 \usepackage{todonotes}
 \usepackage{listings}
 \lstloadlanguages{XML}
-\lstset{flexiblecolumns=true,tagstyle=\ttfamily, showstringspaces=False}
+\gdef\breakmarkpre{\char'023\char'023}
+\lstset{flexiblecolumns=true,tagstyle=\ttfamily, showstringspaces=False,
+   breaklines=true,prebreak=\breakmarkpre}
+
+\hyphenation{stan-dard-id}
 
 \title{VOResource: an XML Encoding Schema for Resource Metadata}
 
@@ -35,8 +42,9 @@
 \begin{abstract}
 This document describes an XML encoding standard for IVOA Resource
 Metadata, referred to as VOResource.  This schema is primarily
-intended to support interoperable registries used for discovering
-resources; however, any application that needs to describe resources
+intended to support metadata exchange between and resource discovery
+in interoperable registries.
+However, any application that needs to describe resources
 may use this schema.  In this document, we define the types and
 elements that make up the schema in close alignment to the metadata terms
 defined in Resource Metadata for the Virtual Observatory
@@ -114,7 +122,7 @@ metadata terms for describing resources.  The RM defines a resource as:
 maintains it and which can be given a name and a unique identifier.
 Just about anything can be a resource: it can be an abstract idea,
 such as sky coverage or an instrumental setup, or it can be fairly
-concrete, like an organization or a data collection.  This definition
+concrete, like an organisation or a data collection.  This definition
 is consistent with its use in the general Web community as
 ``anything that has an identity'' \citep{std:RFC3986}.  We
 expand on this definition by saying that it is also describable.  
@@ -176,7 +184,7 @@ its legal extensions.''
 \label{fig:archdiag}
 \end{figure}
 
-Fig.~\ref{fig:archdiag} shows the VOResource plays within the
+Fig.~\ref{fig:archdiag} shows the role VOResource plays within the
 IVOA architecture \citep{note:VOARCH}.
 
 VOResource depends on the following other IVOA standards:
@@ -194,7 +202,7 @@ There are relationships to the following other IVOA standards:
 \item[Registry Interfaces \citep{2009ivoa.spec.1104B}] Registry
 Interfaces describes how registries exchange VOResource records, and it
 provides a \xmlel{vr:Resource}-typed element to hold them within XML
-data (VOResource itself has no global element).
+data (VOResource itself has no global elements).
 \item[VOResource extensions] VOResource lays the foundations upon which
 description schemes for concrete resources are built in various
 VOResource extensions.  At the time of writing, recommendations have
@@ -241,6 +249,14 @@ record:
        resource (lines 47ff).
 \end{enumerate}
 
+Actual services obviously need additional metadata defining the
+modalities of service access. In VOResource, such information
+is typcially encapsulated in \xmlel{vr:Capability}-typed elements. This
+document only provides a generic base class for them, deferring the
+definition of more useful subclasses to VOResource extensions like
+VODataService \citep{2010ivoa.spec.1202P} or SimpleDALRegExt
+\citep{2013ivoa.spec.1125P}.
+
 
 \subsection{The Schema Namespace and Location}
 
@@ -286,7 +302,7 @@ rules for unqualified elements, the VOResource namespace prefix must not
 used to qualify VOResource elements.  In general, namespace prefixes are
 only used to qualify type names given as values to the \xmlel{xsi:type}
 attribute (see next section).  Legal extensions of the VOResource schema
-should also set \verb|elementFormDefault="unqualified"| for consistancy.
+should also set \verb|elementFormDefault="unqualified"| for consistency.
 
 
 
@@ -308,15 +324,16 @@ The IVOA Registry Interface standard \citep{2009ivoa.spec.1104B},
 for example, at the time of writing includes a small schema that defines
 a global element \xmlel{ri:Resource} of base type
 \xmlel{vr:Resource}.  It is primarily intended as the child of
-\xmlel{oai:metadata} in OAI-PMH responses \citep{std:oaipmh}, a protocol
-frequently used to transport VOResource records.  When describing actual
-resources, \xmlel{ri:Resource} will still use \xmlel{xsi:type} to
+\xmlel{oai:metadata} in OAI-PMH responses \citep{std:oaipmh}, the protocol
+used for VOResource record exchange by Registry Interface-compliant
+Registries.  Note that even
+\xmlel{ri:Resource}-typed elements will still use \xmlel{xsi:type} to
 indicate the actual resource type.
 
 Applications describe a single resource using an element of the type
-\xmlel{vr:Resource} or a legal derivation of it.  The content of the
-\xmlel{vr:Resource} type is referred to as the \textbf{core VOResource
-metadata}, and they fall into four categories (corresponding to the
+\xmlel{vr:Resource} or a legal derivation of it.  The content of this
+element is referred to as the \textbf{core VOResource
+metadata} and can be grouped into four categories (corresponding to the
 sections 3.1, 3.2, 3.3, and 4 of the RM):
 
 \begin{itemize}
@@ -460,7 +477,8 @@ a trailing Z.
 % /GENERATED
 
 
-Where day granularity might suffice, VOResource and extensions can
+Where day granularity might suffice for some instance documents, 
+VOResource and extensions can
 employ the \xmlel{vr:UTCDateTime} type.
 
 % GENERATED: !schemadoc VOResource-v1.1.xsd UTCDateTime
@@ -480,7 +498,8 @@ employ the \xmlel{vr:UTCDateTime} type.
 
 \begin{lstlisting}[language=XML,basicstyle=\footnotesize]
 <xs:simpleType name="UTCDateTime" >
-  <xs:union memberTypes="xs:date vr:UTCTimestamp" />
+  <xs:union
+          memberTypes="xs:date vr:UTCTimestamp" />
 </xs:simpleType>
 \end{lstlisting}\endgroup
 \end{generated}
@@ -562,7 +581,7 @@ things:
   \item it sharpens the semantic meaning of the resource description by
        indicating what specific type of resource it is, and
   \item it \emph{may} allow additional metadata not part of the core
-       but specific to the that type of resource.
+       but specific to that type of resource.
 \end{enumerate}
 
 
@@ -578,7 +597,7 @@ well as information regarding its behavior.
 
 
 
-Extensions of the \xmlel{vr:Resource} type is a key way
+Extension of the \xmlel{vr:Resource} type is a key way
 derivation is used in VOResource to provide refined resource
 descriptions.  Two other important parent types in the schema are
 \xmlel{vr:Capability} and \xmlel{vr:Interface}; these are
@@ -589,7 +608,7 @@ more specific semantic meaning through the derived type's name, and to
 provide additional, specialized metadata that is not part of the
 parent type.  Note, however, that in general, a derived type need not
 alter the content model of its base type.  This allows derived types
-to add more specific meaning with out adding any additional metadata.
+to add more specific meaning without adding any additional metadata.
 
 
 
@@ -625,20 +644,8 @@ service endpoint URL.  In particular, it is used to describe support for
 an IVOA service standard (e.g. Simple Image Access Protocol).  A service
 resource record may have multiple child \xmlel{capability} elements,
 each describing a different major functionality; however, these
-capabilities should be related in an obvious, logical way by virtue of
-sharing the same core VOResource metadata.  
-
-
-\begin{admonition}{Note}
-Whether multiple related capabilities are grouped together in a
-single Service record or are described in separate Service
-records is expected to be the choice of the VOResource record
-author.  However, it is also expected that resource registry
-providers will provide some guidance to authors on best
-practices.  This guidance could in part come in the form of a
-GUI that naturally encourage or constrain aggregation of
-capabilities in a single record.
-\end{admonition}
+capabilities should be related in an obvious, logical way (they would
+hardly share their core VOResource metadata otherwise).
 
 The \xmlel{capability} element, through its type \xmlel{vr:Capability},
 describes the behavior of service capability and how to access it.  The
@@ -648,27 +655,33 @@ behavior, the base \xmlel{vr:Capability} type only provides a
 this capability provides.  More structured behavioral information must
 be provided through specialized \xmlel{vr:Capability} extensions.  In
 particular, a service standard (e.g. Simple Image
-Access Protocol) will define an extension of \xmlel{vr:Capability} that
+Access Protocol) or an ancillary standard built upon the service
+standard will define an extension of \xmlel{vr:Capability} that
 adds additional metadata that can describe the service's behavior in
-relation to the standard (in practice, the Registry extension is
-frequently defined in an separate ancillary standard). 
+relation to the standard. 
 
 The added metadata can describe
 limitations of the service implementation or indicate support for
-optional features.  The specific \xmlel{vr:Capability} type is invoked
+optional features.  As a rough guideline, whenever the standard has a
+SHOULD or MAY in the sense of RFC2119 and clients have no other way to
+discover the choices of a concrete service implementation, a respective
+declaration should be considered for the capability or the interface
+elements defined by the registry extension.
+
+The specific \xmlel{vr:Capability} type is invoked
 using the \xmlel{xsi:type} mechanism described in
 sect.~\ref{sect:namespace}.
-
-
 Here is an example for assigning a specialized Capability type for
 a standard service capability.  In this example, it is assumed that
 \xmlel{ExampleCapType} extension type is defined in a separate
-schema document, the target namespace of which as been bound to the
-\xmlel{ex:} prefix:
-.
+schema document, the target namespace of which is being bound to the
+\xmlel{ex:} prefix in the capability element itself (it could, of
+course, be bound in some enclosing element just as well):
+
 \begin{lstlisting}[language=XML]
 <capability xsi:type="ex:ExampleCapType"
-            standardID="ivo://example.com/std/exampleAccess">
+  standardID="ivo://example.com/std/exampleAccess"
+  xmlns:ex="http://ivoa.net/std/example-1.xsd">
   ...
 </capability>
 \end{lstlisting}
@@ -678,7 +691,9 @@ independently of each other.  There is no requirement to use a given
 capability type for an endpoint conforming to a certain standard, as
 indicated by the capability's \xmlel{standardID}. Conversely,
 it may make sense to re-use a certain capability type in a different
-standard; historically, several VOResource extension types have
+standard. 
+
+Historically, several VOResource extension types have
 fixed \xmlel{standardID}s.  This is now discouraged, as it needlessly
 limits the applicability of the encoded metadata models.
 
@@ -699,8 +714,13 @@ can be accessed.  The \xmlel{interface} element's type,
 defines two \xmlel{vr:Interface} extension types:
 \xmlel{vr:WebBrowser}, for describing an interface access via web
 browser, and \xmlel{vr:WebService}, for accessing a service
-described by a Web Service Description Language (WSDL) document.
-
+described by a Web Service Description Language (WSDL) document.  In
+today's VO, the latter interface type has almost vanished with the
+general move away from SOAP-based architectures.  VO standard
+capabilities currently typically use interface types defined in
+VODataService.\footnote{Retrospectively, \xmlel{vs:ParamHTTP} should probably
+have been part of VOResource itself; changing this now, however, does
+not seem to be worth the migration effort.}
 
 When a \xmlel{capability} contains more than one
 \xmlel{interface}, each \xmlel{interface} should be
@@ -719,9 +739,7 @@ standard interfaces (typically with the value ``std'').
 All other interfaces are considered non-standard
 alternatives.  To best support real-world discovery strategies, it is
 recommended to avoid having non-standard interfaces in capabilities
-with well-known \xmlel{standardID}s with the exception of
-\xmlel{vr:WebBrowser}-typed ones.
-
+with well-known \xmlel{standardID}s.
 
 Another way \xmlel{interface}s inside the same
 \xmlel{capability} element can be used is if a standard forsees
@@ -831,7 +849,7 @@ but can also include other concepts that are specific to that standard.
 An extension schema can define new interface types, though not
 necessarily in the context of any specific standard service
 capability.  The basic \xmlel{vr:Interface} type provides only
-\xmlel{accessURL}, \xmlel{mirrorURL}, and \xmlel{securityMethod} as child
+\xmlel{accessURL}, \xmlel{mirrorURL}, and \xmlel{security\-Method} as child
 elements.  A derived \xmlel{vr:Interface} type must indicate in
 the documentation how the \xmlel{accessURL} should be
 interpreted and used.  The derived type may also include other added
@@ -870,6 +888,8 @@ and general content metadata for a resource (see sections 3.1 through
 minimally compliant resource description; this requirement is enforced
 by the VOResource schema definition.  
 
+\goodbreak
+
 % GENERATED: !schemadoc VOResource-v1.1.xsd Resource
 \begin{generated}
 \begingroup
@@ -907,7 +927,7 @@ by the VOResource schema definition.
       </xs:restriction>
     </xs:simpleType>
   </xs:attribute>
-  <xs:attribute name="version" type="xs.token" />
+  <xs:attribute name="version" type="xs:token" />
 </xs:complexType>
 \end{lstlisting}
 
@@ -967,9 +987,10 @@ by the VOResource schema definition.
 \end{description}
 \item[version]
 \begin{description}
-\item[Type] \xmlel{xs.token}
+\item[Type] string: \xmlel{xs:token}
 \item[Meaning] 
-               The XML schema version for which this instance was written.
+               The VOResource XML schema version 
+               against which this instance was written.
                Implementors should set this to the value of the version
                attribute of their schema's root (xs:schema) element.
                Clients may assume version 1.0 if this attribute is 
@@ -1043,8 +1064,8 @@ by the VOResource schema definition.
 \begin{description}
 \item[Type] an IVOA Identifier URI: vr:IdentifierURI
 \item[Meaning] 
-                 Unambiguous reference to the resource conforming to the IVOA
-                 standard for identifiers
+                  Unambiguous reference to the resource conforming to the IVOA
+                  standard for identifiers
                
 \item[Occurrence] required
 
@@ -1122,10 +1143,6 @@ The identity metadata described in the RM (section
 3.1) are represented as top-level children of the
 \xmlel{vr:Resource} type.
 
-\todo{I think we should deprecate IdentifierURI (what's that URI in
-there now?)  And then there'd be IVOID (which may have query parts and
-fragments) and perhaps RegistryReference (as in ``Reference into the
-registry'' with the current IdentifierURI's pattern.}
 Two special types, \xmlel{vr:ShortName} and
 \xmlel{vr:IdentifierURI} are defined to support identity
 metadata.  The \xmlel{vr:ShortName} definition enforces the
@@ -1138,7 +1155,7 @@ metadata.  The \xmlel{vr:ShortName} definition enforces the
       	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{vr:ShortName} Type Schema Documentation}
 
 \noindent{\small
-         a short name or abbreviation given to something.
+         A short name or abbreviation given to something.
        \par}
 
 \noindent{\small
@@ -1172,9 +1189,20 @@ metadata.  The \xmlel{vr:ShortName} definition enforces the
       	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{vr:IdentifierURI} Type Schema Documentation}
 
 \noindent{\small
-            A reference to a registry record.  Note that this is not
-            suitable for some types of IVOA identifiers, as it does
-            not admit query parts  or fragment identifiers.
+            A reference to a registry record.
+         \par}
+
+\noindent{\small
+            This type should only be used if what is referenced
+            must actually be a true Registry record; vr:IdentifierURI
+            does not allow query or fragment parts and is hence
+            not suitable for everything defined by IVOA Identifiers,
+            in particular not standard keys (which are used for versions
+            of standards, for instance) or dataset identifiers.
+
+            When something does not need to be locked down to a
+            reference to a single registry record, xs:anyURI should
+            be used.
          \par}
 
 \vspace{1ex}\noindent\textbf{\xmlel{vr:IdentifierURI} Type Schema Definition}
@@ -1226,7 +1254,8 @@ The curation metadata described in the RM (section
     <xs:element name="date" type="vr:Date" minOccurs="0"
               maxOccurs="unbounded" />
     <xs:element name="version" type="xs:token" minOccurs="0" />
-    <xs:element name="contact" type="vr:Contact" maxOccurs="unbounded" />
+    <xs:element name="contact" type="vr:Contact"
+              maxOccurs="unbounded" />
   </xs:sequence>
 </xs:complexType>
 \end{lstlisting}
@@ -1403,7 +1432,7 @@ type which bundles together the RM metadata \emph{Creator} and
 \begin{description}
 \item[Type] string with ID attribute: vr:ResourceName
 \item[Meaning] 
-                  the name or title of the creating person or organization
+                  the name or title of the creating person or organisation
               
 \item[Occurrence] required
 \item[Comment] 
@@ -1429,11 +1458,11 @@ type which bundles together the RM metadata \emph{Creator} and
 \begin{description}
 \item[Type] a URI: \xmlel{xs:anyURI}
 \item[Meaning] 
-                  A reference to this entitiy in a non-IVOA identifier
-                  scheme, e.g., orcid.  Always use a URI form including
-                  a scheme here.  For Orcid, use a pattern like
-                  orcid:0000-0000-0000-000X.
-               
+                 A reference to this entitiy in a non-IVOA identifier
+                 scheme, e.g., orcid.  Always use a URI form including
+                 a scheme here.  For Orcid, use a pattern like
+                 orcid:0000-0000-0000-000X.
+              
 \item[Occurrence] optional; multiple occurrences allowed.
 
 \end{description}
@@ -1453,7 +1482,7 @@ collation simple for clients, person names should be formatted last name
 first wherever appropriate.
 
 In collaborative efforts, multiple creator elements should be used, one
-element per person or organization involved.
+element per person or organisation involved.
 
 Examples for encouraged use of creator include:
 
@@ -1502,15 +1531,32 @@ an RDF vocabulary at
 \url{http://www.ivoa.net/rdf/voresource/date_role} from
 which the \xmlel{role} terms should be taken if at all possible.  At the
 time or writing, the vocabulary consists of three old-style VOResource
-1.0 terms and terms from the DataCite Metadata 3.1.
+1.0 terms and terms from the DataCite Metadata 3.1 (see the RDF URL for
+the definitions of the terms):
 
-The vocabulary can evolve independently of this specification.
-Applications can rely on the presence of the \textsl{Updated}
-(deprecated VOResource 1.0 synonym: \textsl{update}) and
-\textsl{Created} (deprecated VOResource 1.0 synonym: \textsl{creation})
-terms.  Applications are not expected to support semantic relationships
-between the terms (except for mapping the deprecated VOResource 1.0
-terms to the modern DataCite Metadata ones).
+\begin{quotation}\noindent
+% GENERATED: sed -e 's/\([^;]*\);.*/\\textsl{\1}/' terms/date_role.terms | sort -i
+\textsl{Accepted}
+\textsl{Available}
+\textsl{Collected}
+\textsl{Copyrighted}
+\textsl{Created}
+\textsl{Issued}
+\textsl{Submitted}
+\textsl{Updated}
+\textsl{Valid}
+\textsl{creation}
+\textsl{representative}
+\textsl{update}
+
+% /GENERATED
+\end{quotation}
+
+
+Terms can be added to this vocabulary without changes to this
+specification.  Applications are not expected to support semantic
+relationships between the terms (except for mapping the deprecated
+VOResource 1.0 terms to the modern DataCite Metadata ones).
 
 % GENERATED: !schemadoc VOResource-v1.1.xsd Date
 \begin{generated}
@@ -1522,7 +1568,8 @@ terms to the modern DataCite Metadata ones).
 <xs:complexType name="Date" >
   <xs:simpleContent >
     <xs:extension base="vr:UTCDateTime" >
-      <xs:attribute name="role" type="xs:string" default="representative" />
+      <xs:attribute name="role" type="xs:string"
+                  default="representative" />
     </xs:extension>
   </xs:simpleContent>
 </xs:complexType>
@@ -1543,10 +1590,10 @@ representative
                	The value of role should be taken from the vocabulary
                	http://www.ivoa.net/rdf/voresource/date\_role.
                	This includes the the traditional and deprecated strings
-                {"}creation{"}, indicating the date that the resource 
-                itself was created, and {"}update{"}, indicating when the
+                “creation”, indicating the date that the resource 
+                itself was created, and “update”, indicating when the
                 resource was updated last, and the default value,
-                {"}representative{"}, meaning the date is a rough 
+                “representative”, meaning the date is a rough 
                 representation of the time coverage of the resource.
                 The preferred terms from that vocabulary are the DataCite
                 Metadata terms.   It is expected that the vocabulary will 
@@ -1556,7 +1603,7 @@ representative
 \item[Comment] 
                  Note that this date refers to the resource; dates describing
                  the metadata description of the resource are handled by
-                 the {"}created{"} and {"}updated{"} attributes of the Resource 
+                 the “created” and “updated” attributes of the Resource 
                  element. 
                
 \end{description}
@@ -1585,7 +1632,8 @@ and \emph{Contact.Email}.
       	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{vr:Contact} Type Schema Documentation}
 
 \noindent{\small
-          Information that can be used for contacting someone
+          Information allowing establishing contact, e.g., for purposes
+          of support.
         \par}
 
 \vspace{1ex}\noindent\textbf{\xmlel{vr:Contact} Type Schema Definition}
@@ -1611,8 +1659,8 @@ and \emph{Contact.Email}.
               
 \item[Occurrence] required
 \item[Comment] 
-                  This can be a person's name, e.g. {"}John P. Jones{"} or
-                  a group, {"}Archive Support Team{"}.
+                  This can be a person's name, e.g. “John P. Jones” or
+                  a group, “Archive Support Team”.
               
 
 \end{description}
@@ -1623,7 +1671,7 @@ and \emph{Contact.Email}.
 \item[Occurrence] optional
 \item[Comment] 
                 All components of the mailing address are given in one
-                string, e.g. {"}3700 San Martin Drive, Baltimore, MD 21218 USA{"}.
+                string, e.g. “3700 San Martin Drive, Baltimore, MD 21218 USA”.
               
 
 \end{description}
@@ -1641,7 +1689,7 @@ and \emph{Contact.Email}.
 \item[Occurrence] optional
 \item[Comment] 
                 Complete international dialing codes should be given, e.g.
-                {"}+1-410-338-1234{"}.
+                “+1-410-338-1234”.
               
 
 \end{description}
@@ -1680,7 +1728,8 @@ defined by the \xmlel{vr:Content} complex type.
 \begin{lstlisting}[language=XML,basicstyle=\footnotesize]
 <xs:complexType name="Content" >
   <xs:sequence >
-    <xs:element name="subject" type="xs:token" maxOccurs="unbounded" />
+    <xs:element name="subject" type="xs:token"
+              maxOccurs="unbounded" />
     <xs:element name="description" type="xs:string" />
     <xs:element name="source" type="vr:Source" minOccurs="0" />
     <xs:element name="referenceURL" type="xs:anyURI" />
@@ -1721,6 +1770,12 @@ defined by the \xmlel{vr:Content} complex type.
                The description may include but is not limited to an abstract, 
                table of contents, reference to a graphical representation of
                content or a free-text account of the content.
+
+               Note that description is xs:string-typed, which means that
+               whitespace is considered significant.  Clients should
+               render empty lines as paragraph boundaries and ideally
+               refrain from reflowing material that looks formatted (i.e.,
+               is broken to about 80-character lines).
              
 
 \end{description}
@@ -1754,8 +1809,7 @@ defined by the \xmlel{vr:Content} complex type.
 \item[Type] string: \xmlel{xs:token}
 \item[Meaning] 
                Nature or genre of the content of the resource.  Values for
-               type should be taken from a controlled vocabulary, available 
-               in various forms from
+               type should be taken from the controlled vocabulary
                http://www.ivoa.net/rdf/voresource/content\_type
              
 \item[Occurrence] optional; multiple occurrences allowed.
@@ -1766,8 +1820,8 @@ defined by the \xmlel{vr:Content} complex type.
 \item[Type] string: \xmlel{xs:token}
 \item[Meaning] 
                 Description of the content level or intended audience.
-                Values for contentLevel should be taken from a controlled
-                vocabulary, available at
+                Values for contentLevel should be taken from the controlled
+                vocabulary
                 http://www.ivoa.net/rdf/voresource/content\_level.
              
 \item[Occurrence] optional; multiple occurrences allowed.
@@ -1872,7 +1926,7 @@ The \xmlel{source} element's type,
 \begin{description}
 \item[Type] string: \xmlel{xs:string}
 \item[Meaning] 
-                 The reference format.  Recognized values include {"}bibcode{"}, 
+                 The reference format.  Recognized values include “bibcode”, 
                  referring to a standard astronomical bibcode 
                  (http://cdsweb.u-strasbg.fr/simbad/refcode.html).  
                
@@ -1910,8 +1964,34 @@ but will not be homogenized in VOResource 1.x so as to neither
 needlessly override DataCite practices nor interfere with existing uses
 of the VOResource terms.
 
-With the exception of the five VOResource 1.0 terms, the vocabulary may
-change without changes to the recommendation.
+\begin{quotation}\noindent
+% GENERATED: sed -e 's/\([^;]*\);.*/\\textsl{\1}/' terms/relationship_type.terms | sort -i
+\textsl{Cites}
+\textsl{Continues}
+\textsl{HasPart}
+\textsl{IsContinuedBy}
+\textsl{IsDerivedFrom}
+\textsl{IsIdenticalTo}
+\textsl{IsNewVersionOf}
+\textsl{IsPartOf}
+\textsl{IsPreviousVersionOf}
+\textsl{IsServedBy}
+\textsl{IsServiceFor}
+\textsl{IsSourceOf}
+\textsl{IsSupplementTo}
+\textsl{IsSupplementedBy}
+\textsl{derived-from}
+\textsl{mirror-of}
+\textsl{related-to}
+\textsl{served-by}
+\textsl{service-for}
+
+% /GENERATED
+\end{quotation}
+
+For definitions of these terms, their relationships, and the complete,
+up-to date list of the legal terms in HTML, turtle, or RDF-X formats,
+please refer to \url{http://www.ivoa.net/rdf/voresource/relationship_type}.
 
 % GENERATED: !schemadoc VOResource-v1.1.xsd Relationship
 \begin{generated}
@@ -1930,7 +2010,8 @@ change without changes to the recommendation.
 <xs:complexType name="Relationship" >
   <xs:sequence >
     <xs:element name="relationshipType" type="xs:token" />
-    <xs:element name="relatedResource" type="vr:ResourceName" minOccurs="1"
+    <xs:element name="relatedResource" type="vr:ResourceName"
+              minOccurs="1"
               maxOccurs="unbounded" />
   </xs:sequence>
 </xs:complexType>
@@ -2150,10 +2231,10 @@ elements to the core set of metadata, \xmlel{facility} and
 
 \noindent{\small
            According to the Resource Metadata Recommendation, organisations 
-           "can be hierarchical and range in size and scope.  At a high level, 
+           “can be hierarchical and range in size and scope.  At a high level, 
            an organisation could be a university, observatory, or government
            agency.  At a finer level, it could be a specific scientific 
-           project, mission, or individual researcher."  
+           project, mission, or individual researcher.”
          \par}
 
 \noindent{\small
@@ -2224,7 +2305,7 @@ example in sect.~\ref{sect:model}).
 
 
 The \xmlel{vr:Service} resource type is used to describe a service--a resource
-that actually does something--in the sense defined by the
+that actually does something -- in the sense defined by the
 RM:
 
 \begin{quotation}
@@ -2272,7 +2353,7 @@ invoked.
 
 \begingroup\small\begin{bigdescription}\item[Element \xmlel{rights}]
 \begin{description}
-\item[Type] composite: \xmlel{vr:Rights}
+\item[Type] a string with optional attributes
 \item[Meaning] 
                        Information about rights held in and over the resource.
                      
@@ -2338,11 +2419,11 @@ identify usage conditions.
 
 \begin{lstlisting}[language=XML,basicstyle=\footnotesize]
 <xs:complexType name="Rights" >
-  <xs:complexContent >
+  <xs:simpleContent >
     <xs:extension base="xs:token" >
       <xs:attribute name="rightsURI" type="xs:anyURI" />
     </xs:extension>
-  </xs:complexContent>
+  </xs:simpleContent>
 </xs:complexType>
 \end{lstlisting}
 
@@ -2490,7 +2571,7 @@ different capability of the service.
                
 \item[Comment] 
                   Multiple occurences can describe different interfaces to 
-                  the logically same capability--i.e. data or functionality.
+                  the logically same capability, i.e. data or functionality.
                   That is, the inputs accepted and the output provides should
                   be logically the same.  For example, a WebBrowser interface
                   given in addition to a WebService interface would simply 
@@ -2510,7 +2591,7 @@ different capability of the service.
 
 
 The \xmlel{capability} element is sufficient for describing a
-\emph{custom service capability}--i.e., a service that is
+\emph{custom service capability}, i.e., a service that is
 particular to one provider and does not conform to a specific standard 
 (be it recognized by the IVOA or some other sub-community).  However,
 service standards will often create a \xmlel{vr:Capability}
@@ -2530,21 +2611,10 @@ elements in a type derived from \xmlel{vr:Capability}.
 \end{admonition}
 
 
-The \xmlel{interface} element is of the complex type 
-\xmlel{vr:Interface}.
-
-The \xmlel{vr:Interface} type is defined as abstract, so as described in
-sect.~\ref{sect:servicemodel}, it must not be
-used as part of a \xmlel{vr:Service} description unless it includes an
-\xmlel{xsi:type} attribute that refers to a type derived from
-\xmlel{vr:Interface}. The VOResource schema defines two derived
-\xmlel{vr:Interface} types: \xmlel{vr:WebBrowser} and
-\xmlel{vr:WebService}.
-
-As described in sect.~\ref{sect:servicemodel}, the \xmlel{vr:Interface}
-attributes help distinguish between multiple interfaces within the same
-\xmlel{capability} element:
-
+The \xmlel{interface} element is of the complex type
+\xmlel{vr:Interface}; its usage, in particular as regards the mandatory
+use of its \xmlel{xsi:type} attribute and typical values thereof , is
+discussed sect.~\ref{sect:servicemodel}.
 
 % GENERATED: !schemadoc VOResource-v1.1.xsd Interface
 \begin{generated}
@@ -2573,9 +2643,10 @@ attributes help distinguish between multiple interfaces within the same
   <xs:sequence >
     <xs:element name="accessURL" type="vr:AccessURL" minOccurs="1"
               maxOccurs="unbounded" />
-    <xs:element name="mirrorURL" type="vr:MirrorURL" minOccurs="1"
+    <xs:element name="mirrorURL" type="vr:MirrorURL" minOccurs="0"
               maxOccurs="unbounded" />
-    <xs:element name="securityMethod" type="vr:SecurityMethod" minOccurs="0"
+    <xs:element name="securityMethod" type="vr:SecurityMethod"
+              minOccurs="0"
               maxOccurs="unbounded" />
     <xs:element name="testQueryString" type="xs:token" minOccurs="0"
               maxOccurs="unbounded" />
@@ -2660,7 +2731,7 @@ attributes help distinguish between multiple interfaces within the same
                  accessURL, how this URL is to be interpreted and used 
                  depends on the specific Interface subclass
                
-\item[Occurrence] required; multiple occurrences allowed.
+\item[Occurrence] optional; multiple occurrences allowed.
 \item[Comment] 
                 This is intended exclusively for true mirrors, i.e.,
                 interfaces that are functionally identical to the
@@ -2717,7 +2788,7 @@ attributes help distinguish between multiple interfaces within the same
 Exactly how a client uses the value
 of the \xmlel{accessURL} element depends on the specific
 type derived from \xmlel{vr:Interface}.  Extension schemas that
-define non-abstract types derived from \xmlel{vr:Interface } MUST
+define non-abstract types derived from \xmlel{vr:Interface} MUST
 provide documentation that explains the exact use of the
 \xmlel{accessURL}; this documentation should follow the
 documention conventions described in sect.~\ref{sect:core}.  
@@ -2843,7 +2914,7 @@ VOResource extension schema will define
 additional types derived from \xmlel{vr:SecurityMethod}.  If such
 a sub-type is available, it may be employed at
 \xmlel{securityMethod} location within a
-\xmlel{vr:Interface}-typed element, in which case, it should be
+\xmlel{vr:Interface}-typed element, in which case it should be
 invoked via a \xmlel{xsi:type} attribute to the
 \xmlel{securityMethod} element.  
 
@@ -2958,6 +3029,11 @@ realized as one that employs the Simple Object Access Protocol
 \citep{std:SOAP}; however, like WSDL, this interface type is not
 restricted to it. With this interface, the \xmlel{vr:accessURL} must
 refer to the service endpoint URL.
+
+Note that \xmlel{vr:WebService} must \emph{not} be used when no WSDL for
+the service is available.  This is true for all modern VO standard
+services.  It is thus unlikely that modern services will use this
+interface.  See sect.~\ref{sect:servicemodel} for details.
 
 \appendix
 

@@ -23,6 +23,6 @@ FIGURES = archdiag.png
 VECTORFIGURES = 
 
 # Additional files to distribute (e.g., CSS, schema files, examples...)
-AUX_FILES = VOResource-v1.0.xsd
+AUX_FILES = VOResource-v1.1.xsd
 
 include ivoatex/Makefile
