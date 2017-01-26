@@ -22,3 +22,15 @@ to) in the Makefile,
 
 Then, make test-install should to the trick, provided you have the necessary
 privileges.
+
+
+To make the conditional rewriting work, the directory needs to be served
+from an apache web server (or anything that will interpret the .htaccess
+files).  Furthermore, the deployment directory or one of its parents
+must be configured to allow rewrites in .htaccess, somewhat like this:
+
+    <Directory /var/www/docs/vocab-test>
+          AllowOverride FileInfo
+    </Directory>
+
+And, of course, mod_rewrite must be loaded in the server.
