@@ -138,7 +138,7 @@ context.
 In addition to concepts and structures laid down in the RM, VOResource
 also acknowledges other (though mostly related) metadata schemes.  Of
 particular importance here is the metadata scheme employed by DataCite,
-which at the time of writing is at version 3.1 \citep{std:DataCite31}.
+which at the time of writing is at version 4.0 \citep{std:DataCite40}.
 This, in particular, concerns the alignment of vocabularies.
 
 This document provides a concrete encoding of the resulting metadata
@@ -268,6 +268,19 @@ $$\hbox{\texttt{http://www.ivoa.net/xml/VOResource/v1.0}}.$$
 The namespace URI has been chosen to allow it to be resolved as a URL
 to the XML Schema document that defines the VOResource schema.
 Applications may assume that the namespace URI is so resolvable.
+
+Although this schema is in version 1.1 now, the URL still ends in
+\texttt{v1.0}.  This is to avoid unnecessarily breaking existing clients
+relying on the namespace as defined by version 1.0 of this
+specification.  As laid out in the IVOA schema versioning policies
+\citep{note:schemaevolution}, although minor versions should never have
+been part of namespace URIs, for namespaces defined before this note
+they cannot be dropped despite their potential for confusion.
+
+Clients should in general not care about minor versions of schemas.  In
+the rare cases that such information is necessary, instance documents
+for version 1.1 of VOResource must have a \xmlel{version} attribute
+with value \texttt{1.1} on their root element (i.e., \xmlel{Resource}).
 
 Document authors are strongly encouraged to bind this namespace to the
 \xmlel{vr:} prefix.  While in generic XML processing, the concrete
@@ -751,10 +764,10 @@ document in effect recommended this pattern for VO standards.
 While this pattern can still be employed, most VO standards that
 actually have different versions distinguish their endpoints by
 different standard identifiers, as described in section 4.2 of IVOA
-Identifiers 2.0 \citep{std:identifiers2}.  In these cases -- where the
+Identifiers 2.0 \citep{2016ivoa.spec.0523D}.  In these cases -- where the
 \xmlel{capability}'s \xmlel{standardID} attribute already uniquely
 determines the protocol spoken --, the specification of \xmlel{version}
-on \xmlel{interface} elements is optional, though encouraged.
+on \xmlel{interface} elements is optional (although encouraged).
 
 \subsection{Extending the VOResource Schema}
 
@@ -1531,8 +1544,9 @@ an RDF vocabulary at
 \url{http://www.ivoa.net/rdf/voresource/date_role} from
 which the \xmlel{role} terms should be taken if at all possible.  At the
 time or writing, the vocabulary consists of three old-style VOResource
-1.0 terms and terms from the DataCite Metadata 3.1 (see the RDF URL for
-the definitions of the terms):
+1.0 terms and terms from the DataCite Metadata 4.0 \citep{std:DataCite40}; 
+see the RDF URL for
+the definitions of the terms:
 
 \begin{quotation}\noindent
 % GENERATED: sed -e 's/\([^;]*\);.*/\\textsl{\1}/' terms/date_role.terms | sort -i
@@ -1754,8 +1768,8 @@ defined by the \xmlel{vr:Content} complex type.
              
 \item[Occurrence] required; multiple occurrences allowed.
 \item[Comment] 
-               Terms for Subject should be drawn from the IAU Astronomy 
-               Thesaurus (http://msowww.anu.edu.au/library/thesaurus/).
+               Terms for Subject should be drawn from the Unified
+               Astronomy Thesaurus (http://astrothesaurus.org).
              
 
 \end{description}
@@ -2649,7 +2663,7 @@ discussed sect.~\ref{sect:servicemodel}.
               minOccurs="0"
               maxOccurs="unbounded" />
     <xs:element name="testQueryString" type="xs:token" minOccurs="0"
-              maxOccurs="unbounded" />
+              maxOccurs="1" />
   </xs:sequence>
   <xs:attribute name="version" type="xs:string" />
   <xs:attribute name="role" type="xs:NMTOKEN" />
@@ -2761,7 +2775,7 @@ discussed sect.~\ref{sect:servicemodel}.
 \item[Meaning] 
                   Test data for exercising the service.
                
-\item[Occurrence] optional; multiple occurrences allowed.
+\item[Occurrence] optional
 \item[Comment] 
                   This contains data that can be passed to the interface to
                   retrieve a non-empty result.  This can be used by validators
@@ -2838,8 +2852,8 @@ record.  To aid in user interfaces for mirror selection,
 \item[Type] string: \xmlel{xs:token}
 \item[Meaning] 
                   A terse, human-readable phrase indicating the function
-                  or location of this mirror, e.g., {"}Primary Backup{"} or
-                  {"}European Mirror{"}.
+                  or location of this mirror, e.g., “Primary Backup” or
+                  “European Mirror”.
                
 \item[Occurrence] optional
 \end{description}
@@ -3039,6 +3053,14 @@ interface.  See sect.~\ref{sect:servicemodel} for details.
 
 \section{Change History}
 
+\subsection{Changes from WD-20170123}
+
+\begin{itemize}
+\item Explanation for mismatch between namespace URI and actual version.
+\item \xmlel{testQueryString} has erroneously had multiplicity 0\dots n.
+It is now defined as 0\dots 1.
+\end{itemize}
+
 \subsection{Changes from WD-20161010}
 
 \begin{itemize}
@@ -3059,7 +3081,6 @@ VOResource otherwise)
 
 \item References to the RM terms in the metadata definition dropped
 (could add support in ivoatex/schemadoc if we want them back).
-
 
 \item Adding altIdentifier elements to creator and resource.
 
@@ -3085,7 +3106,7 @@ Consequently, the vr:Type type vanishes from the XSD.
 The vocabulary is now managed as an external resource.
 Consequently, the vr:ContentLevel type vanishes from the XSD.
 
-\item New testQueryString child of interface.
+\item New testQueryString and mirrorURL children of interface.
 
 \item Now discouraging fixing standardID in VOResource extensions.
 Also, removed indication that capability/@xsi:type should be used for

@@ -1096,7 +1096,7 @@
          </xs:element>
 
          <xs:element name="testQueryString" type="xs:token"
-                     minOccurs="0" maxOccurs="unbounded">
+                     minOccurs="0" maxOccurs="1">
             <xs:annotation>
                <xs:documentation>
                   Test data for exercising the service.
