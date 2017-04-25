@@ -1973,10 +1973,14 @@ VOResource 1.x
 \item selected terms from the DataCite Metadata relationType enumeration.
 \end{itemize}
 
-The resulting mix of term styles might be considered an aesthetic defect
-but will not be homogenized in VOResource 1.x so as to neither
-needlessly override DataCite practices nor interfere with existing uses
-of the VOResource terms.
+The resulting mix of term styles is an aesthetic defect that may
+acutally lead to the construction of invalid terms.  While, for backward
+compatibility, we will not drop the VOResource 1.0 terms in
+VOResource 1.x, they should not be used in new records.  Instead,
+resource records should use the terms given as \emph{Preferred} in the
+vocabulary retrievable at the URL given above.
+
+At the time of writing, the full vocabulary consists of these terms:
 
 \begin{quotation}\noindent
 % GENERATED: sed -e 's/\([^;]*\);.*/\\textsl{\1}/' terms/relationship_type.terms | sort -i
@@ -3059,6 +3063,8 @@ interface.  See sect.~\ref{sect:servicemodel} for details.
 \item Explanation for mismatch between namespace URI and actual version.
 \item \xmlel{testQueryString} has erroneously had multiplicity 0\dots n.
 It is now defined as 0\dots 1.
+\item Adopting DataCite 4.0 as upstream, explanation of the relationship
+between VOResource 1.0 and DataCite terms.
 \end{itemize}
 
 \subsection{Changes from WD-20161010}
