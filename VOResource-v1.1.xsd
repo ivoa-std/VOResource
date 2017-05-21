@@ -8,6 +8,10 @@
            attributeFormDefault="unqualified"
            version="1.1">
 
+<!-- NOTE: target namespace ends in v1.0 in order to not break 1.0 clients.
+This is nevertheless the 1.1 schema, as given by the version attribute.
+For details, see http://ivoa.net/documents/Notes/XMLVers -->
+
    <xs:annotation>
      <xs:appinfo>
        <vm:schemaName>VOResource</vm:schemaName>
