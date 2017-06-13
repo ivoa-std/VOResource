@@ -1679,6 +1679,8 @@ and \emph{Contact.Email}.
     <xs:element name="address" type="xs:token" minOccurs="0" />
     <xs:element name="email" type="xs:token" minOccurs="0" />
     <xs:element name="telephone" type="xs:token" minOccurs="0" />
+    <xs:element name="altIdentifier" type="xs:anyURI" minOccurs="0"
+              maxOccurs="unbounded" />
   </xs:sequence>
   <xs:attribute name="ivo-id" type="vr:IdentifierURI" />
 </xs:complexType>
@@ -1745,6 +1747,18 @@ and \emph{Contact.Email}.
                 Complete international dialing codes should be given, e.g.
                 “+1-410-338-1234”.
               
+
+\end{description}
+\item[Element \xmlel{altIdentifier}]
+\begin{description}
+\item[Type] a URI: \xmlel{xs:anyURI}
+\item[Meaning] 
+                 A reference to this entitiy in a non-IVOA identifier
+                 scheme, e.g., orcid.  Always use a URI form including
+                 a scheme here.  For Orcid, use a pattern like
+                 orcid:0000-0000-0000-000X.
+              
+\item[Occurrence] optional; multiple occurrences allowed.
 
 \end{description}
 

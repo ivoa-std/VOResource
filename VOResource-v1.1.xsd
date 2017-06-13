@@ -554,6 +554,18 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
            </xs:annotation>
         </xs:element>
 
+        <xs:element name="altIdentifier" type="xs:anyURI" minOccurs="0"
+              maxOccurs="unbounded">
+           <xs:annotation>
+              <xs:documentation>
+                 A reference to this entitiy in a non-IVOA identifier
+                 scheme, e.g., orcid.  Always use a URI form including
+                 a scheme here.  For Orcid, use a pattern like
+                 orcid:0000-0000-0000-000X.
+              </xs:documentation>
+           </xs:annotation>
+        </xs:element>
+
       </xs:sequence>
 
       <xs:attribute name="ivo-id" type="vr:IdentifierURI">
