@@ -555,6 +555,16 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
         </xs:element>
 
       </xs:sequence>
+
+      <xs:attribute name="ivo-id" type="vr:IdentifierURI">
+         <xs:annotation>
+           <xs:documentation>
+             An IVOA identifier for the contact (typically when it is
+             an organization).
+           </xs:documentation>
+         </xs:annotation>
+      </xs:attribute>
+
    </xs:complexType>
 
    <xs:complexType name="Creator">
@@ -603,6 +613,16 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
         </xs:element>
 
       </xs:sequence>
+
+      <xs:attribute name="ivo-id" type="vr:IdentifierURI">
+         <xs:annotation>
+           <xs:documentation>
+             An IVOA identifier for the creator (typically when it is
+             an organization).
+           </xs:documentation>
+         </xs:annotation>
+      </xs:attribute>
+
    </xs:complexType>
 
    <xs:complexType name="Date">

@@ -1436,8 +1436,28 @@ type which bundles together the RM metadata \emph{Creator} and
     <xs:element name="altIdentifier" type="xs:anyURI" minOccurs="0"
               maxOccurs="unbounded" />
   </xs:sequence>
+  <xs:attribute name="ivo-id" type="vr:IdentifierURI" />
 </xs:complexType>
 \end{lstlisting}
+
+\vspace{0.5ex}\noindent\textbf{\xmlel{vr:Creator} Attributes}
+
+\begingroup\small\begin{bigdescription}
+\item[ivo-id]
+\begin{description}
+\item[Type] an IVOA Identifier URI: vr:IdentifierURI
+\item[Meaning] 
+             An IVOA identifier for the creator (typically when it is
+             an organization).
+           
+\item[Occurrence] optional
+
+\end{description}
+
+
+\end{bigdescription}\endgroup
+
+
 
 \vspace{0.5ex}\noindent\textbf{\xmlel{vr:Creator} Metadata Elements}
 
@@ -1660,8 +1680,28 @@ and \emph{Contact.Email}.
     <xs:element name="email" type="xs:token" minOccurs="0" />
     <xs:element name="telephone" type="xs:token" minOccurs="0" />
   </xs:sequence>
+  <xs:attribute name="ivo-id" type="vr:IdentifierURI" />
 </xs:complexType>
 \end{lstlisting}
+
+\vspace{0.5ex}\noindent\textbf{\xmlel{vr:Contact} Attributes}
+
+\begingroup\small\begin{bigdescription}
+\item[ivo-id]
+\begin{description}
+\item[Type] an IVOA Identifier URI: vr:IdentifierURI
+\item[Meaning] 
+             An IVOA identifier for the contact (typically when it is
+             an organization).
+           
+\item[Occurrence] optional
+
+\end{description}
+
+
+\end{bigdescription}\endgroup
+
+
 
 \vspace{0.5ex}\noindent\textbf{\xmlel{vr:Contact} Metadata Elements}
 
@@ -3056,6 +3096,14 @@ interface.  See sect.~\ref{sect:servicemodel} for details.
 \appendix
 
 \section{Change History}
+
+\subsection{Changes from PR-20170425}
+
+\begin{itemize} 
+\item creator and contact can now have ivo-id attributes (analogous
+to publisher and contributor); these are intended for when the roles are
+filled by organizations.
+\end{itemize}
 
 \subsection{Changes from WD-20170123}
 
