@@ -75,7 +75,7 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
                   or research study. 
                </xs:documentation>
                <xs:documentation>
-                  See vr:ValidationLevel for an explanation of the
+                  See vr:Validation for an explanation of the
                   allowed levels.  
                </xs:documentation>
                <xs:documentation>
@@ -421,14 +421,11 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
                <vm:dcterm>Creator</vm:dcterm>
              </xs:appinfo>
              <xs:documentation>
-                The entity (e.g. person or organisation) primarily responsible 
+                The entity/ies (e.g. person(s) or organisation) primarily responsible 
                 for creating the content or constitution of the resource.
              </xs:documentation>
              <xs:documentation>
-                A logo need only be provided for the first occurrence.
-                When multiple logos are supplied via multiple creator 
-                elements, the application is free to choose which to
-                use. 
+                This is the equivalent of the author of a publication.
              </xs:documentation>
           </xs:annotation>
        </xs:element>
@@ -609,6 +606,12 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
                 URL pointing to a graphical logo, which may be used to help 
                 identify the information source
               </xs:documentation>
+              <xs:documentation>
+                A logo need only be provided for the first occurrence.
+                When multiple logos are supplied via multiple creator 
+                elements, the application is free to choose which to
+                use. 
+              </xs:documentation>
            </xs:annotation>
         </xs:element>
 
@@ -646,7 +649,8 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
                  A string indicating what the date refers to.  
                </xs:documentation>
                <xs:documentation>
-               	The value of role should be taken from the vocabulary
+               	The value of role should be taken from the vocabulary 
+               	maintained at
                	http://www.ivoa.net/rdf/voresource/date_role.
                	This includes the the traditional and deprecated strings
                 “creation”, indicating the date that the resource 

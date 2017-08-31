@@ -102,7 +102,7 @@ Parts of the schema appear within the main sections of this document;
 however, documentation nodes have been left out for the sake of brevity.
 Where the content of the pieces of schema embedded in this text
 diverges from the schema document in the IVOA document
-repository, the version in the document repository is authoritative.
+repository, the version in the schema repository is authoritative.
 
 References to specific elements and types defined in the VOResource
 schema include the namespaces prefix \xmlel{vr} as in
@@ -235,18 +235,19 @@ record:
 \begin{enumerate}
   \item the VOResource namespace (line 3),
   \item the specific type of resource indicated by
-       the value of the \xmlel{xsi:type} attribute (line 2),
+       the value of the \xmlel{xsi:type} attribute as
+       discussed in sect.~\ref{sect:derivedtypes} (line 2),
   \item the location of the schema documents used by
-       this description (lines 5f) -- this is to facilitate document
+       this description (lines 6f) -- this is to facilitate document
        validation --,
   \item values for the three main types of core metadata:
        identity, curation, and content,
   \item a reference to another resource is made by
-       providing that resource's IVOA identifier (line 13),
+       providing that resource's IVOA identifier (line 22),
   \item string values can be padded with spaces
-       for easier readability (e.g., line 17),
+       for easier readability (e.g., line 22f),
   \item extension metadata specific to the type of
-       resource (lines 47ff).
+       resource (lines 56ff).
 \end{enumerate}
 
 Actual services obviously need additional metadata defining the
@@ -801,7 +802,10 @@ VOResource.  In particular:
        VOResource does not use the choice structure because it does
        not map readily into any object-oriented software language
        structure.  Choices are handled instead as multiple derived
-       types that can be inserted in place of a parent type.  
+       types that can be inserted in place of a parent type; for
+       examples, see the \xmlel{vs:VOTableType} and
+       \xmlel{vs:SimpleDataType} defintions in VODataService 1.1
+       \citep{2010ivoa.spec.1202P}.
 
   \item \emph{Avoid the use of substitution groups}.  VOResource
        prefers instead the use of \xmlel{xsi:type} which are
@@ -841,6 +845,9 @@ of the \xmlel{vr:Resource} base type; in this case, the purpose
 of the derivation is only to sharpen the semantic meaning of the
 resource description.  
 
+In VOResource itself, this mechanism is used to derive
+\xmlel{vr:Organisation}
+and \xmlel{vr:Service}.
 
 \subsubsection{Defining New Service Capabilities and Interfaces}
 \label{sect:serviceelements}
@@ -874,9 +881,11 @@ absolutely required by clients in order to invoke the service.
 
 
 Examples for extension schemas can be found in the IVOA Document
-Repository.\footnote{\url{http://ivoa.net/documents}}
+Repository.\footnote{\url{http://ivoa.net/documents}; TAPRegExt or
+SimpleDALRegExt give starting points.}
 Sect.~\ref{sect:role} enumerates the ones in Recommendation state at the
-time of writing.
+time of writing.  In VOResource itself, the mechanism can be inspected
+in the derivation of \xmlel{vr:WebService} and \xmlel{vr:WebService}.
 
 
 \section{The VOResource Metadata}
@@ -1031,7 +1040,7 @@ by the VOResource schema definition.
                
 \item[Occurrence] optional; multiple occurrences allowed.
 \item[Comment] 
-                  See vr:ValidationLevel for an explanation of the
+                  See vr:Validation for an explanation of the
                   allowed levels.  
                
 \item[Comment] 
@@ -1125,7 +1134,7 @@ by the VOResource schema definition.
 
 Note that the \xmlel{vr:Resource} attributes (\xmlel{created},
 \xmlel{updated}, \xmlel{status}) represent a special class of
-metadata: they describe the resource metadata description contained
+metadata: they describe the resource metadata contained
 within the \xmlel{vr:Resource} itself as opposed to the resource being
 described.  Also note that with OAI-PMH 2.0, VOResource records that
 would have a \xmlel{status} of \verb|deleted| should not occur since
@@ -1289,15 +1298,12 @@ The curation metadata described in the RM (section
 \begin{description}
 \item[Type] composite: \xmlel{vr:Creator}
 \item[Meaning] 
-                The entity (e.g. person or organisation) primarily responsible 
+                The entity/ies (e.g. person(s) or organisation) primarily responsible 
                 for creating the content or constitution of the resource.
              
 \item[Occurrence] optional; multiple occurrences allowed.
 \item[Comment] 
-                A logo need only be provided for the first occurrence.
-                When multiple logos are supplied via multiple creator 
-                elements, the application is free to choose which to
-                use. 
+                This is the equivalent of the author of a publication.
              
 
 \end{description}
@@ -1485,6 +1491,12 @@ type which bundles together the RM metadata \emph{Creator} and
                 identify the information source
               
 \item[Occurrence] optional
+\item[Comment] 
+                A logo need only be provided for the first occurrence.
+                When multiple logos are supplied via multiple creator 
+                elements, the application is free to choose which to
+                use. 
+              
 
 \end{description}
 \item[Element \xmlel{altIdentifier}]
@@ -1621,7 +1633,8 @@ VOResource 1.0 terms to the modern DataCite Metadata ones).
 \item[Occurrence] optional
 representative
 \item[Comment] 
-               	The value of role should be taken from the vocabulary
+               	The value of role should be taken from the vocabulary 
+               	maintained at
                	http://www.ivoa.net/rdf/voresource/date\_role.
                	This includes the the traditional and deprecated strings
                 “creation”, indicating the date that the resource 
@@ -3117,6 +3130,8 @@ interface.  See sect.~\ref{sect:servicemodel} for details.
 \item creator and contact can now have ivo-id attributes (analogous
 to publisher and contributor); these are intended for when the roles are
 filled by organizations.
+\item contact can now have altIdentifier children, too (in parallel to
+creator)
 \end{itemize}
 
 \subsection{Changes from WD-20170123}
@@ -3127,6 +3142,8 @@ filled by organizations.
 It is now defined as 0\dots 1.
 \item Adopting DataCite 4.0 as upstream, explanation of the relationship
 between VOResource 1.0 and DataCite terms.
+\item altIdentifier is now allowed on Contact now (mainly for symmetry
+with Creator.
 \end{itemize}
 
 \subsection{Changes from WD-20161010}

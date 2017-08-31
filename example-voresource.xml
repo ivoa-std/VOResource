@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<resource xsi:type="vr:Organisation"
+<ri:Resource xsi:type="vr:Organisation"
           xmlns:vr="http://www.ivoa.net/xml/VOResource/v1.0" 
+          xmlns:ri="http://www.ivoa.net/xml/RegistryInterface/v1.0" 
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
           xsi:schemaLocation="http://www.ivoa.net/xml/VOResource/v1.0 
-                              http://www.ivoa.net/xml/VOResource/v1.0"
+                              http://www.ivoa.net/xml/VOResource/v1.0
+                              http://www.ivoa.net/xml/RegistryInterface/v1.0
+                              http://www.ivoa.net/xml/RegistryInterface/v1.0"
           created="2009-02-15T12:00:00"
           updated="2009-02-15T12:00:00"
-          status="active"
->
+          status="active">
+    <validationLevel validatedBy="ivo://archive.stsci.edu/nvoregistry">
+      2
+    </validationLevel>
 
     <title>NCSA Radio Astronomy Imaging</title> 
     <shortName>NCSA-RAI</shortName> 
@@ -53,4 +58,4 @@
         Combined Array for Research in Millimeter Astronomy (CARMA) 
     </facility> 
 
-</resource>
+</ri:Resource>
