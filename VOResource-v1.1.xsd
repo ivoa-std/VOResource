@@ -652,7 +652,7 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
                	The value of role should be taken from the vocabulary 
                	maintained at
                	http://www.ivoa.net/rdf/voresource/date_role.
-               	This includes the the traditional and deprecated strings
+               	This includes the traditional and deprecated strings
                 “creation”, indicating the date that the resource 
                 itself was created, and “update”, indicating when the
                 resource was updated last, and the default value,
