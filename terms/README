@@ -11,7 +11,8 @@ To build the vocabularies, at this point say:
 	make
 
 This will bulid the vocabulary files in subdirectories of the current
-directory.
+directory; you'll need python2 and rapper (Debian package:
+rapter2-utils) installed for this to work.
 
 To test them before deploying them, you need to set TEST_DEST (something
 you can rsync to) and TEST_ROOT_URL (the root URL of where TEST_DEST installs
