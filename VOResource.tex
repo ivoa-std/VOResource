@@ -938,8 +938,8 @@ by the VOResource schema definition.
     <xs:element name="curation" type="vr:Curation" />
     <xs:element name="content" type="vr:Content" />
   </xs:sequence>
-  <xs:attribute name="created" type="xs:dateTime" use="required" />
-  <xs:attribute name="updated" type="xs:dateTime" use="required" />
+  <xs:attribute name="created" type="vr:UTCTimestamp" use="required" />
+  <xs:attribute name="updated" type="vr:UTCTimestamp" use="required" />
   <xs:attribute name="status" use="required" >
     <xs:simpleType >
       <xs:restriction base="xs:string" >
@@ -958,12 +958,13 @@ by the VOResource schema definition.
 \begingroup\small\begin{bigdescription}
 \item[created]
 \begin{description}
-\item[Type] \xmlel{xs:dateTime}
+\item[Type] string
 \item[Meaning] 
               The UTC date and time this resource metadata description
               was created. 
             
 \item[Occurrence] required
+
 \item[Comment] 
               This timestamp must not be in the future.  This time is
               not required to be accurate; it should be at least
@@ -973,11 +974,12 @@ by the VOResource schema definition.
 \end{description}
 \item[updated]
 \begin{description}
-\item[Type] \xmlel{xs:dateTime}
+\item[Type] string
 \item[Meaning] 
               The UTC date this resource metadata description was last updated.
             
 \item[Occurrence] required
+
 \item[Comment] 
               This timestamp must not be in the future.  This time is
               not required to be accurate; it should be at least
@@ -1636,7 +1638,7 @@ representative
                	The value of role should be taken from the vocabulary 
                	maintained at
                	http://www.ivoa.net/rdf/voresource/date\_role.
-               	This includes the the traditional and deprecated strings
+               	This includes the traditional and deprecated strings
                 “creation”, indicating the date that the resource 
                 itself was created, and “update”, indicating when the
                 resource was updated last, and the default value,
@@ -3132,6 +3134,9 @@ to publisher and contributor); these are intended for when the roles are
 filled by organizations.
 \item contact can now have altIdentifier children, too (in parallel to
 creator)
+\item @updated and @created on resource are now vr:UTCTimestamp rather
+than xs:datetime.  There has always been a textual requirement that
+these are UTC.  This is now enforced by the schema.
 \end{itemize}
 
 \subsection{Changes from WD-20170123}

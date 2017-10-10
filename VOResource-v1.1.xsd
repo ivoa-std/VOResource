@@ -160,7 +160,7 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
 
       </xs:sequence>
 
-      <xs:attribute name="created" type="xs:dateTime" use="required">
+      <xs:attribute name="created" type="vr:UTCTimestamp" use="required">
          <xs:annotation>
             <xs:documentation>
               The UTC date and time this resource metadata description
@@ -175,7 +175,7 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
          </xs:annotation>
       </xs:attribute>
 
-      <xs:attribute name="updated" type="xs:dateTime" use="required">
+      <xs:attribute name="updated" type="vr:UTCTimestamp" use="required">
          <xs:annotation>
             <xs:documentation>
               The UTC date this resource metadata description was last updated.
