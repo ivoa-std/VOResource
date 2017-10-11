@@ -132,17 +132,15 @@ The resource metadata are, then, the terms and concepts that describe
 a resource in general.  The RM defines the terms as well as describes
 reasonable or allowed values; it does not, however, describe how the
 terms and values should be encoded.  This is because resource metadata
-may be encoded in several different formats, depending on the
-context.
+may be encoded in several different formats, depending on the context.
+The present document provides a concrete encoding of the resulting
+metadata model on XML suitable for embedding into OAI-PMH responses.
 
 In addition to concepts and structures laid down in the RM, VOResource
 also acknowledges other (though mostly related) metadata schemes.  Of
 particular importance here is the metadata scheme employed by DataCite,
 which at the time of writing is at version 4.0 \citep{std:DataCite40}.
 This, in particular, concerns the alignment of vocabularies.
-
-This document provides a concrete encoding of the resulting metadata
-model.
 
 The primary intended use of VOResource is to provide an XML interchange
 format for use with resource registries.  A registry is a repository of
@@ -226,7 +224,7 @@ using the metadata concepts defined in the RM.  Here is an example of a
 VOResource document describing an organisation, the Radio Astronomy
 Imaging Group at the National Center for Supercomputing Applications.  
 
-\lstinputlisting[language=XML,numbers=right,basicstyle=\footnotesize]
+\lstinputlisting[language=XML,numbers=left,basicstyle=\footnotesize]
    {example-voresource.xml}
 
 This example illustrates some important components of a VOResource
@@ -238,16 +236,17 @@ record:
        the value of the \xmlel{xsi:type} attribute as
        discussed in sect.~\ref{sect:derivedtypes} (line 2),
   \item the location of the schema documents used by
-       this description (lines 6f) -- this is to facilitate document
+       this description (lines 6--9) -- this is to facilitate document
        validation --,
   \item values for the three main types of core metadata:
-       identity, curation, and content,
+       identity (lines 17--19), curation (lines 21--36), and content
+       (lines 38--54),
   \item a reference to another resource is made by
        providing that resource's IVOA identifier (line 22),
   \item string values can be padded with spaces
-       for easier readability (e.g., line 22f),
+       for easier readability (e.g., lines 22--24),
   \item extension metadata specific to the type of
-       resource (lines 56ff).
+       resource (lines 56--59).
 \end{enumerate}
 
 Actual services obviously need additional metadata defining the
@@ -278,8 +277,9 @@ specification.  As laid out in the IVOA schema versioning policies
 been part of namespace URIs, for namespaces defined before this note
 they cannot be dropped despite their potential for confusion.
 
-Clients should in general not care about minor versions of schemas.  In
-the rare cases that such information is necessary, instance documents
+Clients should in general not care about minor versions of schemas.
+To cover
+the rare cases in which  such information is necessary, instance documents
 for version 1.1 of VOResource must have a \xmlel{version} attribute
 with value \texttt{1.1} on their root element (i.e., \xmlel{Resource}).
 
@@ -707,7 +707,7 @@ indicated by the capability's \xmlel{standardID}. Conversely,
 it may make sense to re-use a certain capability type in a different
 standard. 
 
-Historically, several VOResource extension types have
+Historically, several VOResource extension types have had
 fixed \xmlel{standardID}s.  This is now discouraged, as it needlessly
 limits the applicability of the encoded metadata models.
 
@@ -735,6 +735,21 @@ capabilities currently typically use interface types defined in
 VODataService.\footnote{Retrospectively, \xmlel{vs:ParamHTTP} should probably
 have been part of VOResource itself; changing this now, however, does
 not seem to be worth the migration effort.}
+
+As an example, a simple, browser-based interface could be declared with
+an untyped capability like this (this assumes the \xmlel{vr} prefix has
+been bound in an ancestor element):
+\begin{lstlisting}[language=XML]
+<capability>
+  <interface xsi:type="vr:WebBrowser">
+    <accessURL use="full"
+      >http://example.org/browser-service</accessURL>
+  </interface>
+</capability>
+\end{lstlisting}
+Note that for less trivial interfaces, in particular
+\xmlel{vs:ParamHTTP}, the parameters accepted should be declared in the
+interface element.
 
 When a \xmlel{capability} contains more than one
 \xmlel{interface}, each \xmlel{interface} should be
@@ -882,7 +897,8 @@ absolutely required by clients in order to invoke the service.
 
 Examples for extension schemas can be found in the IVOA Document
 Repository.\footnote{\url{http://ivoa.net/documents}; TAPRegExt or
-SimpleDALRegExt give starting points.}
+SimpleDALRegExt give starting points.  The actual schema files are
+available from \url{http://ivoa.net/xml}.}
 Sect.~\ref{sect:role} enumerates the ones in Recommendation state at the
 time of writing.  In VOResource itself, the mechanism can be inspected
 in the derivation of \xmlel{vr:WebService} and \xmlel{vr:WebService}.
@@ -1363,6 +1379,8 @@ The curation metadata described in the RM (section
 
 % /GENERATED
 
+\paragraph{Resource Names}
+
 Several of the curation elements (most importantly,
 \xmlel{publisher}\/) make use of the
 \xmlel{vr:ResourceName} type.  This type provides a means of
@@ -1416,6 +1434,8 @@ thus, the identifier (which is encoded as an attribute) is optional.
 
 % /GENERATED
 
+
+\paragraph{The Creator Type}
 
 The \xmlel{creator} element is defined by the \xmlel{vr:Creator} complex
 type which bundles together the RM metadata \emph{Creator} and
@@ -1566,6 +1586,8 @@ technically invalid, they are frowned upon:
   </creator>
 \end{lstlisting}
 
+\paragraph{Dates and Their Roles}
+
 The \xmlel{Date} element's type, \xmlel{vr:Date}, is an extension of the
 \xmlel{UTCDateTime} type that adds an
 optional attribute called \xmlel{role}.  
@@ -1665,7 +1687,7 @@ representative
 
 % /GENERATED
 
-
+\paragraph{The Contact Type}
 
 The \xmlel{contact} element is defined by the
 \xmlel{vr:Contact} type which bundles together several component

@@ -607,7 +607,7 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
                 identify the information source
               </xs:documentation>
               <xs:documentation>
-                A logo need only be provided for the first occurrence.
+                A logo needs only be provided for the first occurrence.
                 When multiple logos are supplied via multiple creator 
                 elements, the application is free to choose which to
                 use. 
