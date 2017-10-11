@@ -307,15 +307,18 @@ xsi:schemaLocation="http://www.ivoa.net/xml/VOResource/v1.0
                     http://www.ivoa.net/xml/VOResource/v1.0"
 \end{verbatim}
 
-Because the VOResource XML schema sets \xmlel{elementFormDefault} to
-unqualified, documents that use the VOResource schema must not bind the
-empty namespace (using \verb|xmlns="..."|), anywhere in the document
-where the VOResource schema is in effect.  This is a restriction set by
-the rules of XML Schema.  Furthermore, in accordance with the Schema
-rules for unqualified elements, the VOResource namespace prefix must not
-used to qualify VOResource elements.  In general, namespace prefixes are
+The VOResource XML schema sets \xmlel{elementFormDefault} to
+unqualified.  This means that element names without prefixes must be
+interpreted outside of any namespace.  One consequence of this is that
+instance documents must not bind the
+empty namespace (using \verb|xmlns="..."|) in any element containing
+VOResource elements.  
+Conversely, the VOResource namespace prefix must not
+be used to qualify VOResource elements.  
+
+In general, namespace prefixes in VOResource are
 only used to qualify type names given as values to the \xmlel{xsi:type}
-attribute (see next section).  Legal extensions of the VOResource schema
+attribute in VOResource (see next section).  VOResource extensions 
 should also set \verb|elementFormDefault="unqualified"| for consistency.
 
 
