@@ -1122,15 +1122,16 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
          </xs:element>
 
          <xs:element name="securityMethod" type="vr:SecurityMethod"
-                     minOccurs="0" maxOccurs="unbounded">
+                     minOccurs="0" maxOccurs="1">
             <xs:annotation>
                <xs:documentation>
-                  the mechanism the client must employ to gain secure
-                  access to the service.  
+                  The mechanism the client must employ to authenticate
+                  to the service.
                </xs:documentation>
                <xs:documentation>
-                  when more than one method is listed, each one must
-                  be employed to gain access.  
+                  Services not requiring authentication must provide
+                  at least one interface definition without a 
+                  securityMethod defined.
                </xs:documentation>
             </xs:annotation>
          </xs:element>
@@ -1265,7 +1266,7 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
             a description of a security mechanism.
          </xs:documentation>
          <xs:documentation>
-            this type only allows one to refer to the mechanism via a
+            This type only allows one to refer to the mechanism via a
             URI.  Derived types would allow for more metadata.  
          </xs:documentation>
       </xs:annotation>

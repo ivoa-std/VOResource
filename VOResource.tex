@@ -1517,7 +1517,7 @@ type which bundles together the RM metadata \emph{Creator} and
               
 \item[Occurrence] optional
 \item[Comment] 
-                A logo need only be provided for the first occurrence.
+                A logo needs only be provided for the first occurrence.
                 When multiple logos are supplied via multiple creator 
                 elements, the application is free to choose which to
                 use. 
@@ -2759,7 +2759,7 @@ discussed sect.~\ref{sect:servicemodel}.
               maxOccurs="unbounded" />
     <xs:element name="securityMethod" type="vr:SecurityMethod"
               minOccurs="0"
-              maxOccurs="unbounded" />
+              maxOccurs="1" />
     <xs:element name="testQueryString" type="xs:token" minOccurs="0"
               maxOccurs="1" />
   </xs:sequence>
@@ -2857,13 +2857,14 @@ discussed sect.~\ref{sect:servicemodel}.
 \begin{description}
 \item[Type] composite: \xmlel{vr:SecurityMethod}
 \item[Meaning] 
-                  the mechanism the client must employ to gain secure
-                  access to the service.  
+                  The mechanism the client must employ to authenticate
+                  to the service.
                
-\item[Occurrence] optional; multiple occurrences allowed.
+\item[Occurrence] optional
 \item[Comment] 
-                  when more than one method is listed, each one must
-                  be employed to gain access.  
+                  Services not requiring authentication must provide
+                  at least one interface definition without a 
+                  securityMethod defined.
                
 
 \end{description}
@@ -2980,7 +2981,7 @@ defined as a complex type but with empty content:
          \par}
 
 \noindent{\small
-            this type only allows one to refer to the mechanism via a
+            This type only allows one to refer to the mechanism via a
             URI.  Derived types would allow for more metadata.  
          \par}
 
@@ -3154,6 +3155,13 @@ interface.  See sect.~\ref{sect:servicemodel} for details.
 \subsection{Changes from PR-20170425}
 
 \begin{itemize} 
+\item \xmlel{interface} now only allows zero or one
+\xmlel{securityMethod} elements (rather than zero to unlimited in
+version 1.0).  This is to keep discovery patterns simple in the presence
+of services requiring authentication.  While this is a
+\textbf{potentially incompatible change}, no actual records have ever
+used multiple security methods, and the change has been agreed upon with
+the stakeholders at the time of the change.
 \item creator and contact can now have ivo-id attributes (analogous
 to publisher and contributor); these are intended for when the roles are
 filled by organizations.
