@@ -7,17 +7,17 @@ DOCNAME = VOResource
 DOCVERSION = 1.1
 
 # Publication date, ISO format; update manually for "releases"
-DOCDATE = 2017-04-25
+DOCDATE = 2017-11-07
 
 # What is it you're writing: NOTE, WD, PR, or REC
 DOCTYPE = PR
 
 # Source files for the TeX document (but the main file must always
 # be called $(DOCNAME).tex
-SOURCES = $(DOCNAME).tex example-voresource.xml
+SOURCES = $(DOCNAME).tex example-voresource.xml archdiag.pdf
 
 # List of pixel image files to be included in submitted package 
-FIGURES = archdiag.png
+FIGURES = archdiag.svg
 
 # List of PDF figures (for vector graphics)
 VECTORFIGURES = 
