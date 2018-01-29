@@ -177,7 +177,7 @@ its legal extensions.''
 \begin{figure}
 \centering
 
-\includegraphics[width=0.9\textwidth]{archdiag.pdf}
+\includegraphics[width=0.9\textwidth]{role_diagram.pdf}
 \caption{Architecture diagram for this document}
 \label{fig:archdiag}
 \end{figure}
@@ -2471,7 +2471,11 @@ invoked.
                      
 \item[Occurrence] optional; multiple occurrences allowed.
 \item[Comment] 
-                       This should be repeated for all Rights values that apply.
+                       Mainly for compatibility with DataCite, this element
+                       is repeatable.  Resource record authors are advised
+                       that within the Virtual Observatory clients will
+                       typically only display and/or use the rights
+                       element occurring first and ignore later elements.
                      
 
 \end{description}
