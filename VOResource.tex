@@ -2509,6 +2509,8 @@ invoked.
 
 % /GENERATED
 
+\paragraph{Declaration of copyrights, usage limitations, and licenses}
+
 The \xmlel{rights} element contains free text, where it is recommended
 that standard licenses are named and special circumstances like embargoes
 are mentioned.  The \xmlel{rightsURI} attribute can be used to
@@ -2517,6 +2519,13 @@ full license text.  By re-using standard URIs (e.g., provided by the
 creators of the licenses), machines can
 identify usage conditions.
 
+While the schema allows multiple \xmlel{rights} elements and thus
+multiple license URIs, within the VO such use is discouraged.  This
+means that clients that discard information from additional
+\xmlel{rights} elements are not considered to be in violation of this
+specifiation.  In practice, resource record authors should place all
+usage limitations, citation recommendations, etc., directed at VO users
+in the first \xmlel{rights} element.
 
 % GENERATED: !schemadoc VOResource-v1.1.xsd Rights
 \begin{generated}
@@ -2581,6 +2590,8 @@ An example could look like this:
   repository.
 </rights>
 \end{lstlisting}
+
+\paragraph{Service capabilities}
 
 As described in sect.~\ref{sect:servicemodel}, multiple
 \xmlel{capability} elements may appear, each describing a
@@ -2726,6 +2737,7 @@ service-specific metadata that should be encoded as child
 elements in a type derived from \xmlel{vr:Capability}.  
 \end{admonition}
 
+\paragraph{More on interfaces}
 
 The \xmlel{interface} element is of the complex type
 \xmlel{vr:Interface}; its usage, in particular as regards the mandatory
@@ -2970,6 +2982,8 @@ record.  To aid in user interfaces for mirror selection,
 % /GENERATED
 
 
+\paragraph{Declaring access restrictions}
+
 The \xmlel{vr:SecurityMethod} type is
 defined as a complex type but with empty content:
 
@@ -3035,6 +3049,8 @@ a sub-type is available, it may be employed at
 invoked via a \xmlel{xsi:type} attribute to the
 \xmlel{securityMethod} element.  
 
+
+\paragraph{Web browser interfaces}
 
 \xmlel{vr:WebBrowser} is one of the two \xmlel{vr:Interface}
 sub-types defined by the VOResource schema.  This type indicates that
@@ -3139,6 +3155,8 @@ sub-type available from the VOResource schema:
 \end{generated}
 
 % /GENERATED
+
+\paragraph{Legacy web servcie interfaces}
 
 The \xmlel{vr:WebService} interface is one that is described by a Web
 Service Description Language \citep{booth07} document. This is typically

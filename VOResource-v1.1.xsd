@@ -922,7 +922,11 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
                        Information about rights held in and over the resource.
                      </xs:documentation>
                      <xs:documentation>
-                       This should be repeated for all Rights values that apply.
+                       Mainly for compatibility with DataCite, this element
+                       is repeatable.  Resource record authors are advised
+                       that within the Virtual Observatory clients will
+                       typically only display and/or use the rights
+                       element occurring first and ignore later elements.
                      </xs:documentation>
                   </xs:annotation>
                </xs:element>
@@ -971,7 +975,7 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
                   <xs:documentation>
                      Where formal licenses are available, this URI can
                      reference the full license text.  The IVOA may define
-                     standard URIs (probably IVOIDs) for a set of recommended
+                     standard URIs for a set of recommended
                      licenses, in which case these should be used here.
                   </xs:documentation>
                </xs:annotation>
