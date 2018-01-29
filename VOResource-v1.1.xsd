@@ -959,7 +959,8 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
    <xs:complexType name="Rights">
       <xs:annotation>
          <xs:documentation>
-            A statement of usage rights.  This will typically be a license,
+            A statement of usage conditions.  This will typically
+            include a license,
             which should be given as a full string (e.g., Creative Commons
             Attribution 3.0 International).  Further free-text information,
             e.g., on how to attribute or on embargo periods is allowed.
