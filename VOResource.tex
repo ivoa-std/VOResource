@@ -1530,8 +1530,7 @@ type which bundles together the RM metadata \emph{Creator} and
 \item[Meaning] 
                  A reference to this entitiy in a non-IVOA identifier
                  scheme, e.g., orcid.  Always use a URI form including
-                 a scheme here.  For Orcid, use a pattern like
-                 orcid:0000-0000-0000-000X.
+                 a scheme here.
               
 \item[Occurrence] optional; multiple occurrences allowed.
 
@@ -1588,6 +1587,14 @@ technically invalid, they are frowned upon:
     <name>All data is downloaded from the &lt;a href=http:...</name>
   </creator>
 \end{lstlisting}
+
+The typical identifier type in \xmlel{altIdentifier} in role-like
+elements (at this point, creator and contact) is an ORCID.  In
+accordance with ORCID's
+instructions\footnote{\url{https://support.orcid.org/knowledgebase/articles/116780}}
+(and contrary to Working Drafts of this document), ORCIDs must be given
+as HTTPS URIs, for instance
+\url{https://orcid.org/0000-0001-2345-6789}.
 
 \paragraph{Dates and Their Roles}
 
@@ -1795,8 +1802,7 @@ and \emph{Contact.Email}.
 \item[Meaning] 
                  A reference to this entitiy in a non-IVOA identifier
                  scheme, e.g., orcid.  Always use a URI form including
-                 a scheme here.  For Orcid, use a pattern like
-                 orcid:0000-0000-0000-000X.
+                 a scheme here.
               
 \item[Occurrence] optional; multiple occurrences allowed.
 
@@ -2534,7 +2540,8 @@ in the first \xmlel{rights} element.
       	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{vr:Rights} Type Schema Documentation}
 
 \noindent{\small
-            A statement of usage rights.  This will typically be a license,
+            A statement of usage conditions.  This will typically
+            include a license,
             which should be given as a full string (e.g., Creative Commons
             Attribution 3.0 International).  Further free-text information,
             e.g., on how to attribute or on embargo periods is allowed.
@@ -2565,7 +2572,7 @@ in the first \xmlel{rights} element.
 \item[Comment] 
                      Where formal licenses are available, this URI can
                      reference the full license text.  The IVOA may define
-                     standard URIs (probably IVOIDs) for a set of recommended
+                     standard URIs for a set of recommended
                      licenses, in which case these should be used here.
                   
 \end{description}
@@ -3192,6 +3199,8 @@ creator)
 \item @updated and @created on resource are now vr:UTCTimestamp rather
 than xs:datetime.  There has always been a textual requirement that
 these are UTC.  This is now enforced by the schema.
+\item The schema example for an ORCID used a non-standard URI form.  It
+is now deleted, and the text gives an example for an https URI.
 \end{itemize}
 
 \subsection{Changes from WD-20170123}
