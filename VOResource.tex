@@ -298,7 +298,7 @@ to provide a location for VOResource XML Schema document using the
 \xmlel{xsi:schemaLocation} attribute; the choice of the location value
 is the choice of the author.  In general, the use of
 \xmlel{xsi:schemaLocation} is recommended by this specification with
-a the namespace URI given as the location as illustrated in the example
+a namespace URI given as the location as illustrated in the example
 above, unless the application prefers otherwise.
 
 
@@ -371,7 +371,7 @@ These elements are defined in more detail in sect.~\ref{sect:metadata}.
 
 \begin{admonition}{Note}
 In the example instance
-document at the beginning of section~\ref{sect:model}, the root element,
+document at the beginning of section~\ref{sect:model}, the root element
 \xmlel{resource} is not defined in any schema.
 Nevertheless, this document is still legal and verifiable XML.
 This is because the element's type is explicitly specified with
@@ -614,7 +614,7 @@ well as information regarding its behavior.
 
 
 
-Extension of the \xmlel{vr:Resource} type is a key way
+Extension of the \xmlel{vr:Resource} type is a key way in which
 derivation is used in VOResource to provide refined resource
 descriptions.  Two other important parent types in the schema are
 \xmlel{vr:Capability} and \xmlel{vr:Interface}; these are
@@ -726,7 +726,7 @@ Each \xmlel{capability} element can contain one or more child
 can be accessed.  The \xmlel{interface} element's type,
 \xmlel{vr:Interface}, is abstract; thus, the
 \xmlel{interface} element must be accompanied by an
-\xmlel{xsi:type} attribute that indicates an
+\xmlel{xsi:type} attribute that indicates a
 \xmlel{vr:Interface} extension type.  The VOResource schema
 defines two \xmlel{vr:Interface} extension types:
 \xmlel{vr:WebBrowser}, for describing an interface access via web
@@ -920,7 +920,7 @@ VOResource schema.
 \label{sect:restype}
 
 A resource, as defined by the RM, is any entity or component of a VO
-application that is describable and identifiable by a IVOA Identifier.
+application that is describable and identifiable by an IVOA Identifier.
 A resource is described using VOResource by an element of the type
 \xmlel{vr:Resource} or one of its legal extensions.  The schema
 definition (below) includes elements that encode the identity, curation,
@@ -939,7 +939,7 @@ by the VOResource schema definition.
 
 \noindent{\small
            Any entity or component of a VO application that is
-           describable and identifiable by a IVOA Identifier. 
+           describable and identifiable by an IVOA Identifier. 
          \par}
 
 \vspace{1ex}\noindent\textbf{\xmlel{vr:Resource} Type Schema Definition}
@@ -1609,7 +1609,7 @@ attribute are not controlled by the schema.  The IVOA, however, defines
 an RDF vocabulary at
 \url{http://www.ivoa.net/rdf/voresource/date_role} from
 which the \xmlel{role} terms should be taken if at all possible.  At the
-time or writing, the vocabulary consists of three old-style VOResource
+time of writing, the vocabulary consists of three old-style VOResource
 1.0 terms and terms from the DataCite Metadata 4.0 \citep{std:DataCite40}; 
 see the RDF URL for
 the definitions of the terms:
@@ -2074,7 +2074,7 @@ VOResource 1.x
 \end{itemize}
 
 The resulting mix of term styles is an aesthetic defect that may
-acutally lead to the construction of invalid terms.  While, for backward
+actually lead to the construction of invalid terms.  While, for backward
 compatibility, we will not drop the VOResource 1.0 terms in
 VOResource 1.x, they should not be used in new records.  Instead,
 resource records should use the terms given as \emph{Preferred} in the
@@ -2308,7 +2308,7 @@ The VOResource schema defines two extensions of the base
 \xmlel{vr:Resource} type for describing two specific types of
 resources:  \xmlel{vr:Organisation} and \xmlel{vr:Service}.  In
 addition to providing more refined semantic meanings over
-\xmlel{vr:Resource}, they add additional metadata for the
+\xmlel{vr:Resource}, they add additional metadata for
 describing the resource which do not necessarily apply in the generic
 case. 
 
@@ -2729,8 +2729,8 @@ The \xmlel{capability} element is sufficient for describing a
 particular to one provider and does not conform to a specific standard 
 (be it recognized by the IVOA or some other sub-community).  However,
 service standards will often create a \xmlel{vr:Capability}
-extension that adds additional metadata that are specific that that
-are specific to the behavior of that particular type of service.  
+extension that adds additional metadata that are specific 
+to the behavior of that particular type of service.  
 
 
 

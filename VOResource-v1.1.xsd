@@ -60,7 +60,7 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
       <xs:annotation>
          <xs:documentation>
            Any entity or component of a VO application that is
-           describable and identifiable by a IVOA Identifier. 
+           describable and identifiable by an IVOA Identifier. 
          </xs:documentation>
       </xs:annotation>
       <xs:sequence>
@@ -1174,7 +1174,7 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
       <xs:attribute name="role" type="xs:NMTOKEN">
          <xs:annotation>
             <xs:documentation>
-               A tag name the identifies the role the interface plays
+               A tag name that identifies the role the interface plays
                in the particular capability.  If the value is equal to
                "std" or begins with "std:", then the interface refers
                to a standard interface defined by the standard
@@ -1183,7 +1183,7 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
             <xs:documentation>
                For an interface complying with some registered
                standard (i.e. has a legal standardID), the role can be
-               match against interface roles enumerated in standard 
+               matched against interface roles enumerated in standard 
                resource record.  The interface descriptions in
                the standard record can provide default descriptions 
                so that such details need not be repeated here.  
