@@ -69,8 +69,9 @@ Framework Program via the
 Optical Infrared Coordination Network (OPTICON).  Funding for the 2016
 update was provided by BMBF grant GAVO-2014, grant number 05A14VHA.
 
-The vocabulary management closely follows what Norman Gray  has
-developed for Datalink.
+The vocabulary management closely follows the one used in the managament
+of the Datalink \citep{2015ivoa.spec.0617D} core vocabulary, designed by
+Norman Gray.
 
 \section*{Conformance-related definitions}
 
@@ -140,7 +141,8 @@ In addition to concepts and structures laid down in the RM, VOResource
 also acknowledges other (though mostly related) metadata schemes.  Of
 particular importance here is the metadata scheme employed by DataCite,
 which at the time of writing is at version 4.0 \citep{std:DataCite40}.
-This, in particular, concerns the alignment of vocabularies.
+This, in particular, concerns the alignment of the vocabularies for date
+roles and relationships.
 
 The primary intended use of VOResource is to provide an XML interchange
 format for use with resource registries.  A registry is a repository of
@@ -3163,7 +3165,7 @@ sub-type available from the VOResource schema:
 
 % /GENERATED
 
-\paragraph{Legacy web servcie interfaces}
+\paragraph{Legacy web service interfaces}
 
 The \xmlel{vr:WebService} interface is one that is described by a Web
 Service Description Language \citep{booth07} document. This is typically
@@ -3180,6 +3182,10 @@ interface.  See sect.~\ref{sect:servicemodel} for details.
 \appendix
 
 \section{Change History}
+
+\subsection{Changes from PR-20171107}
+
+\item Editoral changes after DAL and Semantics RFC comments.
 
 \subsection{Changes from PR-20170425}
 
