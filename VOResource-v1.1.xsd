@@ -169,7 +169,7 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
             <xs:documentation>
               This timestamp must not be in the future.  This time is
               not required to be accurate; it should be at least
-              accurate to the day.  Any insignificant time fields
+              accurate to the day.  Any non-significant time fields
               should be set to zero. 
             </xs:documentation>
          </xs:annotation>
@@ -183,7 +183,7 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
             <xs:documentation>
               This timestamp must not be in the future.  This time is
               not required to be accurate; it should be at least
-              accurate to the day.  Any insignificant time fields
+              accurate to the day.  Any non-significant time fields
               should be set to zero. 
             </xs:documentation>
          </xs:annotation>

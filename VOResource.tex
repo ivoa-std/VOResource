@@ -42,8 +42,8 @@
 \begin{abstract}
 This document describes an XML encoding standard for IVOA Resource
 Metadata, referred to as VOResource.  This schema is primarily
-intended to support metadata exchange between and resource discovery
-in interoperable registries.
+intended to support metadata exchange between 
+in interoperable registries and resource discovery within them.
 However, any application that needs to describe resources
 may use this schema.  In this document, we define the types and
 elements that make up the schema in close alignment to the metadata terms
@@ -163,8 +163,9 @@ extended.  The model for doing this is described in
 sect.~\ref{sect:extending}.
 
 \begin{admonition}{Note}
-The name ``VOResource'' has in practice had two meanings within
-IVOA discussions.  The first refers specifically to the core
+The term ``VOResource'' is used to denote two different concepts within
+the IVOA community.
+The first refers specifically to the core
 XML schema defined by this document.  The second refers more
 broadly to the core schema plus the set of legal extensions.
 In this document, use of the name ``VOResource'' corresponds to
@@ -1617,19 +1618,19 @@ see the RDF URL for
 the definitions of the terms:
 
 \begin{quotation}\noindent
-% GENERATED: sed -e 's/\([^;]*\);.*/\\textsl{\1}/' terms/date_role.terms | sort -i
-\textsl{Accepted}
-\textsl{Available}
-\textsl{Collected}
-\textsl{Copyrighted}
-\textsl{Created}
-\textsl{Issued}
-\textsl{Submitted}
-\textsl{Updated}
+% GENERATED: sed -e 's/\([^;]*\);.*/\\textsl{\1},/;$s/,$//' terms/date_role.terms | sort -i
+\textsl{Accepted},
+\textsl{Available},
+\textsl{Collected},
+\textsl{Copyrighted},
+\textsl{Created},
+\textsl{Issued},
+\textsl{Submitted},
+\textsl{Updated},
 \textsl{Valid}
-\textsl{creation}
-\textsl{representative}
-\textsl{update}
+\textsl{creation},
+\textsl{representative},
+\textsl{update},
 
 % /GENERATED
 \end{quotation}
@@ -1962,12 +1963,13 @@ defined by the \xmlel{vr:Content} complex type.
 % /GENERATED
 
 The content of \xmlel{contentLevel} should conform to the values from a
-vocabulary.  At the time of writing, this vocabulary contained the terms
+vocabulary.  At the time of writing, this vocabulary contained the
+terms:
 
 \begin{quotation}\noindent
-% GENERATED: sed -e 's/\([^;]*\);.*/\\textsl{\1}/' terms/content_level.terms
-\textsl{Research}
-\textsl{Amateur}
+% GENERATED: sed -e 's/\([^;]*\);.*/\\textsl{\1},/;$s/,$//' terms/content_level.terms
+\textsl{Research},
+\textsl{Amateur},
 \textsl{General}
 
 % /GENERATED
@@ -1978,31 +1980,32 @@ up-to date list of the legal terms in HTML, turtle, or RDF-X formats,
 please refer to \url{http://www.ivoa.net/rdf/voresource/content_level}.
 
 The content of \xmlel{type} should conform to the values from a
-vocabulary.  At the time of writing, this vocabulary contained the terms
+vocabulary.  At the time of writing, this vocabulary contained the
+terms:
 
 \begin{quotation}\noindent
-% GENERATED: sed -e 's/\([^;]*\);.*/\\textsl{\1}/' terms/content_type.terms
-\textsl{Other}
-\textsl{Archive}
-\textsl{Bibliography}
-\textsl{Catalog}
-\textsl{Journal}
-\textsl{Library}
-\textsl{Simulation}
-\textsl{Survey}
-\textsl{Transformation}
-\textsl{Education}
-\textsl{Outreach}
-\textsl{EPOResource}
-\textsl{Animation}
-\textsl{Artwork}
-\textsl{Background}
-\textsl{BasicData}
-\textsl{Historical}
-\textsl{Photographic}
-\textsl{Press}
-\textsl{Organisation}
-\textsl{Project}
+% GENERATED: sed -e 's/\([^;]*\);.*/\\textsl{\1},/;$s/,$//' terms/content_type.terms
+\textsl{Other},
+\textsl{Archive},
+\textsl{Bibliography},
+\textsl{Catalog},
+\textsl{Journal},
+\textsl{Library},
+\textsl{Simulation},
+\textsl{Survey},
+\textsl{Transformation},
+\textsl{Education},
+\textsl{Outreach},
+\textsl{EPOResource},
+\textsl{Animation},
+\textsl{Artwork},
+\textsl{Background},
+\textsl{BasicData},
+\textsl{Historical},
+\textsl{Photographic},
+\textsl{Press},
+\textsl{Organisation},
+\textsl{Project},
 \textsl{Registry}
 
 % /GENERATED
@@ -2085,26 +2088,26 @@ vocabulary retrievable at the URL given above.
 At the time of writing, the full vocabulary consists of these terms:
 
 \begin{quotation}\noindent
-% GENERATED: sed -e 's/\([^;]*\);.*/\\textsl{\1}/' terms/relationship_type.terms | sort -i
-\textsl{Cites}
-\textsl{Continues}
-\textsl{HasPart}
-\textsl{IsContinuedBy}
-\textsl{IsDerivedFrom}
-\textsl{IsIdenticalTo}
-\textsl{IsNewVersionOf}
-\textsl{IsPartOf}
-\textsl{IsPreviousVersionOf}
+% GENERATED: sed -e 's/\([^;]*\);.*/\\textsl{\1},/;$s/,$//' terms/relationship_type.terms | sort -i
+\textsl{Cites},
+\textsl{Continues},
+\textsl{HasPart},
+\textsl{IsContinuedBy},
+\textsl{IsDerivedFrom},
+\textsl{IsIdenticalTo},
+\textsl{IsNewVersionOf},
+\textsl{IsPartOf},
+\textsl{IsPreviousVersionOf},
 \textsl{IsServedBy}
-\textsl{IsServiceFor}
-\textsl{IsSourceOf}
-\textsl{IsSupplementTo}
-\textsl{IsSupplementedBy}
-\textsl{derived-from}
-\textsl{mirror-of}
-\textsl{related-to}
-\textsl{served-by}
-\textsl{service-for}
+\textsl{IsServiceFor},
+\textsl{IsSourceOf},
+\textsl{IsSupplementTo},
+\textsl{IsSupplementedBy},
+\textsl{derived-from},
+\textsl{mirror-of},
+\textsl{related-to},
+\textsl{served-by},
+\textsl{service-for},
 
 % /GENERATED
 \end{quotation}
@@ -2811,7 +2814,7 @@ discussed sect.~\ref{sect:servicemodel}.
 \begin{description}
 \item[Type] \xmlel{xs:NMTOKEN}
 \item[Meaning] 
-               A tag name the identifies the role the interface plays
+               A tag name that identifies the role the interface plays
                in the particular capability.  If the value is equal to
                {"}std{"} or begins with {"}std:{"}, then the interface refers
                to a standard interface defined by the standard
@@ -2821,7 +2824,7 @@ discussed sect.~\ref{sect:servicemodel}.
 \item[Comment] 
                For an interface complying with some registered
                standard (i.e. has a legal standardID), the role can be
-               match against interface roles enumerated in standard 
+               matched against interface roles enumerated in standard 
                resource record.  The interface descriptions in
                the standard record can provide default descriptions 
                so that such details need not be repeated here.  
@@ -3185,7 +3188,9 @@ interface.  See sect.~\ref{sect:servicemodel} for details.
 
 \subsection{Changes from PR-20171107}
 
+\begin{itemize}
 \item Editoral changes after DAL and Semantics RFC comments.
+\end{itemize}
 
 \subsection{Changes from PR-20170425}
 
