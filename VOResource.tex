@@ -311,13 +311,13 @@ xsi:schemaLocation="http://www.ivoa.net/xml/VOResource/v1.0
 \end{verbatim}
 
 The VOResource XML schema sets \xmlel{elementFormDefault} to
-unqualified.  This means that element names without prefixes must be
-interpreted outside of any namespace.  One consequence of this is that
+unqualified.  This means that
 instance documents must not bind the
 empty namespace (using \verb|xmlns="..."|) in any element containing
-VOResource elements.  
+VOResource elements, as XML element names in VOResource must be
+interpreted outside of any namespace.
 Conversely, the VOResource namespace prefix must not
-be used to qualify VOResource elements.  
+be used to qualify tag names of VOResource elements.  
 
 In general, namespace prefixes in VOResource are
 only used to qualify type names given as values to the \xmlel{xsi:type}
@@ -2185,15 +2185,70 @@ multiple places within a \xmlel{vr:Resource} type or sub-type.  It may
 appear zero or more times as direct children of a \xmlel{vr:Resource}
 type and/or, if the resource is a \xmlel{vr:Service} type or sub-type,
 zero or more times as the first children of any \xmlel{capability}
-element.  
+element.
 
-The \xmlel{validationLevel} element requires an attribute called
-\xmlel{validatedBy} which takes an IVOID as a value.  This IVOID
+\begin{admonition}{NOte}
+\xmlel{validationLevel} is of type \xmlel{vr:Validation}; somewhat
+confusingly, VOResource also has a type \xmlel{vr:ValidationLevel}.  The
+latter is extended by \xmlel{vr:Validation} with a \xmlel{validatedBy}
+attribute.  The choice of names in this triple certainly is somewhat
+confusing and can be considered an editorial oversight in version 1.0.
+However, the effort of changing element and/or type names would seem
+unproportional to the merely aesthetic benefit in a part of VOResource
+that is rarely visible to common VO users.
+\end{admonition}
+
+The \xmlel{validationLevel} element's attribute
+\xmlel{validatedBy} takes an IVOID as a value.  This IVOID
 must refer to a registered organisation or registry that assigned the
-numerical value.  This element can appear multiple times, each with
+numerical value.  The \xmlel{validationlevel} element can appear 
+multiple times, each with
 a different \xmlel{validatedBy} value, to reflect the code
 assigned by different organisations. 
 
+% GENERATED: !schemadoc VOResource-v1.1.xsd Validation
+\begin{generated}
+\begingroup
+      	\renewcommand*\descriptionlabel[1]{%
+      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{vr:Validation} Type Schema Documentation}
+
+\noindent{\small
+         a validation stamp combining a validation level and the ID of 
+         the validator.
+       \par}
+
+\vspace{1ex}\noindent\textbf{\xmlel{vr:Validation} Type Schema Definition}
+
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<xs:complexType name="Validation" >
+  <xs:simpleContent >
+    <xs:extension base="vr:ValidationLevel" >
+      <xs:attribute name="validatedBy" type="xs:anyURI" use="required" />
+    </xs:extension>
+  </xs:simpleContent>
+</xs:complexType>
+\end{lstlisting}
+
+\vspace{0.5ex}\noindent\textbf{\xmlel{vr:Validation} Attributes}
+
+\begingroup\small\begin{bigdescription}
+\item[validatedBy]
+\begin{description}
+\item[Type] a URI: \xmlel{xs:anyURI}
+\item[Meaning] 
+               The IVOA ID of the registry or organisation that
+               assigned the validation level.  
+             
+\item[Occurrence] required
+\end{description}
+
+
+\end{bigdescription}\endgroup
+
+\endgroup
+\end{generated}
+
+% /GENERATED
 
 % GENERATED: !schemadoc VOResource-v1.1.xsd ValidationLevel
 \begin{generated}
@@ -2263,49 +2318,6 @@ assigned by different organisations.
 
 % /GENERATED
 
-% GENERATED: !schemadoc VOResource-v1.1.xsd Validation
-\begin{generated}
-\begingroup
-      	\renewcommand*\descriptionlabel[1]{%
-      	\hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{vr:Validation} Type Schema Documentation}
-
-\noindent{\small
-         a validation stamp combining a validation level and the ID of 
-         the validator.
-       \par}
-
-\vspace{1ex}\noindent\textbf{\xmlel{vr:Validation} Type Schema Definition}
-
-\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
-<xs:complexType name="Validation" >
-  <xs:simpleContent >
-    <xs:extension base="vr:ValidationLevel" >
-      <xs:attribute name="validatedBy" type="xs:anyURI" use="required" />
-    </xs:extension>
-  </xs:simpleContent>
-</xs:complexType>
-\end{lstlisting}
-
-\vspace{0.5ex}\noindent\textbf{\xmlel{vr:Validation} Attributes}
-
-\begingroup\small\begin{bigdescription}
-\item[validatedBy]
-\begin{description}
-\item[Type] a URI: \xmlel{xs:anyURI}
-\item[Meaning] 
-               The IVOA ID of the registry or organisation that
-               assigned the validation level.  
-             
-\item[Occurrence] required
-\end{description}
-
-
-\end{bigdescription}\endgroup
-
-\endgroup
-\end{generated}
-
-% /GENERATED
 
 \subsection{Resource Type Extensions:  Organisation and Service}
 
@@ -3205,8 +3217,6 @@ the stakeholders at the time of the change.
 \item creator and contact can now have ivo-id attributes (analogous
 to publisher and contributor); these are intended for when the roles are
 filled by organizations.
-\item contact can now have altIdentifier children, too (in parallel to
-creator)
 \item @updated and @created on resource are now vr:UTCTimestamp rather
 than xs:datetime.  There has always been a textual requirement that
 these are UTC.  This is now enforced by the schema.
@@ -3223,7 +3233,7 @@ It is now defined as 0\dots 1.
 \item Adopting DataCite 4.0 as upstream, explanation of the relationship
 between VOResource 1.0 and DataCite terms.
 \item altIdentifier is now allowed on Contact now (mainly for symmetry
-with Creator.
+with Creator).
 \end{itemize}
 
 \subsection{Changes from WD-20161010}
