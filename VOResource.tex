@@ -196,12 +196,11 @@ provides the central concepts and structures mapped here into an XML
 schema.
 \end{description}
 
-
 There are relationships to the following other IVOA standards:
 
 \begin{description}
-\item[Registry Interfaces \citep{2009ivoa.spec.1104B}] Registry
-Interfaces describes how registries exchange VOResource records, and it
+\item[Registry Interfaces \citep{2009ivoa.spec.1104B}] The Registry
+Interfaces standard describes how registries exchange VOResource records, and it
 provides a \xmlel{vr:Resource}-typed element to hold them within XML
 data (VOResource itself has no global elements).
 \item[VOResource extensions] VOResource lays the foundations upon which
@@ -276,7 +275,7 @@ Although this schema is in version 1.1 now, the URL still ends in
 \texttt{v1.0}.  This is to avoid unnecessarily breaking existing clients
 relying on the namespace as defined by version 1.0 of this
 specification.  As laid out in the IVOA schema versioning policies
-\citep{note:schemaevolution}, although minor versions should never have
+\citep{2018ivoa.spec.0529H}, although minor versions should never have
 been part of namespace URIs, for namespaces defined before this note
 they cannot be dropped despite their potential for confusion.
 
@@ -298,7 +297,7 @@ engines) will use these prefixes rather than the full namespace URIs.
 
 Authors of instance documents that use the VOResource schema may choose
 to provide a location for VOResource XML Schema document using the
-\xmlel{xsi:schemaLocation} attribute; the choice of the location value
+\xmlel{xsi:schemaLo\-cation} attribute; the choice of the location value
 is the choice of the author.  In general, the use of
 \xmlel{xsi:schemaLocation} is recommended by this specification with
 a namespace URI given as the location as illustrated in the example
@@ -607,7 +606,7 @@ things:
 
 
 The VOResource schema defines two types derived from
-\xmlel{vr:Resource}:  \xmlel{vr:Organisation} and
+\xmlel{vr:Resource}:  \xmlel{vr:Orga\-nisation} and
 \xmlel{vr:Service}.   The \xmlel{vr:Organisation} adds
 metadata describing the astronomical facilities such as telescopes
 that are associated with the organisation it describes.  The
@@ -814,7 +813,7 @@ VOResource.  In particular:
 
 \begin{itemize}
   \item \emph{Provide semantic definitions of all types and elements within
-       the first \xmlel{xsd:documentation} element inside
+       the first \xmlel{xsd:do\-cumentation} element inside
        the type or element definition.}  Subsequent
        \xmlel{xsd:documentation} elements may provide
        additional comments or discussion.  
@@ -1124,7 +1123,7 @@ by the VOResource schema definition.
                   A reference to this resource in a non-IVOA identifier
                   scheme, e.g., DOI or bibcode.  Always use the an URI scheme
                   here, e.g., doi:10.1016/j.epsl.2011.11.037.  For bibcodes,
-                  use a form like bibcode:2008ivoa.spec.0222P.
+                  use a form like\hfil\break bibcode:2008ivoa.spec.0222P.
                
 \item[Occurrence] optional; multiple occurrences allowed.
 
@@ -1170,7 +1169,7 @@ set to \verb|deleted| might still be useful outside of OAI-PMH.
 The \xmlel{version} attribute of an \xmlel{vr:Resource} element gives
 the version of the schema it was written against, as prescribed in the
 IVOA Note ``XML Schema Versioning Policies''
-\citep{note:schemaevolution}.  If missing, the value of this attribute
+\citep{2018ivoa.spec.0529H}.  If missing, the value of this attribute
 can be assumed to be 1.0.  This attribute should \emph{not} be used to
 locate the schema file -- clients should either consult
 \xmlel{schemaLocation} or retrieve the latest schema for the \xmlel{vr:}
@@ -1927,6 +1926,7 @@ defined by the \xmlel{vr:Content} complex type.
 \item[Meaning] 
                Nature or genre of the content of the resource.  Values for
                type should be taken from the controlled vocabulary
+               \hfil\break
                http://www.ivoa.net/rdf/voresource/content\_type
              
 \item[Occurrence] optional; multiple occurrences allowed.
@@ -3296,7 +3296,7 @@ clients  might be confused, we do not expect incompatibilites.
 to enable simple plain text markup.
 
 \item Adding language on using capability/@standardID rather than
-interface/@version to distinguish between different protocol versions in
+interface/@ver\-sion to distinguish between different protocol versions in
 the normal case, removed skynode example.
 
 \item Consequently, removing 1.0 default on interface/@version.
