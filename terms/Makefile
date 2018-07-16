@@ -4,8 +4,8 @@
 # tree generated).
 # This isn't pretty yet, but let's see how tricky we want to get here.
 
-TEST_DEST=alnilam:/var/www/docs/vocab-test
-TEST_URL_ROOT=/vocab-test
+#TEST_DEST=alnilam:/var/www/docs/vocab-test
+#TEST_URL_ROOT=/vocab-test
 
 BUILT_DIRS=content_level content_type date_role relationship_type
 
