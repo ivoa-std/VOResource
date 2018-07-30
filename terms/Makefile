@@ -9,6 +9,13 @@
 
 BUILT_DIRS=content_level content_type date_role relationship_type
 
+all: clean vocabs.conf
+	python convert.py vocabs.conf
+
+dist.tar.gz: all
+	tar -cvzf $@ $(BUILT_DIRS)
+
+
 test:
 	python convert.py vocabs.conf
 
