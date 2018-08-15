@@ -477,7 +477,7 @@ def write_htaccess(vocab_def, root_url):
 	"""
 	with open(".htaccess", "w") as f:
 		f.write(HT_ACCESS_TEMPLATE.format(
-			install_base=root_url+vocab_def["name"]+"/",
+			install_base=vocab_def["baseuri"]+"/",
 			timestamp=vocab_def["timestamp"],
 			name=vocab_def["name"]))
 
@@ -572,6 +572,11 @@ def parse_command_line():
 
 def main():
 	args = parse_command_line()
+	if args.install_root!="http://www.ivoa.net/std/rdf/":
+		# to make this work again, you'd need to infer the local part of
+		# the URI from the baseuri above.
+		raise ReportableError("Non-official install_roots not currently"
+			" supported, sorry.")
 	meta = read_meta(args.vocab_config)
 		
 	for vocab_def in meta:
