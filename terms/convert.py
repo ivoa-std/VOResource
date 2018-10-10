@@ -47,6 +47,7 @@ import csv
 import os
 import re
 import subprocess
+import textwrap
 import sys
 
 
@@ -482,6 +483,19 @@ def write_htaccess(vocab_def, root_url):
 			name=vocab_def["name"]))
 
 
+def write_meta_inf(vocab_def):
+	"""writes a "short" META.INF for use by the vocabulary TOC generator
+	at the IVOA web page to the current directory.
+	"""
+	with open("META.INF", "w") as f:
+		f.write("Name: {}\n{}\n".format(
+		vocab_def["title"],
+		textwrap.fill(
+			vocab_def["description"], 
+			initial_indent="Description: ",
+			subsequent_indent="  ")))
+
+
 def parse_terms(src_name):
 	"""returns a sequence of Terms from a CSV input.
 	"""
@@ -545,6 +559,7 @@ def build_vocab(vocab_def, install_root):
 
 	with work_dir(vocab_def["name"]):
 		write_htaccess(vocab_def, install_root)
+		write_meta_inf(vocab_def)
 
 
 def parse_command_line():
