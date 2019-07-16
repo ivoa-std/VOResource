@@ -1343,7 +1343,3 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
    </xs:complexType>
 
 </xs:schema>
-
-<!-- 
-vim: sta:et:ts=3 
--->
