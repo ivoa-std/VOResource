@@ -1125,7 +1125,7 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
          </xs:element>
 
          <xs:element name="securityMethod" type="vr:SecurityMethod"
-                     minOccurs="0" maxOccurs="unbounded">
+                     minOccurs="0" maxOccurs="1">
             <xs:annotation>
                <xs:documentation>
                   The mechanism the client must employ to authenticate
