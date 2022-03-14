@@ -33,3 +33,8 @@ ivoatex/Makefile:
 	@echo "*** ivoatex submodule not found.  Initialising submodules."
 	@echo
 	git submodule update --init
+
+# These tests need DaCHS installed (Debian: gavodachs2-server)
+test:
+	@dachs adm xsd VOResource-v1.1.xsd
+	@dachs adm xsd example-voresource.xml
