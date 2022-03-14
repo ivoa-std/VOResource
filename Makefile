@@ -27,4 +27,9 @@ AUX_FILES = VOResource-v1.1.xsd terms
 
 AUTHOR_EMAIL=msdemlei@ari.uni-heidelberg.de
 
-include ivoatex/Makefile
+-include ivoatex/Makefile
+
+ivoatex/Makefile:
+	@echo "*** ivoatex submodule not found.  Initialising submodules."
+	@echo
+	git submodule update --init

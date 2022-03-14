@@ -186,7 +186,7 @@ its legal extensions.''
 \end{figure}
 
 Fig.~\ref{fig:archdiag} shows the role VOResource plays within the
-IVOA architecture \citep{note:VOARCH}.
+IVOA architecture \citep{2021ivoa.spec.1101D}.
 
 VOResource depends on the following other IVOA standards:
 
@@ -199,7 +199,7 @@ schema.
 There are relationships to the following other IVOA standards:
 
 \begin{description}
-\item[Registry Interfaces \citep{2009ivoa.spec.1104B}] The Registry
+\item[Registry Interfaces \citep{2018ivoa.spec.0723D}] The Registry
 Interfaces standard describes how registries exchange VOResource records, and it
 provides a \xmlel{vr:Resource}-typed element to hold them within XML
 data (VOResource itself has no global elements).
@@ -208,13 +208,13 @@ description schemes for concrete resources are built in various
 VOResource extensions.  At the time of writing, recommendations have
 been passed for the description of VO Standards
 \citep{2012ivoa.spec.0508H}, various ``simple'' data discovery protocols
-\citep{2013ivoa.spec.1125P}, generic data services
+\citep{2017ivoa.spec.0530P}, generic data services
 \citep{2010ivoa.spec.1202P}, and TAP services
 \citep{2012ivoa.spec.0827D}.  The Registry Interfaces standard also
 contains a VOResource extension.
-\item[RegTAP \citep{2014ivoa.spec.1208D}] The Registry Relational Schema
+\item[RegTAP \citep{2019ivoa.spec.1011D}] The Registry Relational Schema
 gives a relational mapping of the models discussed here.
-\item[VOSI \citep{2011ivoa.spec.0531G}] The VO support interfaces re-use
+\item[VOSI \citep{2017ivoa.spec.0524G}] The VO support interfaces re-use
 the service model developed here to facilitate service self-description.
 \end{description}
 
@@ -257,7 +257,7 @@ is typcially encapsulated in \xmlel{vr:Capability}-typed elements. This
 document only provides a generic base class for them, deferring the
 definition of more useful subclasses to VOResource extensions like
 VODataService \citep{2010ivoa.spec.1202P} or SimpleDALRegExt
-\citep{2013ivoa.spec.1125P}.
+\citep{2017ivoa.spec.0530P}.
 
 
 \subsection{The Schema Namespace and Location}
@@ -339,7 +339,7 @@ legal extensions).  In fact, it need not be of a type from the
 VOResource at all; rather, VOResource types may appear anywhere in the
 document.   
 
-The IVOA Registry Interface standard \citep{2009ivoa.spec.1104B}, 
+The IVOA Registry Interface standard \citep{2018ivoa.spec.0723D}, 
 for example, at the time of writing includes a small schema that defines
 a global element \xmlel{ri:Resource} of base type
 \xmlel{vr:Resource}.  It is primarily intended as the child of
