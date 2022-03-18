@@ -34,7 +34,12 @@ ivoatex/Makefile:
 	@echo
 	git submodule update --init
 
-# These tests need DaCHS installed (Debian: gavodachs2-server)
+STILTS ?= stilts
+
+# These tests need stilts >3.4 and xmlstarlet
 test:
-	@dachs adm xsd VOResource-v1.1.xsd
-	@dachs adm xsd example-voresource.xml
+	@sh test-assertions.sh
+	@$(STILTS) xsdvalidate VOResource-v1.1.xsd
+	@$(STILTS) xsdvalidate \
+		schemaloc='http://www.ivoa.net/xml/VOResource/v1.0=VOResource-v1.1.xsd' \
+		example-voresource.xml
