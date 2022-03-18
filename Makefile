@@ -36,12 +36,10 @@ ivoatex/Makefile:
 
 STILTS ?= stilts
 
-SCHEMA_URLS=\
-	schemaloc="http://www.w3.org/2001/XMLSchema=http://docs.g-vo.org/schemata/XMLSchema.xsd"
-
-# These tests need stilts >3.4
+# These tests need stilts >3.4 and xmlstarlet
 test:
-	@$(STILTS) xsdvalidate $(SCHEMA_URLS) VOResource-v1.1.xsd
-	@$(STILTS) xsdvalidate $(SCHEMA_URLS)\
+	@sh test-assertions.sh
+	@$(STILTS) xsdvalidate VOResource-v1.1.xsd
+	@$(STILTS) xsdvalidate \
 		schemaloc='http://www.ivoa.net/xml/VOResource/v1.0=VOResource-v1.1.xsd' \
 		example-voresource.xml
