@@ -691,8 +691,10 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
                about the resource.  
              </xs:documentation>
              <xs:documentation>
-               Terms for Subject should be drawn from the Unified
-               Astronomy Thesaurus (http://astrothesaurus.org).
+             	The content of subject SHOULD be the fragment identifier of 
+             	the URI of a concept in the IVOA UAT 
+             	(http://www.ivoa.net/rdf/uat/), that is, a string like 
+             	“virtual-observatories”.
              </xs:documentation>
           </xs:annotation>
        </xs:element>

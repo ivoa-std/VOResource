@@ -4,13 +4,13 @@
 DOCNAME = VOResource
 
 # count up; you probably do not want to bother with versions <1.0
-DOCVERSION = 1.1
+DOCVERSION = 1.2
 
 # Publication date, ISO format; update manually for "releases"
-DOCDATE = 2018-06-25
+DOCDATE = 2022-08-29
 
 # What is it you're writing: NOTE, WD, PR, or REC
-DOCTYPE = REC
+DOCTYPE = WD
 
 # Source files for the TeX document (but the main file must always
 # be called $(DOCNAME).tex

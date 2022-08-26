@@ -36,10 +36,10 @@
     </curation> 
 
     <content> 
-        <subject>radio astronomy</subject> 
-        <subject>data repositories</subject> 
-        <subject>digital libraries </subject> 
-        <subject>grid-based processing</subject> 
+        <subject>radio-astronomy</subject> 
+        <subject>astronomy-software</subject> 
+        <subject>astronomy-web-services </subject> 
+        <subject>search-for-extraterrestrial-intelligence</subject> 
         <description> 
             The Radio Astronomy Imaging Group at the National Center for 
             Supercomputing Applications is focused on applying 
