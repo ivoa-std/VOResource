@@ -1836,7 +1836,13 @@ defined by the \xmlel{vr:Content} complex type.
               maxOccurs="unbounded" />
     <xs:element name="description" type="xs:string" />
     <xs:element name="source" type="vr:Source" minOccurs="0" />
-    <xs:element name="referenceURL" type="xs:anyURI" />
+    <xs:element name="referenceURL" >
+      <xs:simpleType >
+        <xs:restriction base="xs:anyURI" >
+          <xs:pattern value="https?://.*" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:element>
     <xs:element name="type" type="xs:token" minOccurs="0"
               maxOccurs="unbounded" />
     <xs:element name="contentLevel" type="xs:token" minOccurs="0"
@@ -1902,12 +1908,18 @@ defined by the \xmlel{vr:Content} complex type.
 \end{description}
 \item[Element \xmlel{referenceURL}]
 \begin{description}
-\item[Type] a URI: \xmlel{xs:anyURI}
+\item[Type] string
 \item[Meaning] 
                 URL pointing to a human-readable document describing this 
                 resource.   
              
 \item[Occurrence] required
+
+\item[Comment] 
+             	In order to ensure that users can actually retrieve the
+             	content, the schema enforces this to be an http or https
+             	URI.
+             
 
 \end{description}
 \item[Element \xmlel{type}]
