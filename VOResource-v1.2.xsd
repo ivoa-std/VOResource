@@ -746,7 +746,7 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
              </xs:documentation>
              <xs:documentation>
              	In order to ensure that users can actually retrieve the
-             	content, the schema enforces this to be an http or https
+             	content, the schema enforces that this is an http or https
              	URI.
              </xs:documentation>
           </xs:annotation>
