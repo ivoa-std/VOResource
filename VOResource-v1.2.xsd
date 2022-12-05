@@ -6,10 +6,10 @@
            xmlns:vm="http://www.ivoa.net/xml/VOMetadata/v0.1"
            elementFormDefault="unqualified"
            attributeFormDefault="unqualified"
-           version="1.1+Erratum-1">
+           version="1.1+wd1">
 
 <!-- NOTE: target namespace ends in v1.0 in order to not break 1.0 clients.
-This is nevertheless the 1.1 schema, as given by the version attribute.
+This is nevertheless the 1.2 schema, as given by the version attribute.
 For details, see http://ivoa.net/documents/Notes/XMLVers -->
 
    <xs:annotation>
@@ -738,13 +738,23 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
           </xs:annotation>
        </xs:element>
        
-       <xs:element name="referenceURL" type="xs:anyURI">
+       <xs:element name="referenceURL">
           <xs:annotation>
              <xs:documentation>
                 URL pointing to a human-readable document describing this 
                 resource.   
              </xs:documentation>
+             <xs:documentation>
+             	In order to ensure that users can actually retrieve the
+             	content, the schema enforces that this is an http or https
+             	URI.
+             </xs:documentation>
           </xs:annotation>
+          <xs:simpleType>
+             <xs:restriction base="xs:anyURI">
+                <xs:pattern value="https?://.*"/>
+             </xs:restriction>
+          </xs:simpleType>
        </xs:element>
 
        <xs:element name="type" type="xs:token" 
