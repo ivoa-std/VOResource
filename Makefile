@@ -35,11 +35,15 @@ ivoatex/Makefile:
 	git submodule update --init
 
 STILTS ?= stilts
+SCHEMA_FILE=VOResource-v1.2.xsd
 
 # These tests need stilts >3.4 and xmlstarlet
 test:
 	@sh test-assertions.sh
-	@$(STILTS) xsdvalidate VOResource-v1.1.xsd
+	@$(STILTS) xsdvalidate $(SCHEMA_FILE)
 	@$(STILTS) xsdvalidate \
-		schemaloc='http://www.ivoa.net/xml/VOResource/v1.0=VOResource-v1.1.xsd' \
+		schemaloc="http://www.ivoa.net/xml/VOResource/v1.0=$(SCHEMA_FILE)" \
 		example-voresource.xml
+	@$(STILTS) xsdvalidate \
+		schemaloc="http://www.ivoa.net/xml/VOResource/v1.0=$(SCHEMA_FILE)" \
+		test-data/valid-record.xml
