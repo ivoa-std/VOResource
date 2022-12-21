@@ -2556,9 +2556,9 @@ The \xmlel{rights} element contains free text, where it is recommended
 that standard licenses are named and special circumstances like embargoes
 are mentioned.  The \xmlel{rightsURI} attribute can be used to
 reference the
-full license text.  By re-using standard URIs (e.g., provided by the
-creators of the licenses), machines can
-identify usage conditions.
+full license text.  In order to facilitate automatic identification
+of usage conditions, it is strongly recommended to use SPDX license
+URIs\footnote{\url{https://spdx.org/licenses/}}.
 
 While the schema allows multiple \xmlel{rights} elements and thus
 multiple license URIs, within the VO such use is discouraged.  This
@@ -2606,9 +2606,9 @@ in the first \xmlel{rights} element.
 \item[Occurrence] optional
 \item[Comment] 
                      Where formal licenses are available, this URI can
-                     reference the full license text.  The IVOA may define
-                     standard URIs for a set of recommended
-                     licenses, in which case these should be used here.
+                     reference the full license text.  Use SPDX
+                     license URIs (https://spdx.org/licenses/) if at all 
+                     possible.
                   
 \end{description}
 
@@ -2623,9 +2623,10 @@ in the first \xmlel{rights} element.
 An example could look like this:
 
 \begin{lstlisting}[language=XML,basicstyle=\footnotesize]
-<rights rightsURI="http://creativecommons.org/licenses/by/3.0">
+<rights rightsURI="https://spdx.org/licenses/CC-BY-4.0.html">
   The images from the X survey are copyright 2016, the X project.
-  They are published under the creative commons attribution 3.0 unported
+  They are published under the creative commons attribution 4.0
+  international
   license.  If you use this data, please cite doi:10.5072/7273288.
 
   Images are under embargo for one year after their addition to the
@@ -3221,6 +3222,7 @@ interface.  See sect.~\ref{sect:servicemodel} for details.
 \begin{itemize}
 \item We now specify that ``using the UAT'' from version 1.1 means ``use
 fragments into \nolinkurl{http://www.ivoa.net/rdf/uat/#}''.
+\item Now strongly recommending to use SPDX URIs for rightsURI.
 \end{itemize}
 
 \subsection{Changes from PR-20171107}

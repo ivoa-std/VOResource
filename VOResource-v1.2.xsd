@@ -994,9 +994,9 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
                   </xs:documentation>
                   <xs:documentation>
                      Where formal licenses are available, this URI can
-                     reference the full license text.  The IVOA may define
-                     standard URIs for a set of recommended
-                     licenses, in which case these should be used here.
+                     reference the full license text.  Use SPDX
+                     license URIs (https://spdx.org/licenses/) if at all 
+                     possible.
                   </xs:documentation>
                </xs:annotation>
             </xs:attribute>
