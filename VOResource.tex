@@ -1649,7 +1649,12 @@ technically invalid, they are frowned upon:
 
 The typical identifier type in \xmlel{altIdentifier} in role-like
 elements (at this point, creator and contact) is an ORCID; see
-sect.~\ref{sect:altidform} for how to write these.
+sect.~\ref{sect:altidform} for how to write these.  Since VOResource
+version 1.2, the \xmlel{name} children of these role-like elements also
+have an \xmlel{altIdentifier} attribute since they are
+\xmlel{vr:ResourceName}-s.  Do not use these attributes for creators and
+contacts; their alternate identifiers, if any, must be given in their
+direct \xmlel{altIdentifier} children.
 
 \paragraph{Dates and Their Roles}
 
