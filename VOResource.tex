@@ -525,6 +525,48 @@ employ the \xmlel{vr:UTCDateTime} type.
 
 % /GENERATED
 
+\subsubsection{Alternate Identifiers}
+\label{sect:altidform}
+
+While registered resources should be referenced with their IVOA
+identifiers in order to allow simple and uniform resolution, other
+identifier schemes are frequently useful in order to have
+machine-readable references to entities not registered (e.g., authors)
+or also resolvable using external resolvers.  Prime examples for such
+identifiers are DOIs and ORCIDs.
+
+VOResource keeps such identifiers in \xmlel{altIdentifier} elements (for
+resources and creators, which can have multiple such identifiers) or
+attributes (for elements of type \xmlel{vr:ResourceName}, which for
+simplicity are only allowed one alternate identifier).
+
+In order to not bind the Registry to any single resolver, we prefer
+non-http URI forms for such identifiers.  Where the originators of the
+identifier scheme strongly urges the use http URIs directly pointing to
+a resolver, we adopt these conventions.
+
+The following identifier schemes are recognised by VOResource in this
+version:
+
+\begin{description}
+\item[doi] A digital object identifier.  These always use the doi URI
+schema rather the http schema.  Hence, in VO resource records,
+\verb|doi:10.5072/7273288| must be used rather than
+\nolinkurl{https://doi.org/10.5072/7273288} or any of its variants.
+
+\item[orcid] An open researcher and contributor id. In
+accordance with ORCID's
+instructions\footnote{\url{https://support.orcid.org/knowledgebase/articles/116780}}, ORCIDs must be given
+as HTTPS URIs using orcid.org's infrastructure, for instance
+\url{https://orcid.org/0000-0001-2345-6789}.
+
+\item[bibcode] A bibliographic code as used by ADS and CDS.  These
+must be used with an ad-hoc URI scheme of \verb|bibcode|, as in 
+\verb|bibcode:2008ivoa.spec.0222P|.
+\end{description}
+
+Other schemes may be used in \xmlel{altIdentifier}-s.
+
 \subsubsection{VOResource Semantics}
 
 All VOResource types and elements have an associated semantic meaning
@@ -1121,9 +1163,8 @@ by the VOResource schema definition.
 \item[Type] a URI: \xmlel{xs:anyURI}
 \item[Meaning] 
                   A reference to this resource in a non-IVOA identifier
-                  scheme, e.g., DOI or bibcode.  Always use the an URI scheme
-                  here, e.g., doi:10.1016/j.epsl.2011.11.037.  For bibcodes,
-                  use a form like bibcode:2008ivoa.spec.0222P.
+                  scheme, e.g., DOI or bibcode.  See the VOResource
+                  specification for syntax constraints on these identifiers.
                
 \item[Occurrence] optional; multiple occurrences allowed.
 
@@ -1387,13 +1428,16 @@ The curation metadata described in the RM (section
 \paragraph{Resource Names}
 
 Several of the curation elements (most importantly,
-\xmlel{publisher}\/) make use of the
+\xmlel{publisher} and \xmlel{relatedResource}) make use of the
 \xmlel{vr:ResourceName} type.  This type provides a means of
-referring to another resource both by name and by its IVOA
-identifier.  Not all resources referred to using this type will
-necessarily be registered and, therefore, will have an identifier;
-thus, the identifier (which is encoded as an attribute) is optional. 
+referring to another resource, by name, by its IVOA
+identifier, or by some other identifier scheme.
+Not all resources referred to using this type will
+necessarily be registered and, therefore, will have an IVOA identifier;
+thus, the identifier (which is encoded as an attribute) is optional.
 
+For entities registered in some other way -- in particular, DOIs or
+ORCIDs --, resource names can give \xmlel{altIdentifier}-s.
 
 % GENERATED: !schemadoc VOResource-v1.2.xsd ResourceName
 \begin{generated}
@@ -1403,7 +1447,9 @@ thus, the identifier (which is encoded as an attribute) is optional.
 
 \noindent{\small
          The name of a potentially registered resource.  That is, the entity
-         referred to may have an associated identifier.
+         referred to may have an associated identifier.  Resources
+         not registered in the VO Registry can be referenced using the
+         altIdentifier attribute.
        \par}
 
 \vspace{1ex}\noindent\textbf{\xmlel{vr:ResourceName} Type Schema Definition}
@@ -1413,6 +1459,7 @@ thus, the identifier (which is encoded as an attribute) is optional.
   <xs:simpleContent >
     <xs:extension base="xs:token" >
       <xs:attribute name="ivo-id" type="vr:IdentifierURI" />
+      <xs:attribute name="altIdentifier" type="xs:anyURI" />
     </xs:extension>
   </xs:simpleContent>
 </xs:complexType>
@@ -1429,6 +1476,16 @@ thus, the identifier (which is encoded as an attribute) is optional.
               
 \item[Occurrence] optional
 
+\end{description}
+\item[altIdentifier]
+\begin{description}
+\item[Type] a URI: \xmlel{xs:anyURI}
+\item[Meaning] 
+                A non-ivoid identifier for the resource referred to,
+                in particular a DOI.  See the VOResource specification
+                 for syntax constraints on these identifiers.
+              
+\item[Occurrence] optional
 \end{description}
 
 
@@ -1531,8 +1588,8 @@ type which bundles together the RM metadata \emph{Creator} and
 \item[Type] a URI: \xmlel{xs:anyURI}
 \item[Meaning] 
                  A reference to this entitiy in a non-IVOA identifier
-                 scheme, e.g., orcid.  Always use a URI form including
-                 a scheme here.
+                 scheme, e.g., orcid.  See the VOResource specification
+                 for syntax constraints on these identifiers.
               
 \item[Occurrence] optional; multiple occurrences allowed.
 
@@ -1591,12 +1648,13 @@ technically invalid, they are frowned upon:
 \end{lstlisting}
 
 The typical identifier type in \xmlel{altIdentifier} in role-like
-elements (at this point, creator and contact) is an ORCID.  In
-accordance with ORCID's
-instructions\footnote{\url{https://support.orcid.org/knowledgebase/articles/116780}}
-(and contrary to Working Drafts of this document), ORCIDs must be given
-as HTTPS URIs, for instance
-\url{https://orcid.org/0000-0001-2345-6789}.
+elements (at this point, creator and contact) is an ORCID; see
+sect.~\ref{sect:altidform} for how to write these.  Since VOResource
+version 1.2, the \xmlel{name} children of these role-like elements also
+have an \xmlel{altIdentifier} attribute since they are
+\xmlel{vr:ResourceName}-s.  Do not use these attributes for creators and
+contacts; their alternate identifiers, if any, must be given in their
+direct \xmlel{altIdentifier} children.
 
 \paragraph{Dates and Their Roles}
 
@@ -1791,8 +1849,8 @@ and \emph{Contact.Email}.
 \item[Type] a URI: \xmlel{xs:anyURI}
 \item[Meaning] 
                  A reference to this entitiy in a non-IVOA identifier
-                 scheme, e.g., orcid.  Always use a URI form including
-                 a scheme here.
+                 scheme, e.g., orcid.  See the VOResource specification
+                 for syntax constraints on these identifiers.
               
 \item[Occurrence] optional; multiple occurrences allowed.
 
@@ -3225,6 +3283,8 @@ fragments into \nolinkurl{http://www.ivoa.net/rdf/uat/#}''.
 \item Now strongly recommending to use SPDX URIs for rightsURI.
 \item Adding \emph{doi} as a recognised source format.
 \item The schema now requires referenceURLs to have http or https URI schemes.
+\item Adding an altIdentifier attribute to \verb|vr:ResourceName|.  this
+way, data providers can use DOIs when declaring relationships.
 \end{itemize}
 
 \subsection{Changes from PR-20171107}

@@ -1,0 +1,3 @@
+This directory contains non-normative data files to be used in
+regression tests.  Do not publish resource records given
+here in any VO registry; they do not correspond to any actual resources.

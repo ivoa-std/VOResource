@@ -1,0 +1,99 @@
+<!-- this record tries to exercise all elements at least once; it's not
+a proper regression test, in particular because it cannot test against
+loosening some restritions too far.  But at least we will notice if
+we break something big time. -->
+
+<ri:Resource xsi:type="vr:Service"
+  xmlns:vr="http://www.ivoa.net/xml/VOResource/v1.0" 
+  xmlns:ri="http://www.ivoa.net/xml/RegistryInterface/v1.0" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://www.ivoa.net/xml/RegistryInterface/v1.0
+                      http://www.ivoa.net/xml/RegistryInterface/v1.0"
+  created="2022-12-21T12:00:00"
+  updated="2022-12-21T12:00:00"
+  status="active">
+  <validationLevel validatedBy="ivo://x-invalid/test-suite">0</validationLevel>
+  <title>A test record</title>
+  <shortName>vor test 1</shortName>
+  <identifier>ivo://x-invalid/test-record-1</identifier>
+  <altIdentifier>doi:10.5479/ADS/bib/2018ivoa.spec.0625P</altIdentifier>
+  <altIdentifier>vo://ivoa.net/std/voresource</altIdentifier>
+  <curation>
+    <publisher ivo-id="ivo://x-invalid/ivoa-reg-wg"
+        altIdentifier="http://orcid.org/whatever"
+      >The IVOA Registry WG</publisher>
+    <creator>
+      <name>Demleitner, M.</name>
+      <logo>http://example.org/some-logo</logo>
+      <altIdentifier>http://orcid.org/md</altIdentifier>
+    </creator>
+    <creator>
+      <name>Plante, R.</name>
+    </creator>
+    <contributor>
+      Aristoteles
+    </contributor>
+    <contributor
+      ivo-id="ivo://x-invalid/nasa"
+      altIdentifier="doi:21.109876543210">
+      NASA
+    </contributor>
+    <date role="updated">2020-12-21T08:59:32Z</date>
+    <date role="updated">2022-12-21T08:59:32Z</date>
+    <version>1.2</version>
+    <contact ivo-id="ivo://x-invalid/ivoa-reg-wg">
+      <name>IVOA Reg WG</name>
+      <address>Olympus Mons 23, Mars</address>
+      <email>not-an-address@ivoa.net</email>
+      <telephone>not checked</telephone>
+      <altIdentifier>http://orcid.org/whatever</altIdentifier>
+    </contact>
+  </curation>
+  <content>
+    <subject>virtual-observatories</subject>
+    <subject>software-testing</subject>
+    <description>This is a test record used for regression testing
+    of the VOResource specification.</description>
+    <source format="bibcode">2008ivoa.spec.0222P</source>
+    <referenceURL>https://ivoa.net/documents/VOResource/</referenceURL>
+    <type>Background</type>
+    <type>Bibliography</type>
+    <contentLevel>research</contentLevel>
+    <contentLevel>amateur</contentLevel>
+    <relationship>
+      <relationshipType>Cites</relationshipType>
+      <relatedResource
+        ivo-id="ivo://x-invalid/ivoa-reg-wg"
+        altIdentifier="http://orcid.org/whatever">IVOA Reg WG
+      </relatedResource>
+      <relatedResource
+        ivo-id="ivo://ivoa.net/std/registryinterface">
+        Registry Interfaces
+      </relatedResource>
+    </relationship>
+    <relationship>
+      <relationshipType>IsCitedBy</relationshipType>
+      <relatedResource>VODataService</relatedResource>
+    </relationship>
+  </content>
+  <rights
+    rightsURI="https://spdx.org/licenses/CC-BY-4.0.html"
+    >Creative Commons Attribution 4.0</rights>
+  <capability standardID="ivo://x-invalid/test-proto">
+    <validationLevel validatedBy="ivo://x-invalid/test-suite"
+      >0</validationLevel>
+    <description>An example standard capability</description>
+    <interface role="starring" version="1.0" xsi:type="vr:WebBrowser">
+      <accessURL>http://example.org/foo/bar</accessURL>
+      <mirrorURL>http://example.com/foo/bar</mirrorURL>
+      <mirrorURL>http://example.net/foo/bar</mirrorURL>
+      <testQueryString>a=b&amp;c=d</testQueryString>
+    </interface>
+  </capability>
+  <capability>
+    <description>An example non-standard capability</description>
+    <interface xsi:type="vr:WebService">
+      <accessURL>http://example.org/non/std</accessURL>
+    </interface>
+  </capability>
+</ri:Resource>
