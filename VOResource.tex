@@ -29,11 +29,8 @@
 
 \editor{Markus Demleitner}
 
-\previousversion[http://www.ivoa.net/Documents/REC/ReR/VOResource-20080222.html]{REC -1.03}
-\previousversion[http://www.ivoa.net/Documents/WD/ReR/VOResource-20061107.html]
-  {WD 2006-11-07}
-\previousversion[http://www.ivoa.net/Documents/WD/ReR/VOResource-20060620.html]
-  {WD 2006-06-20}
+\previousversion[https://ivoa.net/documents/VOResource/20180625/]{REC-1.1}
+\previousversion[http://www.ivoa.net/Documents/REC/ReR/VOResource-20080222.html]{REC-1.03}
 \previousversion[http://www.ivoa.net/Documents/WD/ReR/VOResource-20060530.html]
   {WD-2006-05-30}
       
@@ -137,6 +134,18 @@ may be encoded in several different formats, depending on the context.
 The present document provides a concrete encoding of the resulting
 metadata model on XML suitable for embedding into OAI-PMH responses.
 
+\begin{admonition}{Note}
+The term ``VOResource'' is used to denote two different concepts within
+the IVOA community.
+The first refers specifically to the core
+XML schema defined by this document.  The second refers more
+broadly to the core schema plus the set of legal extensions.
+In this document, use of the name ``VOResource'' corresponds to
+the first meaning.  Reference to the broader set of schemas
+will be indicated explicitly with the annotating phrase, ``and
+its legal extensions.''
+\end{admonition}
+
 In addition to concepts and structures laid down in the RM, VOResource
 also acknowledges other (though mostly related) metadata schemes.  Of
 particular importance here is the metadata scheme employed by DataCite,
@@ -162,18 +171,6 @@ Thus, the VOResource schema has been especially designed to be
 extended.  The model for doing this is described in
 sect.~\ref{sect:extending}.
 
-\begin{admonition}{Note}
-The term ``VOResource'' is used to denote two different concepts within
-the IVOA community.
-The first refers specifically to the core
-XML schema defined by this document.  The second refers more
-broadly to the core schema plus the set of legal extensions.
-In this document, use of the name ``VOResource'' corresponds to
-the first meaning.  Reference to the broader set of schemas
-will be indicated explicitly with the annotating phrase, ``and
-its legal extensions.''
-\end{admonition}
-
 \subsection{Role within the VO Architecture}
 \label{sect:role}
 
@@ -191,7 +188,7 @@ IVOA architecture \citep{2021ivoa.spec.1101D}.
 VOResource depends on the following other IVOA standards:
 
 \begin{description}
-\item[Resource Metadata, v1.12 \citep{2007ivoa.spec.0302H}] The RM
+\item[Resource Metadata, v1.12] The RM \citep{2007ivoa.spec.0302H}
 provides the central concepts and structures mapped here into an XML
 schema.
 \end{description}
@@ -199,8 +196,9 @@ schema.
 There are relationships to the following other IVOA standards:
 
 \begin{description}
-\item[Registry Interfaces \citep{2018ivoa.spec.0723D}] The Registry
-Interfaces standard describes how registries exchange VOResource records, and it
+\item[Registry Interfaces] The Registry
+Interfaces \citep{2018ivoa.spec.0723D} standard 
+describes how registries exchange VOResource records, and it
 provides a \xmlel{vr:Resource}-typed element to hold them within XML
 data (VOResource itself has no global elements).
 \item[VOResource extensions] VOResource lays the foundations upon which
@@ -209,12 +207,12 @@ VOResource extensions.  At the time of writing, recommendations have
 been passed for the description of VO Standards
 \citep{2012ivoa.spec.0508H}, various ``simple'' data discovery protocols
 \citep{2017ivoa.spec.0530P}, generic data services
-\citep{2010ivoa.spec.1202P}, and TAP services
+\citep{2021ivoa.spec.1102D}, and TAP services
 \citep{2012ivoa.spec.0827D}.  The Registry Interfaces standard also
 contains a VOResource extension.
-\item[RegTAP \citep{2019ivoa.spec.1011D}] The Registry Relational Schema
+\item[RegTAP] The Registry Relational Schema \citep{2019ivoa.spec.1011D}
 gives a relational mapping of the models discussed here.
-\item[VOSI \citep{2017ivoa.spec.0524G}] The VO support interfaces re-use
+\item[VOSI] The VO support interfaces \citep{2017ivoa.spec.0524G} re-use
 the service model developed here to facilitate service self-description.
 \end{description}
 
@@ -256,7 +254,7 @@ modalities of service access. In VOResource, such information
 is typcially encapsulated in \xmlel{vr:Capability}-typed elements. This
 document only provides a generic base class for them, deferring the
 definition of more useful subclasses to VOResource extensions like
-VODataService \citep{2010ivoa.spec.1202P} or SimpleDALRegExt
+VODataService \citep{2021ivoa.spec.1102D} or SimpleDALRegExt
 \citep{2017ivoa.spec.0530P}.
 
 
@@ -349,6 +347,15 @@ Registries.  Note that even
 \xmlel{ri:Resource}-typed elements will still use \xmlel{xsi:type} to
 indicate the actual resource type.
 
+\begin{admonition}{Note}
+In the example instance
+document at the beginning of section~\ref{sect:model}, the root element
+\xmlel{resource} is not defined in any schema.
+Nevertheless, this document is still legal and verifiable XML.
+This is because the element's type is explicitly specified with
+the \xmlel{xsi:type} attribute.
+\end{admonition}
+
 Applications describe a single resource using an element of the type
 \xmlel{vr:Resource} or a legal derivation of it.  The content of this
 element is referred to as the \textbf{core VOResource
@@ -369,16 +376,6 @@ sections 3.1, 3.2, 3.3, and 4 of the RM):
 
 
 These elements are defined in more detail in sect.~\ref{sect:metadata}.
-
-
-\begin{admonition}{Note}
-In the example instance
-document at the beginning of section~\ref{sect:model}, the root element
-\xmlel{resource} is not defined in any schema.
-Nevertheless, this document is still legal and verifiable XML.
-This is because the element's type is explicitly specified with
-the \xmlel{xsi:type} attribute.
-\end{admonition}
 
 
 \subsubsection{Naming Convention}
@@ -538,7 +535,7 @@ identifiers are DOIs and ORCIDs.
 VOResource keeps such identifiers in \xmlel{altIdentifier} elements (for
 resources and creators, which can have multiple such identifiers) or
 attributes (for elements of type \xmlel{vr:ResourceName}, which for
-simplicity are only allowed one alternate identifier).
+simplicity are only allowed one alternate identifier each).
 
 In order to not bind the Registry to any single resolver, we prefer
 non-http URI forms for such identifiers.  Where the originators of the
@@ -1672,11 +1669,21 @@ which the \xmlel{role} terms should be taken if at all possible.  At the
 time of writing, the vocabulary consists of three old-style VOResource
 1.0 terms and terms from the DataCite Metadata 4.0 \citep{std:DataCite40}; 
 see the RDF URL for
-the definitions of the terms:
+the definitions of the terms.  The following identifiers are available at
+the time of writing (omitting deprecated ones):
 
 \begin{quotation}\noindent
-% GENERATED: sed -e 's/\([^;]*\);.*/\\textsl{\1},/;$s/,$//' terms/date_role.terms | sort -i
-
+% GENERATED: !vocterms voresource/date_role
+\textsl{Accepted},
+\textsl{Available},
+\textsl{Collected},
+\textsl{Copyrighted},
+\textsl{Created},
+\textsl{Inspected},
+\textsl{Issued},
+\textsl{Submitted},
+\textsl{Updated},
+\textsl{Valid}
 % /GENERATED
 \end{quotation}
 
@@ -2032,12 +2039,11 @@ vocabulary.  At the time of writing, this vocabulary contained the
 terms:
 
 \begin{quotation}\noindent
-% this was generated by: sed -e 's/\([^;]*\);.*/\\textsl{\1},/;$s/,$//' terms/content_level.terms
-\textsl{Research},
+% GENERATED: !vocterms voresource/content_level
 \textsl{Amateur},
-\textsl{General}
-% (but we need to fix the procedure to use RDF repo, as the stuff
-% is maintained there now)
+\textsl{General},
+\textsl{Research}
+% /GENERATED
 \end{quotation}
 
 For definitions of these terms, their relationships, and the complete,
@@ -2049,32 +2055,30 @@ vocabulary.  At the time of writing, this vocabulary contained the
 terms:
 
 \begin{quotation}\noindent
-% this was generated by: sed -e 's/\([^;]*\);.*/\\textsl{\1},/;$s/,$//' terms/content_type.terms
-\textsl{Other},
-\textsl{Archive},
-\textsl{Bibliography},
-\textsl{Catalog},
-\textsl{Journal},
-\textsl{Library},
-\textsl{Simulation},
-\textsl{Survey},
-\textsl{Transformation},
-\textsl{Education},
-\textsl{Outreach},
-\textsl{EPOResource},
+% GENERATED: !vocterms voresource/content_type
 \textsl{Animation},
+\textsl{Archive},
 \textsl{Artwork},
 \textsl{Background},
 \textsl{BasicData},
+\textsl{Bibliography},
+\textsl{Catalog},
+\textsl{Education},
+\textsl{EPOResource},
 \textsl{Historical},
+\textsl{Journal},
+\textsl{Library},
+\textsl{Organisation},
+\textsl{Other},
+\textsl{Outreach},
 \textsl{Photographic},
 \textsl{Press},
-\textsl{Organisation},
 \textsl{Project},
-\textsl{Registry}
-
-% (but we need to fix the procedure to use RDF repo, as the stuff
-% is maintained there now)
+\textsl{Registry},
+\textsl{Simulation},
+\textsl{Survey},
+\textsl{Transformation}
+% /GENERATED
 \end{quotation}
 
 For definitions of these terms, their relationships, and the complete,
@@ -2160,10 +2164,11 @@ VOResource 1.x, they should not be used in new records.  Instead,
 resource records should use the terms given as \emph{Preferred} in the
 vocabulary retrievable at the URL given above.
 
-At the time of writing, the full vocabulary consists of these terms:
+At the time of writing, the full vocabulary consists of these terms
+(omitting deprecated ones):
 
 \begin{quotation}\noindent
-% this was generated by: sed -e 's/\([^;]*\);.*/\\textsl{\1},/;$s/,$//' terms/relationship_type.terms | sort -i
+% GENERATED: !vocterms voresource/relationship_type
 \textsl{Cites},
 \textsl{Continues},
 \textsl{HasPart},
@@ -2173,19 +2178,12 @@ At the time of writing, the full vocabulary consists of these terms:
 \textsl{IsNewVersionOf},
 \textsl{IsPartOf},
 \textsl{IsPreviousVersionOf},
-\textsl{IsServedBy}
+\textsl{IsServedBy},
 \textsl{IsServiceFor},
 \textsl{IsSourceOf},
-\textsl{IsSupplementTo},
 \textsl{IsSupplementedBy},
-\textsl{derived-from},
-\textsl{mirror-of},
-\textsl{related-to},
-\textsl{served-by},
-\textsl{service-for},
-
-% (but we need to fix the procedure to use RDF repo, as the stuff
-% is maintained there now)
+\textsl{IsSupplementTo}
+% /GENERATED
 \end{quotation}
 
 For definitions of these terms, their relationships, and the complete,
@@ -2263,7 +2261,7 @@ type and/or, if the resource is a \xmlel{vr:Service} type or sub-type,
 zero or more times as the first children of any \xmlel{capability}
 element.
 
-\begin{admonition}{NOte}
+\begin{admonition}{Note}
 \xmlel{validationLevel} is of type \xmlel{vr:Validation}; somewhat
 confusingly, VOResource also has a type \xmlel{vr:ValidationLevel}.  The
 latter is extended by \xmlel{vr:Validation} with a \xmlel{validatedBy}

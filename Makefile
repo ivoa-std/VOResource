@@ -7,7 +7,7 @@ DOCNAME = VOResource
 DOCVERSION = 1.2
 
 # Publication date, ISO format; update manually for "releases"
-DOCDATE = 2022-08-29
+DOCDATE = 2023-01-05
 
 # What is it you're writing: NOTE, WD, PR, or REC
 DOCTYPE = WD
@@ -23,7 +23,7 @@ FIGURES = role_diagram.svg
 VECTORFIGURES = 
 
 # Additional files to distribute (e.g., CSS, schema files, examples...)
-AUX_FILES = VOResource-v1.1.xsd terms
+AUX_FILES = VOResource-v1.2.xsd
 
 AUTHOR_EMAIL=msdemlei@ari.uni-heidelberg.de
 
