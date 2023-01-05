@@ -134,6 +134,18 @@ may be encoded in several different formats, depending on the context.
 The present document provides a concrete encoding of the resulting
 metadata model on XML suitable for embedding into OAI-PMH responses.
 
+\begin{admonition}{Note}
+The term ``VOResource'' is used to denote two different concepts within
+the IVOA community.
+The first refers specifically to the core
+XML schema defined by this document.  The second refers more
+broadly to the core schema plus the set of legal extensions.
+In this document, use of the name ``VOResource'' corresponds to
+the first meaning.  Reference to the broader set of schemas
+will be indicated explicitly with the annotating phrase, ``and
+its legal extensions.''
+\end{admonition}
+
 In addition to concepts and structures laid down in the RM, VOResource
 also acknowledges other (though mostly related) metadata schemes.  Of
 particular importance here is the metadata scheme employed by DataCite,
@@ -158,18 +170,6 @@ additional metadata that is relevant only to a resource of its type.
 Thus, the VOResource schema has been especially designed to be
 extended.  The model for doing this is described in
 sect.~\ref{sect:extending}.
-
-\begin{admonition}{Note}
-The term ``VOResource'' is used to denote two different concepts within
-the IVOA community.
-The first refers specifically to the core
-XML schema defined by this document.  The second refers more
-broadly to the core schema plus the set of legal extensions.
-In this document, use of the name ``VOResource'' corresponds to
-the first meaning.  Reference to the broader set of schemas
-will be indicated explicitly with the annotating phrase, ``and
-its legal extensions.''
-\end{admonition}
 
 \subsection{Role within the VO Architecture}
 \label{sect:role}
@@ -347,6 +347,15 @@ Registries.  Note that even
 \xmlel{ri:Resource}-typed elements will still use \xmlel{xsi:type} to
 indicate the actual resource type.
 
+\begin{admonition}{Note}
+In the example instance
+document at the beginning of section~\ref{sect:model}, the root element
+\xmlel{resource} is not defined in any schema.
+Nevertheless, this document is still legal and verifiable XML.
+This is because the element's type is explicitly specified with
+the \xmlel{xsi:type} attribute.
+\end{admonition}
+
 Applications describe a single resource using an element of the type
 \xmlel{vr:Resource} or a legal derivation of it.  The content of this
 element is referred to as the \textbf{core VOResource
@@ -367,16 +376,6 @@ sections 3.1, 3.2, 3.3, and 4 of the RM):
 
 
 These elements are defined in more detail in sect.~\ref{sect:metadata}.
-
-
-\begin{admonition}{Note}
-In the example instance
-document at the beginning of section~\ref{sect:model}, the root element
-\xmlel{resource} is not defined in any schema.
-Nevertheless, this document is still legal and verifiable XML.
-This is because the element's type is explicitly specified with
-the \xmlel{xsi:type} attribute.
-\end{admonition}
 
 
 \subsubsection{Naming Convention}
@@ -2262,7 +2261,7 @@ type and/or, if the resource is a \xmlel{vr:Service} type or sub-type,
 zero or more times as the first children of any \xmlel{capability}
 element.
 
-\begin{admonition}{NOte}
+\begin{admonition}{Note}
 \xmlel{validationLevel} is of type \xmlel{vr:Validation}; somewhat
 confusingly, VOResource also has a type \xmlel{vr:ValidationLevel}.  The
 latter is extended by \xmlel{vr:Validation} with a \xmlel{validatedBy}
