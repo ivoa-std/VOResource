@@ -6,7 +6,7 @@
            xmlns:vm="http://www.ivoa.net/xml/VOMetadata/v0.1"
            elementFormDefault="unqualified"
            attributeFormDefault="unqualified"
-           version="1.1+wd1">
+           version="1.1+wd2">
 
 <!-- NOTE: target namespace ends in v1.0 in order to not break 1.0 clients.
 This is nevertheless the 1.2 schema, as given by the version attribute.
@@ -507,7 +507,7 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
               <xs:documentation>
                 A non-ivoid identifier for the resource referred to,
                 in particular a DOI.  See the VOResource specification
-                 for syntax constraints on these identifiers.
+                for syntax constraints on these identifiers.
               </xs:documentation>
             </xs:annotation>
          </xs:attribute>
@@ -566,9 +566,8 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
               maxOccurs="unbounded">
            <xs:annotation>
               <xs:documentation>
-                 A reference to this entitiy in a non-IVOA identifier
-                 scheme, e.g., orcid.  See the VOResource specification
-                 for syntax constraints on these identifiers.
+              	Deprecated as a child element.  Use the name
+              	attribute's altIdentifier attribute instead.
               </xs:documentation>
            </xs:annotation>
         </xs:element>
@@ -629,9 +628,8 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
               maxOccurs="unbounded">
            <xs:annotation>
               <xs:documentation>
-                 A reference to this entitiy in a non-IVOA identifier
-                 scheme, e.g., orcid.  See the VOResource specification
-                 for syntax constraints on these identifiers.
+              	Deprecated as a child element.  Use the name
+              	attribute's altIdentifier attribute instead.
               </xs:documentation>
            </xs:annotation>
         </xs:element>
