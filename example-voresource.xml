@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ri:Resource xsi:type="vr:Organisation"
-          xmlns:vr="http://www.ivoa.net/xml/VOResource/v1.0" 
-          xmlns:ri="http://www.ivoa.net/xml/RegistryInterface/v1.0" 
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-          xsi:schemaLocation="http://www.ivoa.net/xml/VOResource/v1.0 
+          xmlns:vr="http://www.ivoa.net/xml/VOResource/v1.0"
+          xmlns:ri="http://www.ivoa.net/xml/RegistryInterface/v1.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://www.ivoa.net/xml/VOResource/v1.0
                               http://www.ivoa.net/xml/VOResource/v1.0
                               http://www.ivoa.net/xml/RegistryInterface/v1.0
                               http://www.ivoa.net/xml/RegistryInterface/v1.0"
@@ -14,48 +14,48 @@
       2
     </validationLevel>
 
-    <title>NCSA Radio Astronomy Imaging</title> 
-    <shortName>NCSA-RAI</shortName> 
-    <identifier>ivo://rai.ncsa/RAI</identifier> 
+    <title>NCSA Radio Astronomy Imaging</title>
+    <shortName>NCSA-RAI</shortName>
+    <identifier>ivo://rai.ncsa/RAI</identifier>
 
-    <curation> 
-        <publisher ivo-id="ivo://ncsa.uiuc/NCSA"> 
-            National Center for Supercomputing Applications 
-        </publisher> 
-        <creator> 
-            <name> Crutcher, Richard </name> 
-            <logo> 
-                http://rai.ncsa.uiuc.edu/rai.jpg 
-            </logo> 
-        </creator> 
-        <date>1993-01-01</date> 
-        <contact> 
-            <name>Plante, R.</name> 
-            <email>rplante@ncsa.uiuc.edu</email> 
-        </contact> 
-    </curation> 
+    <curation>
+        <publisher ivo-id="ivo://ncsa.uiuc/NCSA">
+            National Center for Supercomputing Applications
+        </publisher>
+        <creator>
+            <name> Crutcher, Richard </name>
+            <logo>
+                http://rai.ncsa.uiuc.edu/rai.jpg
+            </logo>
+        </creator>
+        <date>1993-01-01</date>
+        <contact>
+            <name>Plante, R.</name>
+            <email>rplante@ncsa.uiuc.edu</email>
+        </contact>
+    </curation>
 
-    <content> 
-        <subject>radio-astronomy</subject> 
-        <subject>astronomy-software</subject> 
-        <subject>astronomy-web-services </subject> 
-        <subject>search-for-extraterrestrial-intelligence</subject> 
-        <description> 
-            The Radio Astronomy Imaging Group at the National Center for 
-            Supercomputing Applications is focused on applying 
-            high-performance computing to astronomical research. Our 
-            projects include the NCSA Astronomy Digital Image Library, 
-            the BIMA Data Archive, the BIMA Image Pipeline, and the 
-            National Virtual Observatory. 
-        </description> 
-        <referenceURL>http://rai.ncsa.uiuc.edu/</referenceURL> 
-        <type>Organisation</type> 
-        <contentLevel>Research</contentLevel> 
-    </content> 
+    <content>
+        <subject>radio-astronomy</subject>
+        <subject>astronomy-software</subject>
+        <subject>astronomy-web-services </subject>
+        <subject>search-for-extraterrestrial-intelligence</subject>
+        <description>
+            The Radio Astronomy Imaging Group at the National Center for
+            Supercomputing Applications is focused on applying
+            high-performance computing to astronomical research. Our
+            projects include the NCSA Astronomy Digital Image Library,
+            the BIMA Data Archive, the BIMA Image Pipeline, and the
+            National Virtual Observatory.
+        </description>
+        <referenceURL>http://rai.ncsa.uiuc.edu/</referenceURL>
+        <type>Organisation</type>
+        <contentLevel>Research</contentLevel>
+    </content>
 
-    <facility>Berkeley-Illinois-Maryland Array (BIMA)</facility> 
-    <facility> 
-        Combined Array for Research in Millimeter Astronomy (CARMA) 
-    </facility> 
+    <facility>Berkeley-Illinois-Maryland Array (BIMA)</facility>
+    <facility>
+        Combined Array for Research in Millimeter Astronomy (CARMA)
+    </facility>
 
 </ri:Resource>
