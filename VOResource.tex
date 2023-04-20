@@ -1480,7 +1480,7 @@ ORCIDs --, resource names can give \xmlel{altIdentifier}-s.
 \item[Meaning]
                 A non-ivoid identifier for the resource referred to,
                 in particular a DOI.  See the VOResource specification
-                 for syntax constraints on these identifiers.
+                for syntax constraints on these identifiers.
 
 \item[Occurrence] optional
 \end{description}
@@ -1584,9 +1584,8 @@ type which bundles together the RM metadata \emph{Creator} and
 \begin{description}
 \item[Type] a URI: \xmlel{xs:anyURI}
 \item[Meaning]
-                 A reference to this entitiy in a non-IVOA identifier
-                 scheme, e.g., orcid.  See the VOResource specification
-                 for syntax constraints on these identifiers.
+              	Deprecated as a child element.  Use the name
+              	attribute's altIdentifier attribute instead.
 
 \item[Occurrence] optional; multiple occurrences allowed.
 
@@ -1644,14 +1643,19 @@ technically invalid, they are frowned upon:
   </creator>
 \end{lstlisting}
 
-The typical identifier type in \xmlel{altIdentifier} in role-like
-elements (at this point, creator and contact) is an ORCID; see
-sect.~\ref{sect:altidform} for how to write these.  Since VOResource
-version 1.2, the \xmlel{name} children of these role-like elements also
-have an \xmlel{altIdentifier} attribute since they are
-\xmlel{vr:ResourceName}-s.  Do not use these attributes for creators and
-contacts; their alternate identifiers, if any, must be given in their
-direct \xmlel{altIdentifier} children.
+In VOResource 1.1 the \xmlel{creator} and \xmlel{contact} elements
+received \xmlel{altIdentifier} child elements, mainly to enable
+inclusion of ORCIDs in VOResource documents.  In VOResource
+version 1.2, the \xmlel{vr:ResourceName} type received an
+\xmlel{altIdentifier} attribute, and hence an alternate identifier like
+an ORCID can be communicated through the \xmlel{name} children of
+\xmlel{creator} and \xmlel{contact}.
+
+We hence deprecate the \xmlel{altIdentifier} children in these two
+elements (but not in \xmlel{Resource} itself).  New resource records
+must use the \xmlel{name/@altIdentifier} attributes to communicate
+ORCIDs or similar identifiers for persons.
+
 
 \paragraph{Dates and Their Roles}
 
@@ -1855,9 +1859,8 @@ and \emph{Contact.Email}.
 \begin{description}
 \item[Type] a URI: \xmlel{xs:anyURI}
 \item[Meaning]
-                 A reference to this entitiy in a non-IVOA identifier
-                 scheme, e.g., orcid.  See the VOResource specification
-                 for syntax constraints on these identifiers.
+              	Deprecated as a child element.  Use the name
+              	attribute's altIdentifier attribute instead.
 
 \item[Occurrence] optional; multiple occurrences allowed.
 
@@ -3276,13 +3279,21 @@ interface.  See sect.~\ref{sect:servicemodel} for details.
 \subsection{Changes from REC-1.1}
 
 \begin{itemize}
+\item Adding an altIdentifier attribute to \xmlel{vr:ResourceName} to
+let  data providers use DOIs when declaring relationships.  This also
+covers what \xmlel{role/@altIdentifier} and
+\xmlel{contact/@altIdentifier} was created for.  These special
+constructs introduced in version 1.1 are now deprecated again.
+
 \item We now specify that ``using the UAT'' from version 1.1 means ``use
 fragments into \nolinkurl{http://www.ivoa.net/rdf/uat/#}''.
+
 \item Now strongly recommending to use SPDX URIs for rightsURI.
+
 \item Adding \emph{doi} as a recognised source format.
+
 \item The schema now requires referenceURLs to have http or https URI schemes.
-\item Adding an altIdentifier attribute to \verb|vr:ResourceName|.  this
-way, data providers can use DOIs when declaring relationships.
+
 \end{itemize}
 
 \subsection{Changes from PR-20171107}
