@@ -7,14 +7,14 @@ DOCNAME = VOResource
 DOCVERSION = 1.2
 
 # Publication date, ISO format; update manually for "releases"
-DOCDATE = 2023-01-05
+DOCDATE = 2024-10-15
 
 # What is it you're writing: NOTE, WD, PR, or REC
-DOCTYPE = WD
+DOCTYPE = PR
 
 # Source files for the TeX document (but the main file must always
 # be called $(DOCNAME).tex
-SOURCES = $(DOCNAME).tex example-voresource.xml role_diagram.pdf
+SOURCES = $(DOCNAME).tex example-voresource.xml role_diagram.pdf gitmeta.tex
 
 # List of pixel image files to be included in submitted package
 FIGURES = role_diagram.svg

@@ -1,5 +1,6 @@
 \documentclass[11pt,a4paper]{ivoa}
 \input tthdefs
+\input gitmeta
 
 % we want a bit more space so our schema definitions don't have to break
 % that often
@@ -12,6 +13,7 @@
    breaklines=true,prebreak=\breakmarkpre}
 
 \hyphenation{stan-dard-id}
+\hyphenation{Ha-nisch}
 
 \title{VOResource: an XML Encoding Schema for Resource Metadata}
 
@@ -29,6 +31,7 @@
 
 \editor{Markus Demleitner}
 
+\previousversion[https://ivoa.net/documents/VOResource/20230105/]{WD-1.2-20230105}
 \previousversion[https://ivoa.net/documents/VOResource/20180625/]{REC-1.1}
 \previousversion[http://www.ivoa.net/Documents/REC/ReR/VOResource-20080222.html]{REC-1.03}
 \previousversion[http://www.ivoa.net/Documents/WD/ReR/VOResource-20060530.html]
@@ -40,7 +43,7 @@
 This document describes an XML encoding standard for IVOA Resource
 Metadata, referred to as VOResource.  This schema is primarily
 intended to support metadata exchange between
-in interoperable registries and resource discovery within them.
+interoperable registries and resource discovery within them.
 However, any application that needs to describe resources
 may use this schema.  In this document, we define the types and
 elements that make up the schema in close alignment to the metadata terms
@@ -48,7 +51,7 @@ defined in Resource Metadata for the Virtual Observatory
 \citep{2007ivoa.spec.0302H}, but also taking into account other metadata
 standards as well as experiences from the operation of the VO Registry.
 We also describe the general model for the
-schema and explain how it may be extended to add new metadata terms and
+schema and explain how it is extended to add new metadata terms and
 describe more specific types of resources.
 \end{abstract}
 
@@ -65,10 +68,6 @@ European Commission's Sixth
 Framework Program via the
 Optical Infrared Coordination Network (OPTICON).  Funding for the 2016
 update was provided by BMBF grant GAVO-2014, grant number 05A14VHA.
-
-The vocabulary management closely follows the one used in the managament
-of the Datalink \citep{2015ivoa.spec.0617D} core vocabulary, designed by
-Norman Gray.
 
 \section*{Conformance-related definitions}
 
@@ -214,6 +213,8 @@ contains a VOResource extension.
 gives a relational mapping of the models discussed here.
 \item[VOSI] The VO support interfaces \citep{2017ivoa.spec.0524G} re-use
 the service model developed here to facilitate service self-description.
+\item[Vocabularies] VOResource contains several controlled vocabularies
+that are maintained and can be used as per \citet{2023ivoa.spec.0206D}.
 \end{description}
 
 \section{The VOResource Data Model}
@@ -251,7 +252,7 @@ record:
 
 Actual services obviously need additional metadata defining the
 modalities of service access. In VOResource, such information
-is typcially encapsulated in \xmlel{vr:Capability}-typed elements. This
+is typcially encapsulated in \xmlel{vr:Capa\-bility}-typed elements. This
 document only provides a generic base class for them, deferring the
 definition of more useful subclasses to VOResource extensions like
 VODataService \citep{2021ivoa.spec.1102D} or SimpleDALRegExt
@@ -310,7 +311,7 @@ xsi:schemaLocation="http://www.ivoa.net/xml/VOResource/v1.0
 The VOResource XML schema sets \xmlel{elementFormDefault} to
 unqualified.  This means that
 instance documents must not bind the
-empty namespace (using \verb|xmlns="..."|) in any element containing
+empty namespace in any element containing
 VOResource elements, as XML element names in VOResource must be
 interpreted outside of any namespace.
 Conversely, the VOResource namespace prefix must not
@@ -610,7 +611,7 @@ VOResource entities:
 
 Additional semantics are transmitted through the use of derived types
 using the \xmlel{xsi:type} attribute.  In the sample instance document
-above, the use of \verb|xsi:type="vr:Organisation"| means that the
+above, the use of the XSI type \verb|vr:Organisation| means that the
 resource being described is specifically an organisation as defined by
 the \xmlel{vr:Organisation} type.  This type provides additional
 metadata that are not part of the core resource metadata.  The semantics
@@ -804,8 +805,8 @@ overall type (e.g. \xmlel{vr:WebBrowser},
 output products.
 
 
-When a standard capability is being described (by means of providing a
-\xmlel{standardID}), then at least one of the
+When a standard capability is being described (i.e., there is a
+\xmlel{standardID} attribute), then at least one of the
 \xmlel{interface} elements should describe an interface required
 by the standard.  The \xmlel{role} attribute is used to mark the
 standard interfaces (typically with the value ``std'').
@@ -854,7 +855,7 @@ VOResource.  In particular:
   \item \emph{Provide semantic definitions of all types and elements within
        the first \xmlel{xsd:do\-cumentation} element inside
        the type or element definition.}  Subsequent
-       \xmlel{xsd:documentation} elements may provide
+       documentation elements may provide
        additional comments or discussion.
 
   \item \emph{Avoid the use of \xmlel{xsd:choice} elements.}
@@ -864,7 +865,7 @@ VOResource.  In particular:
        types that can be inserted in place of a parent type; for
        examples, see the \xmlel{vs:VOTableType} and
        \xmlel{vs:SimpleDataType} defintions in VODataService 1.1
-       \citep{2010ivoa.spec.1202P}.
+       \citep{2010ivoa.spec.1202P}. % version-sharp reference
 
   \item \emph{Avoid the use of substitution groups}.  VOResource
        prefers instead the use of \xmlel{xsi:type} which are
@@ -1683,6 +1684,7 @@ the time of writing (omitting deprecated ones):
 \textsl{Collected},
 \textsl{Copyrighted},
 \textsl{Created},
+\textsl{ExportRequested},
 \textsl{Inspected},
 \textsl{Issued},
 \textsl{Submitted},
@@ -1728,7 +1730,7 @@ VOResource 1.0 terms to the modern DataCite Metadata ones).
 \item[Comment]
                	The value of role should be taken from the vocabulary
                	maintained at
-               	http://www.ivoa.net/rdf/voresource/date\_role.
+               	\url{http://www.ivoa.net/rdf/voresource/date_role}.
                	This includes the traditional and deprecated strings
                 “creation”, indicating the date that the resource
                 itself was created, and “update”, indicating when the
@@ -1934,7 +1936,7 @@ defined by the \xmlel{vr:Content} complex type.
 \item[Comment]
              	The content of subject SHOULD be the fragment identifier of
              	the URI of a concept in the IVOA UAT
-             	(http://www.ivoa.net/rdf/uat/), that is, a string like
+             	(\url{http://www.ivoa.net/rdf/uat/}), that is, a string like
              	“virtual-observatories”.
 
 
@@ -1996,7 +1998,7 @@ defined by the \xmlel{vr:Content} complex type.
 \item[Meaning]
                Nature or genre of the content of the resource.  Values for
                type should be taken from the controlled vocabulary
-               http://www.ivoa.net/rdf/voresource/content\_type
+               \url{http://www.ivoa.net/rdf/voresource/content_type}
 
 \item[Occurrence] optional; multiple occurrences allowed.
 
@@ -2008,7 +2010,7 @@ defined by the \xmlel{vr:Content} complex type.
                 Description of the content level or intended audience.
                 Values for contentLevel should be taken from the controlled
                 vocabulary
-                http://www.ivoa.net/rdf/voresource/content\_level.
+                \url{http://www.ivoa.net/rdf/voresource/content_level}.
 
 \item[Occurrence] optional; multiple occurrences allowed.
 
@@ -2058,6 +2060,7 @@ vocabulary.  At the time of writing, this vocabulary contained the
 terms:
 
 \begin{quotation}\noindent
+\raggedright
 % GENERATED: !vocterms voresource/content_type
 \textsl{Animation},
 \textsl{Archive},
@@ -2120,7 +2123,7 @@ The \xmlel{source} element's type,
 \item[Meaning]
                  The reference format.  Recognized values include “bibcode”,
                  referring to a standard astronomical bibcode
-                 (http://cdsweb.u-strasbg.fr/simbad/refcode.html), and
+                 (\url{http://cdsweb.u-strasbg.fr/simbad/refcode.html}), and
                  “doi” for a Digital Object Identifier
 
 \item[Occurrence] optional
@@ -2171,6 +2174,7 @@ At the time of writing, the full vocabulary consists of these terms
 (omitting deprecated ones):
 
 \begin{quotation}\noindent
+\raggedright
 % GENERATED: !vocterms voresource/relationship_type
 \textsl{Cites},
 \textsl{Continues},
@@ -2229,7 +2233,7 @@ please refer to \url{http://www.ivoa.net/rdf/voresource/relationship_type}.
 \item[Comment]
                  The value  of relationshipType should be taken from the
                  vocabulary at
-                 http://www.ivoa.net/rdf/voresource/relationship\_type.
+                 \url{http://www.ivoa.net/rdf/voresource/relationship_type}.
 
 
 \end{description}
@@ -2258,7 +2262,7 @@ please refer to \url{http://www.ivoa.net/rdf/voresource/relationship_type}.
 
 The RM's \emph{ResourceValidationLevel} is encoded in the VOResource
 schema with the \xmlel{validationLevel} element, which can appear in
-multiple places within a \xmlel{vr:Resource} type or sub-type.  It may
+multiple places within a \xmlel{vr:Re\-source} type or sub-type.  It may
 appear zero or more times as direct children of a \xmlel{vr:Resource}
 type and/or, if the resource is a \xmlel{vr:Service} type or sub-type,
 zero or more times as the first children of any \xmlel{capability}
@@ -2666,7 +2670,7 @@ in the first \xmlel{rights} element.
 \item[Comment]
                      Where formal licenses are available, this URI can
                      reference the full license text.  Use SPDX
-                     license URIs (https://spdx.org/licenses/) if at all
+                     license URIs (\url{https://spdx.org/licenses/}) if at all
                      possible.
 
 \end{description}
@@ -2685,8 +2689,8 @@ An example could look like this:
 <rights rightsURI="https://spdx.org/licenses/CC-BY-4.0.html">
   The images from the X survey are copyright 2016, the X project.
   They are published under the creative commons attribution 4.0
-  international
-  license.  If you use this data, please cite doi:10.5072/7273288.
+  international license.  If you use this data, please cite
+  doi:10.5072/7273288.
 
   Images are under embargo for one year after their addition to the
   repository.
@@ -3281,7 +3285,7 @@ interface.  See sect.~\ref{sect:servicemodel} for details.
 \begin{itemize}
 \item Adding an altIdentifier attribute to \xmlel{vr:ResourceName} to
 let  data providers use DOIs when declaring relationships.  This also
-covers what \xmlel{role/@altIdentifier} and
+covers what \xmlel{role/@altIdentifi\-er} and
 \xmlel{contact/@altIdentifier} was created for.  These special
 constructs introduced in version 1.1 are now deprecated again.
 
