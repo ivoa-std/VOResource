@@ -9,4 +9,5 @@
 	<rec name="SimpleDALR.E." x="55" y="400"/>
 	<rec name="Identifiers" x="125" y="425"/>
 	<rec name="VOSI" x="540" y="435"/>
+  <rec name="Vocabularies" x="168.5" y="335" w="73"/>
 </archdiag>
