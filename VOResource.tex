@@ -148,7 +148,7 @@ its legal extensions.''
 In addition to concepts and structures laid down in the RM, VOResource
 also acknowledges other (though mostly related) metadata schemes.  Of
 particular importance here is the metadata scheme employed by DataCite,
-which at the time of writing is at version 4.0 \citep{std:DataCite40}.
+which at the time of writing is at version 4.6 \citep{std:DataCite46}.
 This, in particular, concerns the alignment of the vocabularies for date
 roles and relationships.
 
@@ -561,6 +561,15 @@ as HTTPS URIs using orcid.org's infrastructure, for instance
 \item[bibcode] A bibliographic code as used by ADS and CDS.  These
 must be used with an ad-hoc URI scheme of \verb|bibcode|, as in
 \verb|bibcode:2008ivoa.spec.0222P|.
+
+\item[ROR id] An identifier for an organisation (and hence suitable in
+elements like \vorent{publisher} or records of type
+\vorent{vr:Organisation}) taken from the Research Organization
+Registry\footnote{\url{https://ror.org}}.  In accordance with their 2024
+preferences, ROR identifiers in VOResource always use the
+browser-resolvable URL form with an https schema, such as
+\nolinkurl{https://ror.org/04rcqnp59}.  This regulation stays in place
+for VOResource even if upstream reconsiders this preference.
 \end{description}
 
 Other schemes may be used in \xmlel{altIdentifier}-s.
@@ -3280,6 +3289,12 @@ interface.  See sect.~\ref{sect:servicemodel} for details.
 
 \section{Change History}
 
+\subsection{Changes from PR-1.2}
+
+\begin{itemize}
+\item Also listing ROR as a recognised identifier type.
+\end{itemize}
+
 \subsection{Changes from REC-1.1}
 
 \begin{itemize}
@@ -3443,7 +3458,7 @@ in the document repository)
 
 
 
-\bibliography{ivoatex/ivoabib,ivoatex/docrepo}
+\bibliography{ivoatex/ivoabib,ivoatex/docrepo,local}
 
 
 \end{document}
