@@ -109,7 +109,7 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
                <xs:documentation>
                  This name will be used where brief annotations for
                  the resource name are required.  Applications may
-                 use to refer to this resource in a compact display.
+                 use it to refer to this resource in a compact display.
                </xs:documentation>
                <xs:documentation>
                  One word or a few letters is recommended.  No more

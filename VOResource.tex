@@ -252,7 +252,7 @@ record:
 
 Actual services obviously need additional metadata defining the
 modalities of service access. In VOResource, such information
-is typcially encapsulated in \xmlel{vr:Capa\-bility}-typed elements. This
+is typically encapsulated in \xmlel{vr:Capa\-bility}-typed elements. This
 document only provides a generic base class for them, deferring the
 definition of more useful subclasses to VOResource extensions like
 VODataService \citep{2021ivoa.spec.1102D} or SimpleDALRegExt
@@ -391,7 +391,7 @@ names of elements and types:
   \item Locally defined elements begin with a lower-case character.
   \item For all types and element names that are made up of multiple
        words, such as \xmlel{shortName}, upper-case letters are
-       used demarcate the start of appended word (the ``camel''
+       used to demarcate the start of appended word (the ``camel''
        format).
   \item Names that include abbreviations, such as
        \xmlel{IdentifierURI}, all letters in the abbreviation are
@@ -417,7 +417,7 @@ and trailing spaces.
 
 The \xmlel{description} children of resources and capabilities, on the
 other hand, are of type \xmlel{xs:string}, which means that even
-schema-aware processors will preserve whitespace.  This is inteded to
+schema-aware processors will preserve whitespace.  This is intended to
 allow simple markup like paragraphs (empty lines) in the descriptions,
 which may be little texts.  Since in VO practice, constructs like simple
 ASCII tables sometimes appear in such descriptions, clients are
@@ -457,7 +457,7 @@ date and time, but enforces the use of the UTC timezone.  The time
 format to be used by VOResource (designed to coincide with
 what the OAI-PMH transport protocol mentioned above defines)
 therefore requires timestamps like
-$$\hbox{\texttt{2008-02-22T12:22:34Z,}}$$
+$$\hbox{\texttt{2008-02-22T12:22:34Z}},$$
 where optional fractional seconds are allowed.  See the schema
 documentation for the actual regular expression pattern.
 
@@ -540,7 +540,7 @@ simplicity are only allowed one alternate identifier each).
 
 In order to not bind the Registry to any single resolver, we prefer
 non-http URI forms for such identifiers.  Where the originators of the
-identifier scheme strongly urges the use http URIs directly pointing to
+identifier scheme strongly urges the use of http URIs directly pointing to
 a resolver, we adopt these conventions.
 
 The following identifier schemes are recognised by VOResource in this
