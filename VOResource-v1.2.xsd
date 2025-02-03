@@ -6,7 +6,7 @@
            xmlns:vm="http://www.ivoa.net/xml/VOMetadata/v0.1"
            elementFormDefault="unqualified"
            attributeFormDefault="unqualified"
-           version="1.1+wd2">
+           version="1.2">
 
 <!-- NOTE: target namespace ends in v1.0 in order to not break 1.0 clients.
 This is nevertheless the 1.2 schema, as given by the version attribute.
@@ -650,7 +650,7 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
    <xs:complexType name="Date">
       <xs:simpleContent>
          <xs:extension base="vr:UTCDateTime">
-           <xs:attribute name="role" type="xs:string" default="representative">
+           <xs:attribute name="role" type="xs:string" default="Collected">
              <xs:annotation>
                <xs:documentation>
                  A string indicating what the date refers to.
@@ -663,8 +663,9 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
                 “creation”, indicating the date that the resource
                 itself was created, and “update”, indicating when the
                 resource was updated last, and the default value,
-                “representative”, meaning the date is a rough
+                “Collected”, meaning the date is a rough
                 representation of the time coverage of the resource.
+                (prefer coverage/temporal to convey the information).
                 The preferred terms from that vocabulary are the DataCite
                 Metadata terms.   It is expected that the vocabulary will
                 be kept synchronous with the corresponding list of terms
