@@ -1719,7 +1719,7 @@ VOResource 1.0 terms to the modern DataCite Metadata ones).
   <xs:simpleContent >
     <xs:extension base="vr:UTCDateTime" >
       <xs:attribute name="role" type="xs:string"
-                  default="representative" />
+                  default="Collected" />
     </xs:extension>
   </xs:simpleContent>
 </xs:complexType>
@@ -1735,7 +1735,7 @@ VOResource 1.0 terms to the modern DataCite Metadata ones).
                  A string indicating what the date refers to.
 
 \item[Occurrence] optional
-\item[Default] representative
+\item[Default] Collected
 \item[Comment]
                	The value of role should be taken from the vocabulary
                	maintained at
@@ -1744,8 +1744,9 @@ VOResource 1.0 terms to the modern DataCite Metadata ones).
                 “creation”, indicating the date that the resource
                 itself was created, and “update”, indicating when the
                 resource was updated last, and the default value,
-                “representative”, meaning the date is a rough
-                representation of the time coverage of the resource.
+                “Collected”, meaning the date is a rough
+                representation of the time coverage of the resource
+                (preferably use coverage/temporal for this purpose).
                 The preferred terms from that vocabulary are the DataCite
                 Metadata terms.   It is expected that the vocabulary will
                 be kept synchronous with the corresponding list of terms
@@ -3293,6 +3294,9 @@ interface.  See sect.~\ref{sect:servicemodel} for details.
 
 \begin{itemize}
 \item Also listing ROR as a recognised identifier type.
+\item Replacing ``representative'' as vr:Date/@role's defaut with
+``Collected'' as per the date\_role vocabulary.  This replacement has
+alreday been done by RegTAP services since VOResource 1.1.
 \end{itemize}
 
 \subsection{Changes from REC-1.1}
