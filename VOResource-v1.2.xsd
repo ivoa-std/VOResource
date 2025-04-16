@@ -604,7 +604,7 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
                   subsequent credits and acknowledgements.
 
                   This should be exactly one name, preferably last name
-                  first (as in "van der Waals, Johannes Diderik").
+                  first (as in “van der Waals, Johannes Diderik”).
               </xs:documentation>
            </xs:annotation>
         </xs:element>
@@ -664,8 +664,8 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
                 itself was created, and “update”, indicating when the
                 resource was updated last, and the default value,
                 “Collected”, meaning the date is a rough
-                representation of the time coverage of the resource.
-                (prefer coverage/temporal to convey the information).
+                representation of the time coverage of the resource
+                (prefer coverage/temporal to convey this information).
                 The preferred terms from that vocabulary are the DataCite
                 Metadata terms.   It is expected that the vocabulary will
                 be kept synchronous with the corresponding list of terms
