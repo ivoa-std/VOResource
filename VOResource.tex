@@ -31,6 +31,7 @@
 
 \editor{Markus Demleitner}
 
+\previousversion[https://www.ivoa.net/documents/VOResource/20241015]{PR-1.2-20241015}
 \previousversion[https://ivoa.net/documents/VOResource/20230105/]{WD-1.2-20230105}
 \previousversion[https://ivoa.net/documents/VOResource/20180625/]{REC-1.1}
 \previousversion[http://www.ivoa.net/Documents/REC/ReR/VOResource-20080222.html]{REC-1.03}
@@ -907,7 +908,7 @@ of service metadata elements.
 
 
 Derivation of \xmlel{vr:Resource} to define new kinds of
-resources should be done by extension (i.e. using
+resources should be done by extension (i.e., using
 \xmlel{xsd:extension}) rather than restriction.  It is
 not required that the derived type change the content model from that
 of the \xmlel{vr:Resource} base type; in this case, the purpose
@@ -1146,7 +1147,7 @@ by the VOResource schema definition.
 \item[Comment]
                  This name will be used where brief annotations for
                  the resource name are required.  Applications may
-                 use to refer to this resource in a compact display.
+                 use it to refer to this resource in a compact display.
 
 \item[Comment]
                  One word or a few letters is recommended.  No more
@@ -1570,7 +1571,7 @@ type which bundles together the RM metadata \emph{Creator} and
                   subsequent credits and acknowledgements.
 
                   This should be exactly one name, preferably last name
-                  first (as in {"}van der Waals, Johannes Diderik{"}).
+                  first (as in “van der Waals, Johannes Diderik”).
 
 
 \end{description}
@@ -1718,8 +1719,7 @@ VOResource 1.0 terms to the modern DataCite Metadata ones).
 <xs:complexType name="Date" >
   <xs:simpleContent >
     <xs:extension base="vr:UTCDateTime" >
-      <xs:attribute name="role" type="xs:string"
-                  default="Collected" />
+      <xs:attribute name="role" type="xs:string" default="Collected" />
     </xs:extension>
   </xs:simpleContent>
 </xs:complexType>
@@ -1746,7 +1746,7 @@ VOResource 1.0 terms to the modern DataCite Metadata ones).
                 resource was updated last, and the default value,
                 “Collected”, meaning the date is a rough
                 representation of the time coverage of the resource
-                (preferably use coverage/temporal for this purpose).
+                (prefer coverage/temporal to convey this information).
                 The preferred terms from that vocabulary are the DataCite
                 Metadata terms.   It is expected that the vocabulary will
                 be kept synchronous with the corresponding list of terms
@@ -2535,7 +2535,7 @@ that actually does something -- in the sense defined by the
 RM:
 
 \begin{quotation}
-A service is any VO resource that can be invoked by the user to
+\noindent A service is any VO resource that can be invoked by the user to
 perform some action on their behalf.
 \end{quotation}
 

@@ -1,0 +1,92 @@
+<ri:Resource
+	xmlns:ri="http://www.ivoa.net/xml/RegistryInterface/v1.0"
+	xmlns:vstd="http://www.ivoa.net/xml/StandardsRegExt/v1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:type="vstd:Standard"
+	status="active"
+	created="2013-03-25T19:21:51.07"
+	updated="2025-04-16T09:07:32.628361">
+
+  <title>
+    VOResource: an XML Encoding Schema for Resource Metadata
+  </title>
+  <shortName>VOResource</shortName>
+  <identifier>ivo://ivoa.net/std/VOResource</identifier>
+
+  <curation>
+    <publisher ivo-id="ivo://ivoa.net/IVOA">
+      International Virtual Observatory Alliance
+    </publisher>
+    <creator>
+      <name> Raymond Plante </name>
+    </creator>
+    <creator>
+      <name> Kevin Benson </name>
+    </creator>
+    <creator>
+      <name> Markus Demleitner </name>
+    </creator>
+    <creator>
+      <name> Matthew Graham </name>
+    </creator>
+    <creator>
+      <name> Gretchen Greene </name>
+    </creator>
+    <creator>
+      <name> Paul Harrison </name>
+    </creator>
+    <creator>
+      <name> Gerard Lemson </name>
+    </creator>
+    <creator>
+      <name> Tony Linde </name>
+    </creator>
+    <creator>
+      <name> Guy Rixon </name>
+    </creator>
+    <date role="Updated">2025-04-16</date>
+    <date role="Updated">2008-02-22</date>
+    <version>1.2</version>
+    <contact>
+      <name>Registry Working Group</name>
+      <email>registry@ivoa.net</email>
+    </contact>
+  </curation>
+
+  <content>
+    <subject>virtual-observatories</subject>
+    <description>
+			This document describes an XML encoding standard for IVOA Resource
+			Metadata, referred to as VOResource.  This schema is primarily intended
+			to support metadata exchange between interoperable registries and
+			resource discovery within them.  However, any application that needs to
+			describe resources may use this schema.  In this document, we define the
+			types and elements that make up the schema in close alignment to the
+			metadata terms defined in Resource Metadata for the Virtual Observatory
+			(Hanisch 2007), but also taking into account other metadata standards as
+			well as experiences from the operation of the VO Registry.  We also
+			describe the general model for the schema and explain how it is extended
+			to add new metadata terms and describe more specific types of resources.
+    </description>
+    <referenceURL>http://www.ivoa.net/Documents/VOResource</referenceURL>
+    <type>Other</type>
+    <contentLevel> Research </contentLevel>
+    <relationship>
+      <relationshipType>related-to</relationshipType>
+      <relatedResource ivo-id="ivo://www.ivoa.net/std/RM"
+      	>Resource Metadata for the Virtual Observatory</relatedResource>
+    </relationship>
+  </content>
+
+  <endorsedVersion status="rec">1.2</endorsedVersion>
+
+  <schema namespace="http://www.ivoa.net/xml/VOResource/v1.0">
+    <location>http://www.ivoa.net/xml/VOResource/v1.0</location>
+    <description>
+      The core VOResource schema for describing resources
+      in the registry.
+    </description>
+    <example>https://dc.g-vo.org/purx/q/enroll/info</example>
+  </schema>
+
+</ri:Resource>
