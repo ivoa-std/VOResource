@@ -2440,16 +2440,23 @@ assigned by different organisations.
 % /GENERATED
 
 
-\subsection{Resource Type Extensions:  Organisation and Service}
+\subsection{Resource Type Extensions}
 
-The VOResource schema defines two extensions of the base
-\xmlel{vr:Resource} type for describing two specific types of
+The VOResource schema defines three extensions of the base
+\xmlel{vr:Resource} type.  Two of them describe specific types of
 resources:  \xmlel{vr:Organisation} and \xmlel{vr:Service}.  In
 addition to providing more refined semantic meanings over
 \xmlel{vr:Resource}, they add additional metadata for
 describing the resource which do not necessarily apply in the generic
 case.
 
+The last resource type defined by VOResource,
+\xmlel{vr:DiscontinuedResource} allows publishers to
+provide a certain amount of persistence even in the presence of major
+changes in their data holding.
+
+The following subsections will introduce these resource types in more
+detail.
 
 
 \subsubsection{The Organisation Resource Type}
@@ -2560,7 +2567,7 @@ example in sect.~\ref{sect:model}).
 \subsubsection{The Service Resource Type}
 
 
-The \xmlel{vr:Service} resource type is used to describe a service--a resource
+The \xmlel{vr:Service} resource type is used to describe a service -- a resource
 that actually does something -- in the sense defined by the
 RM:
 
@@ -3317,6 +3324,44 @@ the service is available.  This is true for all modern VO standard
 services.  It is thus unlikely that modern services will use this
 interface.  See sect.~\ref{sect:servicemodel} for details.
 
+
+\subsubsection{The DiscontinuedResource Resource Type}
+
+The VO by itself provides no persistence features: IVOA identifiers are
+defined and managed by publishers, and when publishers decide to
+withdraw metadata, it is gone.  This is appropriate for a collection of
+metadata of active services; there is also no need to replicate
+established PID schemes, in particular DataCite.
+
+However, sometimes it is desirable to provide links to newer resources
+that supercede existing resources \emph{within} the Virtual Observatory,
+in particular in workflows using IVOA identifiers.  This can be effected
+by a \vorent{relationship} declaration using a relationship type of
+\vocterm{IsContinuedBy}.
+
+When the effort of maintaining the original, superceded resource is
+non-negligible, or if distributing data within the resource is
+scientifically undesirable, its publishers may decide to shut it down.
+If they consequently delete the old resource's registry record, the
+identifier will no longer resolve in searchable registries, and there
+would be no record to hold the \vocterm{IsContinuedBy} relationship.
+Rather than deleting the record, the publisher could just remove all
+capabilities from the existing record.  But since such records could
+also be the result of plain oversights, this seems somewhat too implicit.
+
+Hence, for this situation, VOResource since version 1.3 offers the
+\vorent{vr:DiscontinuedRe\-source} type; this has exactly the content
+model of a plain \vorent{vr:Resource}, such that basic metadata is
+preserved.  But its type indicates that clients should move on to some
+resource given by relationships.  Therefore, records of this type SHOULD
+provide at least one \vorent{relationship} with a type of
+\vocterm{IsContinuedBy}.  Clients should indicate these redirect(s) to
+their users.
+
+Since the content model of discontinued resources is that of basic
+\xmlel{vr:Resource}, we do not repeat it here.  See
+Sect.~\ref{sect:restype} for details.
+
 \appendix
 
 \section{Change History}
@@ -3324,8 +3369,10 @@ interface.  See sect.~\ref{sect:servicemodel} for details.
 \subsection{Changes from REC-1.3}
 
 \begin{itemize}
+\item Added a \xmlel{DiscontinuedResource} record type.
 \item Deprecated the \xmlel{ivo-id} attributes of \xmlel{Creator}
 and \xmlel{Contact}.
+\item Clarifying that the publisher sets the \xmlel{status} attribute.
 \end{itemize}
 
 

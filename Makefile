@@ -47,3 +47,6 @@ test:
 	@$(STILTS) xsdvalidate \
 		schemaloc="http://www.ivoa.net/xml/VOResource/v1.0=$(SCHEMA_FILE)" \
 		test-data/valid-record.xml
+	@$(STILTS) xsdvalidate \
+		schemaloc="http://www.ivoa.net/xml/VOResource/v1.0=$(SCHEMA_FILE)" \
+		test-data/discontinued-record.xml
