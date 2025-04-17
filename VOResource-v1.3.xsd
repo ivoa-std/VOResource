@@ -200,22 +200,31 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
                <xs:enumeration value="active">
                  <xs:annotation>
                    <xs:documentation>
-                      resource is believed to be currently maintained, and its
-                      description is up to date (default).
+                      The resource is available and maintained by the
+                      publisher (default).
                    </xs:documentation>
                  </xs:annotation>
                </xs:enumeration>
                <xs:enumeration value="inactive">
                  <xs:annotation>
                    <xs:documentation>
-                     resource is apparently not being maintained at the present.
+                   	The resource is temporarily offline but is expected to
+                   	resume operations at some later date; publishers in this
+                   	case could publish an estimate when that will happen in a
+                   	date element with a role of Available.  Note that inactive
+                   	resources do not show up in RegTAP searchable registries.
                    </xs:documentation>
                  </xs:annotation>
                </xs:enumeration>
                <xs:enumeration value="deleted">
                  <xs:annotation>
                    <xs:documentation>
-                      resource publisher has explicitly deleted the resource.
+	                   This status could be used for resources permanently
+	                   unavailable if VOResource metadata should still be
+	                   available via OAI-PMH; in the current VO, there is
+	                   probably no reason to ever do that, and deleted
+	                   records also do not show up in RegTAP searchable
+	                   registries.
                    </xs:documentation>
                  </xs:annotation>
                </xs:enumeration>
