@@ -35,7 +35,7 @@ ivoatex/Makefile:
 	git submodule update --init
 
 STILTS ?= stilts
-SCHEMA_FILE=VOResource-v1.2.xsd
+SCHEMA_FILE=VOResource-v1.3.xsd
 
 # These tests need stilts >3.4 and xmlstarlet
 test:
