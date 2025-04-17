@@ -31,6 +31,7 @@
 
 \editor{Markus Demleitner}
 
+\previousversion[https://www.ivoa.net/documents/VOResource/20250416]{REC-1.2}
 \previousversion[https://www.ivoa.net/documents/VOResource/20241015]{PR-1.2-20241015}
 \previousversion[https://ivoa.net/documents/VOResource/20230105/]{WD-1.2-20230105}
 \previousversion[https://ivoa.net/documents/VOResource/20180625/]{REC-1.1}
@@ -271,7 +272,7 @@ The namespace URI has been chosen to allow it to be resolved as a URL
 to the XML Schema document that defines the VOResource schema.
 Applications may assume that the namespace URI is so resolvable.
 
-Although this schema is in version 1.2 now, the URL still ends in
+Although this schema is in version 1.3 now, the URL still ends in
 \texttt{v1.0}.  This is to avoid unnecessarily breaking existing clients
 relying on the namespace as defined by version 1.0 of this
 specification.  As laid out in the IVOA schema versioning policies
@@ -282,8 +283,8 @@ they cannot be dropped despite their potential for confusion.
 Clients should in general not care about minor versions of schemas.
 To cover
 the rare cases in which  such information is necessary, instance documents
-for version 1.2 of VOResource must have a \xmlel{version} attribute
-with value \texttt{1.2} on their root element (i.e., \xmlel{Resource}).
+for version 1.3 of VOResource must have a \xmlel{version} attribute
+with value \texttt{1.3} on their root element (i.e., \xmlel{Resource}).
 
 Document authors are strongly encouraged to bind this namespace to the
 \xmlel{vr:} prefix.  While in generic XML processing, the concrete
@@ -466,7 +467,7 @@ For historical reasons, VOResource also allows a form without any
 timezone marker.  Such timestamps are to be interpreted as  if they had
 a trailing Z.
 
-% GENERATED: !schemadoc VOResource-v1.2.xsd UTCTimestamp
+% GENERATED: !schemadoc VOResource-v1.3.xsd UTCTimestamp
 \begin{generated}
 \begingroup
         \renewcommand*\descriptionlabel[1]{%
@@ -499,7 +500,7 @@ Where day granularity might suffice for some instance documents,
 VOResource and extensions can
 employ the \xmlel{vr:UTCDateTime} type.
 
-% GENERATED: !schemadoc VOResource-v1.2.xsd UTCDateTime
+% GENERATED: !schemadoc VOResource-v1.3.xsd UTCDateTime
 \begin{generated}
 \begingroup
         \renewcommand*\descriptionlabel[1]{%
@@ -981,9 +982,30 @@ and general content metadata for a resource (see sections 3.1 through
 minimally compliant resource description; this requirement is enforced
 by the VOResource schema definition.
 
+\begin{admonition}{Note}
+The VOResource \xmlel{status} attribute in the \xmlel{vr:Resource} type
+somewhat overlaps with OAI-PMH's idea of the record's life cycle. In
+particular, at least when VOResource metadata is consumed through
+RegTAP, there is no difference between setting \xmlel{status} to
+\verb|deleted| over publishing an \xmlel{oai:deletedRecord} for the
+identifer; the former will let you keep publish VOResource metadata
+\emph{through OAI-PMH}, which the latter does not because
+\xmlel{oai:deletedRecords} do not admit \xmlel{oai:metadata}
+elements.  However, there is no use case for that in the current VO, and
+hence publishers should exclusively use deleted records on the OAI-PMH
+level rather than set \xmlel{status} to \verb|deleted|.
+
+Having a \xmlel{status} of \verb|inactive| will again purge the metadata
+from RegTAP instances and hence will be indistinguishable from deletion to
+the VO public.  Operators may want to use that status code internally,
+however, to temporarily hide malfunctioning services without deleting
+their records from internal metadata stores.
+
+\end{admonition}
+
 \goodbreak
 
-% GENERATED: !schemadoc VOResource-v1.2.xsd Resource
+% GENERATED: !schemadoc VOResource-v1.3.xsd Resource
 \begin{generated}
 \begingroup
         \renewcommand*\descriptionlabel[1]{%
@@ -1069,14 +1091,23 @@ by the VOResource schema definition.
 
 \item[Allowed Values]\hfil
 \begin{longtermsdescription}\item[active]
-                      resource is believed to be currently maintained, and its
-                      description is up to date (default).
+                      The resource is available and maintained by the
+                      publisher (default).
 
 \item[inactive]
-                     resource is apparently not being maintained at the present.
+                   	The resource is temporarily offline but is expected to
+                   	resume operations at some later date; publishers in this
+                   	case could publish an estimate when that will happen in a
+                   	date element with a role of Available.  Note that inactive
+                   	resources do not show up in RegTAP searchable registries.
 
 \item[deleted]
-                      resource publisher has explicitly deleted the resource.
+	                   This status could be used for resources permanently
+	                   unavailable if VOResource metadata should still be
+	                   available via OAI-PMH; in the current VO, there is
+	                   probably no reason to ever do that, and deleted
+	                   records also do not show up in RegTAP searchable
+	                   registries.
 
 \end{longtermsdescription}
 \end{description}
@@ -1242,7 +1273,7 @@ Two special types, \xmlel{vr:ShortName} and
 metadata.  The \xmlel{vr:ShortName} definition enforces the
 16-character limit on shortNames.
 
-% GENERATED: !schemadoc VOResource-v1.2.xsd ShortName
+% GENERATED: !schemadoc VOResource-v1.3.xsd ShortName
 \begin{generated}
 \begingroup
         \renewcommand*\descriptionlabel[1]{%
@@ -1276,7 +1307,7 @@ metadata.  The \xmlel{vr:ShortName} definition enforces the
 
 % /GENERATED
 
-% GENERATED: !schemadoc VOResource-v1.2.xsd IdentifierURI
+% GENERATED: !schemadoc VOResource-v1.3.xsd IdentifierURI
 \begin{generated}
 \begingroup
         \renewcommand*\descriptionlabel[1]{%
@@ -1325,7 +1356,7 @@ The curation metadata described in the RM (section
 
 
 
-% GENERATED: !schemadoc VOResource-v1.2.xsd Curation
+% GENERATED: !schemadoc VOResource-v1.3.xsd Curation
 \begin{generated}
 \begingroup
         \renewcommand*\descriptionlabel[1]{%
@@ -1447,7 +1478,7 @@ thus, the identifier (which is encoded as an attribute) is optional.
 For entities registered in some other way -- in particular, DOIs or
 ORCIDs --, resource names can give \xmlel{altIdentifier}-s.
 
-% GENERATED: !schemadoc VOResource-v1.2.xsd ResourceName
+% GENERATED: !schemadoc VOResource-v1.3.xsd ResourceName
 \begin{generated}
 \begingroup
         \renewcommand*\descriptionlabel[1]{%
@@ -1513,7 +1544,7 @@ type which bundles together the RM metadata \emph{Creator} and
 
 
 
-% GENERATED: !schemadoc VOResource-v1.2.xsd Creator
+% GENERATED: !schemadoc VOResource-v1.3.xsd Creator
 \begin{generated}
 \begingroup
         \renewcommand*\descriptionlabel[1]{%
@@ -1545,8 +1576,7 @@ type which bundles together the RM metadata \emph{Creator} and
 \begin{description}
 \item[Type] an IVOA Identifier URI: vr:IdentifierURI
 \item[Meaning]
-             An IVOA identifier for the creator (typically when it is
-             an organization).
+           	Deprecated.  Use the ivo-id attribute of the name child instead.
 
 \item[Occurrence] optional
 
@@ -1709,7 +1739,7 @@ specification.  Applications are not expected to support semantic
 relationships between the terms (except for mapping the deprecated
 VOResource 1.0 terms to the modern DataCite Metadata ones).
 
-% GENERATED: !schemadoc VOResource-v1.2.xsd Date
+% GENERATED: !schemadoc VOResource-v1.3.xsd Date
 \begin{generated}
 \begingroup
         \renewcommand*\descriptionlabel[1]{%
@@ -1777,7 +1807,7 @@ and \emph{Contact.Email}.
 
 
 
-% GENERATED: !schemadoc VOResource-v1.2.xsd Contact
+% GENERATED: !schemadoc VOResource-v1.3.xsd Contact
 \begin{generated}
 \begingroup
         \renewcommand*\descriptionlabel[1]{%
@@ -1811,8 +1841,8 @@ and \emph{Contact.Email}.
 \begin{description}
 \item[Type] an IVOA Identifier URI: vr:IdentifierURI
 \item[Meaning]
-             An IVOA identifier for the contact (typically when it is
-             an organization).
+             Deprecated.  Use the ivo-id attribute of the name child
+             instead.
 
 \item[Occurrence] optional
 
@@ -1897,7 +1927,7 @@ child element \xmlel{content}.  Its content is
 defined by the \xmlel{vr:Content} complex type.
 
 
-% GENERATED: !schemadoc VOResource-v1.2.xsd Content
+% GENERATED: !schemadoc VOResource-v1.3.xsd Content
 \begin{generated}
 \begingroup
         \renewcommand*\descriptionlabel[1]{%
@@ -2108,7 +2138,7 @@ The \xmlel{source} element's type,
 \xmlel{format}.
 
 
-% GENERATED: !schemadoc VOResource-v1.2.xsd Source
+% GENERATED: !schemadoc VOResource-v1.3.xsd Source
 \begin{generated}
 \begingroup
         \renewcommand*\descriptionlabel[1]{%
@@ -2207,7 +2237,7 @@ For definitions of these terms, their relationships, and the complete,
 up-to date list of the legal terms in HTML, turtle, or RDF-X formats,
 please refer to \url{http://www.ivoa.net/rdf/voresource/relationship_type}.
 
-% GENERATED: !schemadoc VOResource-v1.2.xsd Relationship
+% GENERATED: !schemadoc VOResource-v1.3.xsd Relationship
 \begin{generated}
 \begingroup
         \renewcommand*\descriptionlabel[1]{%
@@ -2297,7 +2327,7 @@ multiple times, each with
 a different \xmlel{validatedBy} value, to reflect the code
 assigned by different organisations.
 
-% GENERATED: !schemadoc VOResource-v1.2.xsd Validation
+% GENERATED: !schemadoc VOResource-v1.3.xsd Validation
 \begin{generated}
 \begingroup
         \renewcommand*\descriptionlabel[1]{%
@@ -2341,7 +2371,7 @@ assigned by different organisations.
 
 % /GENERATED
 
-% GENERATED: !schemadoc VOResource-v1.2.xsd ValidationLevel
+% GENERATED: !schemadoc VOResource-v1.3.xsd ValidationLevel
 \begin{generated}
 \begingroup
         \renewcommand*\descriptionlabel[1]{%
@@ -2410,16 +2440,23 @@ assigned by different organisations.
 % /GENERATED
 
 
-\subsection{Resource Type Extensions:  Organisation and Service}
+\subsection{Resource Type Extensions}
 
-The VOResource schema defines two extensions of the base
-\xmlel{vr:Resource} type for describing two specific types of
+The VOResource schema defines three extensions of the base
+\xmlel{vr:Resource} type.  Two of them describe specific types of
 resources:  \xmlel{vr:Organisation} and \xmlel{vr:Service}.  In
 addition to providing more refined semantic meanings over
 \xmlel{vr:Resource}, they add additional metadata for
 describing the resource which do not necessarily apply in the generic
 case.
 
+The last resource type defined by VOResource,
+\xmlel{vr:DiscontinuedResource} allows publishers to
+provide a certain amount of persistence even in the presence of major
+changes in their data holding.
+
+The following subsections will introduce these resource types in more
+detail.
 
 
 \subsubsection{The Organisation Resource Type}
@@ -2444,7 +2481,7 @@ elements to the core set of metadata, \xmlel{facility} and
 \xmlel{instrument}:
 
 
-% GENERATED: !schemadoc VOResource-v1.2.xsd Organisation
+% GENERATED: !schemadoc VOResource-v1.3.xsd Organisation
 \begin{generated}
 \begingroup
         \renewcommand*\descriptionlabel[1]{%
@@ -2530,7 +2567,7 @@ example in sect.~\ref{sect:model}).
 \subsubsection{The Service Resource Type}
 
 
-The \xmlel{vr:Service} resource type is used to describe a service--a resource
+The \xmlel{vr:Service} resource type is used to describe a service -- a resource
 that actually does something -- in the sense defined by the
 RM:
 
@@ -2547,7 +2584,7 @@ The Service type extends the Resource type by adding two elements:
 invoked.
 
 
-% GENERATED: !schemadoc VOResource-v1.2.xsd Service
+% GENERATED: !schemadoc VOResource-v1.3.xsd Service
 \begin{generated}
 \begingroup
         \renewcommand*\descriptionlabel[1]{%
@@ -2642,7 +2679,7 @@ specifiation.  In practice, resource record authors should place all
 usage limitations, citation recommendations, etc., directed at VO users
 in the first \xmlel{rights} element.
 
-% GENERATED: !schemadoc VOResource-v1.2.xsd Rights
+% GENERATED: !schemadoc VOResource-v1.3.xsd Rights
 \begin{generated}
 \begingroup
         \renewcommand*\descriptionlabel[1]{%
@@ -2715,7 +2752,7 @@ As described in sect.~\ref{sect:servicemodel}, multiple
 different capability of the service.
 
 
-% GENERATED: !schemadoc VOResource-v1.2.xsd Capability
+% GENERATED: !schemadoc VOResource-v1.3.xsd Capability
 \begin{generated}
 \begingroup
         \renewcommand*\descriptionlabel[1]{%
@@ -2861,7 +2898,7 @@ The \xmlel{interface} element is of the complex type
 use of its \xmlel{xsi:type} attribute and typical values thereof, is
 discussed sect.~\ref{sect:servicemodel}.
 
-% GENERATED: !schemadoc VOResource-v1.2.xsd Interface
+% GENERATED: !schemadoc VOResource-v1.3.xsd Interface
 \begin{generated}
 \begingroup
         \renewcommand*\descriptionlabel[1]{%
@@ -3053,7 +3090,7 @@ record.  To aid in user interfaces for mirror selection,
 \xmlel{mirrorURL} admits a \xmlel{title} attribute:
 
 
-% GENERATED: !schemadoc VOResource-v1.2.xsd MirrorURL
+% GENERATED: !schemadoc VOResource-v1.3.xsd MirrorURL
 \begin{generated}
 \begingroup
         \renewcommand*\descriptionlabel[1]{%
@@ -3105,7 +3142,7 @@ The \xmlel{vr:SecurityMethod} type is
 defined as a complex type but with empty content:
 
 
-% GENERATED: !schemadoc VOResource-v1.2.xsd SecurityMethod
+% GENERATED: !schemadoc VOResource-v1.3.xsd SecurityMethod
 \begin{generated}
 \begingroup
         \renewcommand*\descriptionlabel[1]{%
@@ -3177,7 +3214,7 @@ the URL of a web page containing one or more forms used to invoke the
 service.
 
 
-% GENERATED: !schemadoc VOResource-v1.2.xsd WebBrowser
+% GENERATED: !schemadoc VOResource-v1.3.xsd WebBrowser
 \begin{generated}
 \begingroup
         \renewcommand*\descriptionlabel[1]{%
@@ -3218,7 +3255,7 @@ may).  Thus, this type is provided purely for its semantic meaning.
 \xmlel{vr:WebService} is the second \xmlel{vr:Interface}
 sub-type available from the VOResource schema:
 
-% GENERATED: !schemadoc VOResource-v1.2.xsd WebService
+% GENERATED: !schemadoc VOResource-v1.3.xsd WebService
 \begin{generated}
 \begingroup
         \renewcommand*\descriptionlabel[1]{%
@@ -3287,9 +3324,57 @@ the service is available.  This is true for all modern VO standard
 services.  It is thus unlikely that modern services will use this
 interface.  See sect.~\ref{sect:servicemodel} for details.
 
+
+\subsubsection{The DiscontinuedResource Resource Type}
+
+The VO by itself provides no persistence features: IVOA identifiers are
+defined and managed by publishers, and when publishers decide to
+withdraw metadata, it is gone.  This is appropriate for a collection of
+metadata of active services; there is also no need to replicate
+established PID schemes, in particular DataCite.
+
+However, sometimes it is desirable to provide links to newer resources
+that supercede existing resources \emph{within} the Virtual Observatory,
+in particular in workflows using IVOA identifiers.  This can be effected
+by a \vorent{relationship} declaration using a relationship type of
+\vocterm{IsContinuedBy}.
+
+When the effort of maintaining the original, superceded resource is
+non-negligible, or if distributing data within the resource is
+scientifically undesirable, its publishers may decide to shut it down.
+If they consequently delete the old resource's registry record, the
+identifier will no longer resolve in searchable registries, and there
+would be no record to hold the \vocterm{IsContinuedBy} relationship.
+Rather than deleting the record, the publisher could just remove all
+capabilities from the existing record.  But since such records could
+also be the result of plain oversights, this seems somewhat too implicit.
+
+Hence, for this situation, VOResource since version 1.3 offers the
+\vorent{vr:DiscontinuedRe\-source} type; this has exactly the content
+model of a plain \vorent{vr:Resource}, such that basic metadata is
+preserved.  But its type indicates that clients should move on to some
+resource given by relationships.  Therefore, records of this type SHOULD
+provide at least one \vorent{relationship} with a type of
+\vocterm{IsContinuedBy}.  Clients should indicate these redirect(s) to
+their users.
+
+Since the content model of discontinued resources is that of basic
+\xmlel{vr:Resource}, we do not repeat it here.  See
+Sect.~\ref{sect:restype} for details.
+
 \appendix
 
 \section{Change History}
+
+\subsection{Changes from REC-1.3}
+
+\begin{itemize}
+\item Added a \xmlel{DiscontinuedResource} record type.
+\item Deprecated the \xmlel{ivo-id} attributes of \xmlel{Creator}
+and \xmlel{Contact}.
+\item Clarifying that the publisher sets the \xmlel{status} attribute.
+\end{itemize}
+
 
 \subsection{Changes from PR-1.2}
 

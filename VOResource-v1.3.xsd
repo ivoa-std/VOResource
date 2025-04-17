@@ -6,10 +6,10 @@
            xmlns:vm="http://www.ivoa.net/xml/VOMetadata/v0.1"
            elementFormDefault="unqualified"
            attributeFormDefault="unqualified"
-           version="1.2">
+           version="1.3-wd1">
 
 <!-- NOTE: target namespace ends in v1.0 in order to not break 1.0 clients.
-This is nevertheless the 1.2 schema, as given by the version attribute.
+This is nevertheless the 1.3 schema, as given by the version attribute.
 For details, see http://ivoa.net/documents/Notes/XMLVers -->
 
    <xs:annotation>
@@ -200,22 +200,31 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
                <xs:enumeration value="active">
                  <xs:annotation>
                    <xs:documentation>
-                      resource is believed to be currently maintained, and its
-                      description is up to date (default).
+                      The resource is available and maintained by the
+                      publisher (default).
                    </xs:documentation>
                  </xs:annotation>
                </xs:enumeration>
                <xs:enumeration value="inactive">
                  <xs:annotation>
                    <xs:documentation>
-                     resource is apparently not being maintained at the present.
+                     The resource is temporarily offline but is expected to
+                     resume operations at some later date; publishers in this
+                     case could publish an estimate when that will happen in a
+                     date element with a role of Available.  Note that inactive
+                     resources do not show up in RegTAP searchable registries.
                    </xs:documentation>
                  </xs:annotation>
                </xs:enumeration>
                <xs:enumeration value="deleted">
                  <xs:annotation>
                    <xs:documentation>
-                      resource publisher has explicitly deleted the resource.
+                     This status could be used for resources permanently
+                     unavailable if VOResource metadata should still be
+                     available via OAI-PMH; in the current VO, there is
+                     probably no reason to ever do that, and deleted
+                     records also do not show up in RegTAP searchable
+                     registries.
                    </xs:documentation>
                  </xs:annotation>
                </xs:enumeration>
@@ -566,8 +575,8 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
               maxOccurs="unbounded">
            <xs:annotation>
               <xs:documentation>
-              	Deprecated as a child element.  Use the name
-              	attribute's altIdentifier attribute instead.
+                Deprecated as a child element.  Use the name
+                attribute's altIdentifier attribute instead.
               </xs:documentation>
            </xs:annotation>
         </xs:element>
@@ -577,8 +586,8 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
       <xs:attribute name="ivo-id" type="vr:IdentifierURI">
          <xs:annotation>
            <xs:documentation>
-             An IVOA identifier for the contact (typically when it is
-             an organization).
+             Deprecated.  Use the ivo-id attribute of the name child
+             instead.
            </xs:documentation>
          </xs:annotation>
       </xs:attribute>
@@ -628,8 +637,8 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
               maxOccurs="unbounded">
            <xs:annotation>
               <xs:documentation>
-              	Deprecated as a child element.  Use the name
-              	attribute's altIdentifier attribute instead.
+                Deprecated as a child element.  Use the name
+                attribute's altIdentifier attribute instead.
               </xs:documentation>
            </xs:annotation>
         </xs:element>
@@ -639,8 +648,7 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
       <xs:attribute name="ivo-id" type="vr:IdentifierURI">
          <xs:annotation>
            <xs:documentation>
-             An IVOA identifier for the creator (typically when it is
-             an organization).
+             Deprecated.  Use the ivo-id attribute of the name child instead.
            </xs:documentation>
          </xs:annotation>
       </xs:attribute>
@@ -656,10 +664,10 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
                  A string indicating what the date refers to.
                </xs:documentation>
                <xs:documentation>
-               	The value of role should be taken from the vocabulary
-               	maintained at
-               	http://www.ivoa.net/rdf/voresource/date_role.
-               	This includes the traditional and deprecated strings
+                 The value of role should be taken from the vocabulary
+                 maintained at
+                 http://www.ivoa.net/rdf/voresource/date_role.
+                 This includes the traditional and deprecated strings
                 “creation”, indicating the date that the resource
                 itself was created, and “update”, indicating when the
                 resource was updated last, and the default value,
@@ -701,10 +709,10 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
                about the resource.
              </xs:documentation>
              <xs:documentation>
-             	The content of subject SHOULD be the fragment identifier of
-             	the URI of a concept in the IVOA UAT
-             	(http://www.ivoa.net/rdf/uat/), that is, a string like
-             	“virtual-observatories”.
+               The content of subject SHOULD be the fragment identifier of
+               the URI of a concept in the IVOA UAT
+               (http://www.ivoa.net/rdf/uat/), that is, a string like
+               “virtual-observatories”.
              </xs:documentation>
           </xs:annotation>
        </xs:element>
@@ -755,9 +763,9 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
                 resource.
              </xs:documentation>
              <xs:documentation>
-             	In order to ensure that users can actually retrieve the
-             	content, the schema enforces that this is an http or https
-             	URI.
+               In order to ensure that users can actually retrieve the
+               content, the schema enforces that this is an http or https
+               URI.
              </xs:documentation>
           </xs:annotation>
           <xs:simpleType>
@@ -822,12 +830,12 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
                  “doi” for a Digital Object Identifier
                </xs:documentation>
                <xs:documentation>
-               	Since format already defines how to interpret source's
-               	values, these do not uses any prefixes, HTTP or otherwise.
-               	A resource would declare VOResource 1.1 as its source by
-               	writing 2018ivoa.spec.0625P with the bibcode format, and
-               	writing 10.5479/ADS/bib/2018ivoa.spec.0625P with the doi
-               	format.
+                 Since format already defines how to interpret source's
+                 values, these do not uses any prefixes, HTTP or otherwise.
+                 A resource would declare VOResource 1.1 as its source by
+                 writing 2018ivoa.spec.0625P with the bibcode format, and
+                 writing 10.5479/ADS/bib/2018ivoa.spec.0625P with the doi
+                 format.
                </xs:documentation>
              </xs:annotation>
            </xs:attribute>
@@ -866,6 +874,30 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
             </xs:annotation>
          </xs:element>
       </xs:sequence>
+   </xs:complexType>
+
+   <!--
+     -  A resource type for discontinued resources
+     -->
+   <xs:complexType name="DiscontinuedResource">
+      <xs:annotation>
+         <xs:documentation>
+           A resource no longer available but continued by some other
+           resource.
+         </xs:documentation>
+         <xs:documentation>
+           The main purpose of registering a discontinued resource is
+           so users still find pertinent metadata, in particular an
+           IsContinuedBy relationship.  Hence, DiscontinuedResource
+           records SHOULD set at least one of those.
+
+           Obviously, DiscontinuedResources cannot have capabilities.
+         </xs:documentation>
+      </xs:annotation>
+
+      <xs:complexContent>
+        <xs:extension base="vr:Resource"/>
+      </xs:complexContent>
    </xs:complexType>
 
    <!--

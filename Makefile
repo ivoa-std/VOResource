@@ -4,13 +4,13 @@
 DOCNAME = VOResource
 
 # count up; you probably do not want to bother with versions <1.0
-DOCVERSION = 1.2
+DOCVERSION = 1.3
 
 # Publication date, ISO format; update manually for "releases"
-DOCDATE = 2025-04-16
+DOCDATE = 2025-10-31
 
 # What is it you're writing: NOTE, WD, PR, or REC
-DOCTYPE = REC
+DOCTYPE = WD
 
 # Source files for the TeX document (but the main file must always
 # be called $(DOCNAME).tex
@@ -35,7 +35,7 @@ ivoatex/Makefile:
 	git submodule update --init
 
 STILTS ?= stilts
-SCHEMA_FILE=VOResource-v1.2.xsd
+SCHEMA_FILE=VOResource-v1.3.xsd
 
 # These tests need stilts >3.4 and xmlstarlet
 test:
@@ -47,3 +47,6 @@ test:
 	@$(STILTS) xsdvalidate \
 		schemaloc="http://www.ivoa.net/xml/VOResource/v1.0=$(SCHEMA_FILE)" \
 		test-data/valid-record.xml
+	@$(STILTS) xsdvalidate \
+		schemaloc="http://www.ivoa.net/xml/VOResource/v1.0=$(SCHEMA_FILE)" \
+		test-data/discontinued-record.xml

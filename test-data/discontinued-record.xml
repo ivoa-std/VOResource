@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ri:Resource xsi:type="vr:Organisation"
+          xmlns:vr="http://www.ivoa.net/xml/VOResource/v1.0"
+          xmlns:ri="http://www.ivoa.net/xml/RegistryInterface/v1.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://www.ivoa.net/xml/VOResource/v1.0
+                              http://www.ivoa.net/xml/VOResource/v1.0
+                              http://www.ivoa.net/xml/RegistryInterface/v1.0
+                              http://www.ivoa.net/xml/RegistryInterface/v1.0"
+          created="2025-04-17T12:00:00Z"
+          updated="2025-04-17T12:00:00Z"
+          status="active">
+
+    <title>The Old Schoolyard</title>
+    <shortName>old-schoolyard</shortName>
+    <identifier>ivo://ivoa-school/old-yard</identifier>
+
+    <curation>
+        <publisher>The IVOA VO school</publisher>
+        <creator>
+            <name>Riese, A.</name>
+        </creator>
+        <date>2024-10-16</date>
+        <contact>
+            <name>IVOA Registry WG</name>
+            <email>registry@ivoa.net</email>
+        </contact>
+    </curation>
+
+    <content>
+        <subject>astronomy-education</subject>
+        <description>
+        	The old schoolyard had nice trees and all, but we used
+        	way too much water on them.  Thus, we built a new
+        	schoolyard, which you will find at ivo://ivoa-school/new-yard.
+        </description>
+        <referenceURL>https://ivoa.net/blog/sustainability</referenceURL>
+        <type>Other</type>
+        <contentLevel>General</contentLevel>
+        <relationship>
+        	<relationshipType>IsContinuedBy</relationshipType>
+        	<relatedResource ivo-id="ivo://ivoa-school/new-yard"
+        		>The new IVOA schoolyard</relatedResource>
+        </relationship>
+    </content>
+
+</ri:Resource>
