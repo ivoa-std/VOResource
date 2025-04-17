@@ -577,8 +577,8 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
       <xs:attribute name="ivo-id" type="vr:IdentifierURI">
          <xs:annotation>
            <xs:documentation>
-             An IVOA identifier for the contact (typically when it is
-             an organization).
+             Deprecated.  Use the ivo-id attribute of the name child
+             instead.
            </xs:documentation>
          </xs:annotation>
       </xs:attribute>
@@ -639,8 +639,7 @@ For details, see http://ivoa.net/documents/Notes/XMLVers -->
       <xs:attribute name="ivo-id" type="vr:IdentifierURI">
          <xs:annotation>
            <xs:documentation>
-             An IVOA identifier for the creator (typically when it is
-             an organization).
+           	Deprecated.  Use the ivo-id attribute of the name child instead.
            </xs:documentation>
          </xs:annotation>
       </xs:attribute>
