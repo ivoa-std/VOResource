@@ -983,6 +983,27 @@ and general content metadata for a resource (see sections 3.1 through
 minimally compliant resource description; this requirement is enforced
 by the VOResource schema definition.
 
+\begin{admonition}{Note}
+The VOResource \xmlel{status} attribute in the \xmlel{vr:Resource} type
+somewhat overlaps with OAI-PMH's idea of the record's life cycle. In
+particular, at least when VOResource metadata is consumed through
+RegTAP, there is no difference between setting \xmlel{status} to
+\verb|deleted| over publishing an \xmlel{oai:deletedRecord} for the
+identifer; the former will let you keep publish VOResource metadata
+\emph{through OAI-PMH}, which the latter does not because
+\xmlel{oai:deletedRecords} do not admit \xmlel{oai:metadata}
+elements.  However, there is no use case for that in the current VO, and
+hence publishers should exclusively use deleted records on the OAI-PMH
+level rather than set \xmlel{status} to \verb|deleted|.
+
+Having a \xmlel{status} of \verb|inactive| will again purge the metadata
+from RegTAP instances and hence will be indistinguishable from deletion to
+the VO public.  Operators may want to use that status code internally,
+however, to temporarily hide malfunctioning services without deleting
+their records from internal metadata stores.
+
+\end{admonition}
+
 \goodbreak
 
 % GENERATED: !schemadoc VOResource-v1.3.xsd Resource
@@ -1071,14 +1092,23 @@ by the VOResource schema definition.
 
 \item[Allowed Values]\hfil
 \begin{longtermsdescription}\item[active]
-                      resource is believed to be currently maintained, and its
-                      description is up to date (default).
+                      The resource is available and maintained by the
+                      publisher (default).
 
 \item[inactive]
-                     resource is apparently not being maintained at the present.
+                   	The resource is temporarily offline but is expected to
+                   	resume operations at some later date; publishers in this
+                   	case could publish an estimate when that will happen in a
+                   	date element with a role of Available.  Note that inactive
+                   	resources do not show up in RegTAP searchable registries.
 
 \item[deleted]
-                      resource publisher has explicitly deleted the resource.
+	                   This status could be used for resources permanently
+	                   unavailable if VOResource metadata should still be
+	                   available via OAI-PMH; in the current VO, there is
+	                   probably no reason to ever do that, and deleted
+	                   records also do not show up in RegTAP searchable
+	                   registries.
 
 \end{longtermsdescription}
 \end{description}
