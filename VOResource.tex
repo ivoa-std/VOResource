@@ -1564,15 +1564,18 @@ type which bundles together the RM metadata \emph{Creator} and
 \begin{description}
 \item[Type] string with ID attribute: vr:ResourceName
 \item[Meaning]
-                  the name or title of the creating person or organisation
+                  A name of a person or organisation that created
+                  the resource's (data) content.
 
 \item[Occurrence] required
 \item[Comment]
-                  Users of the creation should use this name in
-                  subsequent credits and acknowledgements.
+                  In citations or acknowledgements, creator names are intended
+                  to be used in the author field.
 
-                  This should be exactly one name, preferably last name
-                  first (as in “van der Waals, Johannes Diderik”).
+                  Each creator should contain exactly one name, preferably last
+                  name first (as in “van der Waals, Johannes Diderik”).  Use
+                  multiple creator elements for resources created by multiple
+                  entities.
 
 
 \end{description}
@@ -2133,7 +2136,8 @@ The \xmlel{source} element's type,
 \item[Type] string: \xmlel{xs:string}
 \item[Meaning]
                  The reference format.  Recognized values include “bibcode”,
-                 referring to a standard astronomical bibcode, and
+                 referring to a standard astronomical bibcode
+                 (\url{http://cdsweb.u-strasbg.fr/simbad/refcode.html}), and
                  “doi” for a Digital Object Identifier
 
 \item[Occurrence] optional
