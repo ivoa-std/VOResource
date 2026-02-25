@@ -3015,19 +3015,15 @@ discussed sect.~\ref{sect:servicemodel}.
 \begin{description}
 \item[Type] string: \xmlel{xs:token}
 \item[Meaning]
-                  Test data for exercising the service.
+                  Deprecated: Test data for exercising the service.
 
 \item[Occurrence] optional
 \item[Comment]
-                  This contains data that can be passed to the interface to
-                  retrieve a non-empty result.  This can be used by validators
-                  within test suites.
-
-                  Exactly how agents should use the data contained in
-                  the testQueryString depends on the concrete interface class.
-                  For interfaces employing the HTTP GET method, however,
-                  this will typically be urlencoded parameters (as for
-                  the application/x-www-form-urlencoded media type).
+               	  This element was introduced in VOResource 1.1 in an
+               	  attempt to unify test query declarations over
+               	  SimpleDALRegExt and vs:ParamHTTP's testQuery.  This
+               	  turned out to be of no advantage.  Therefore, testQueryString
+               	  is deprecated in VOResource 1.4.
 
 
 \end{description}
@@ -3306,6 +3302,7 @@ interface.  See sect.~\ref{sect:servicemodel} for details.
 \begin{itemize}
 \item Deprecated the \xmlel{ivo-id} attributes of \xmlel{Creator}
 and \xmlel{Contact}.
+\item Deprecated testQueryString in \xmlel{vr:Interface}.
 \end{itemize}
 
 
