@@ -3041,9 +3041,78 @@ Exactly how a client uses the value
 of the \xmlel{accessURL} element depends on the specific
 type derived from \xmlel{vr:Interface}.  Extension schemas that
 define non-abstract types derived from \xmlel{vr:Interface} MUST
-provide documentation that explains the exact use of the
+provide documentation that explains what clients should do with
 \xmlel{accessURL}; this documentation should follow the
 documention conventions described in sect.~\ref{sect:core}.
+A general hint on what to expect when dereferencing an access URL is
+also given by \xmlel{vr:AccessURL}'s \xmlel{use} attribute:
+
+% GENERATED: !schemadoc VOResource-v1.3.xsd AccessURL
+\begin{generated}
+\begingroup
+        \renewcommand*\descriptionlabel[1]{%
+        \hbox to 5.5em{\emph{#1}\hfil}}\vspace{1ex}\noindent\textbf{\xmlel{vr:AccessURL} Type Schema Definition}
+
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<xs:complexType name="AccessURL" >
+  <xs:simpleContent >
+    <xs:extension base="xs:anyURI" >
+      <xs:attribute name="use" >
+        <xs:simpleType >
+          <xs:restriction base="xs:NMTOKEN" >
+            <xs:enumeration value="full" />
+            <xs:enumeration value="base" />
+            <xs:enumeration value="dir" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:extension>
+  </xs:simpleContent>
+</xs:complexType>
+\end{lstlisting}
+
+\vspace{0.5ex}\noindent\textbf{\xmlel{vr:AccessURL} Attributes}
+
+\begingroup\small\begin{bigdescription}
+\item[use]
+\begin{description}
+\item[Type] string
+\item[Meaning]
+               A flag indicating whether this should be interpreted as a base
+               URL, a full URL, or a URL to a directory that will produce a
+               listing of files.
+
+\item[Occurrence] optional
+
+\item[Allowed Values]\hfil
+\begin{longtermsdescription}\item[full]
+                     Assume a full URL, i.e., one that can be invoked
+                     directly without alteration.  This could return a
+                     single, constant document, but more typically will be a
+                     URL to be POSTed to.
+
+\item[base]
+                     Assume a base URL, i.e., one requiring extra material
+                     to be appended before being dereferenced.
+
+\item[dir]
+                     Assume the URL points to a directory that will return a listing
+                     of files.
+
+\end{longtermsdescription}
+\item[Comment]
+               The default value assumed when one is not given depends on the
+               context.
+
+\end{description}
+
+
+\end{bigdescription}\endgroup
+
+\endgroup
+\end{generated}
+
+% /GENERATED
 
 In version 1.0, operators of services with multiple mirrors were
 encouraged to give multiple \xmlel{accessURL} elements.  This feature
